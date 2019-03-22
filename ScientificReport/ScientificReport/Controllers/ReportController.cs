@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ScientificReport.Models;
 
 namespace ScientificReport.Controllers
 {
-    public class HomeController : Controller
+    public class ReportController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Create()
         {
             return View();
         }

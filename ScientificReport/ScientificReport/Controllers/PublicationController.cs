@@ -8,9 +8,9 @@ using ScientificReport.Models;
 
 namespace ScientificReport.Controllers
 {
-    public class HomeController : Controller
+    public class PublicationController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Create()
         {
             return View();
         }

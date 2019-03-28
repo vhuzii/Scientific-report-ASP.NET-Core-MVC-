@@ -11,10 +11,6 @@ namespace ScientificReport.Data.Models
 {
     public class User : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public override string Id { get; set; }
-
         public string Name { get; set; }
 
         public Role Role { get; set; }

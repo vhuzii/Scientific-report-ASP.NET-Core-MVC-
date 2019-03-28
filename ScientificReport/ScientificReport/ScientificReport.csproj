@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
+    <Folder Include="Data\Migrations\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

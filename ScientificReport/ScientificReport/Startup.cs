@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ScientificReport.Data.DataAccess;
 using ScientificReport.Data.Models;
+using ScientificReport.Services;
 
 namespace ScientificReport
 {
@@ -35,6 +36,8 @@ namespace ScientificReport
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

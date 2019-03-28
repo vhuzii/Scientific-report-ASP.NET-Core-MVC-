@@ -13,7 +13,7 @@ namespace ScientificReport.Data.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
-
+        
         public DateTime Date { get; set; }
         
         public string Time { get; set; }
@@ -22,6 +22,6 @@ namespace ScientificReport.Data.Models
 
         public PublicationStatus Status { get; set; }
 
-        public IEnumerable<Author> Authors { get; set; }
+        public ICollection<Author> Authors { get; set; }
     }
 }

@@ -9,7 +9,8 @@ namespace ScientificReport.Data.Models
     public class Report
     {
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int Id { get; set; }
 
         public DateTime Date { get; set; }
 

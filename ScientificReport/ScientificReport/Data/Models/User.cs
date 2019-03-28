@@ -20,11 +20,15 @@ namespace ScientificReport.Data.Models
 
         public DateTime Birthdate { get; set; }
 
-        public string Graduation { get; set; }
+        public string DegreeLevel { get; set; }
+
+        public DateTime DegreeDate { get; set; }
 
         public DateTime GraduationDate { get; set; }
 
         public string Title { get; set; }
+
+        public DateTime TitleDate { get; set; }
 
         public string Faculty { get; set; }
 

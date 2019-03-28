@@ -135,15 +135,33 @@ namespace ScientificReport.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("DepartmentWorkTopic");
+
                     b.Property<string>("Name");
 
                     b.Property<int?>("PublicationId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartmentWorkTopic");
+
                     b.HasIndex("PublicationId");
 
                     b.ToTable("Authors");
+                });
+
+            modelBuilder.Entity("ScientificReport.Data.Models.DepartmentWork", b =>
+                {
+                    b.Property<string>("Topic")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Intro");
+
+                    b.HasKey("Topic");
+
+                    b.ToTable("DepartmentWork");
                 });
 
             modelBuilder.Entity("ScientificReport.Data.Models.Publication", b =>
@@ -179,9 +197,15 @@ namespace ScientificReport.Migrations
 
                     b.Property<DateTime>("Date");
 
+                    b.Property<string>("DepartmentWorkTopic");
+
+                    b.Property<string>("Intro");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentWorkTopic");
 
                     b.HasIndex("UserId");
 
@@ -200,6 +224,10 @@ namespace ScientificReport.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<DateTime>("DegreeDate");
+
+                    b.Property<string>("DegreeLevel");
+
                     b.Property<string>("Department");
 
                     b.Property<string>("Email")
@@ -208,8 +236,6 @@ namespace ScientificReport.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("Faculty");
-
-                    b.Property<string>("Graduation");
 
                     b.Property<DateTime>("GraduationDate");
 
@@ -240,6 +266,8 @@ namespace ScientificReport.Migrations
                     b.Property<string>("SecurityStamp");
 
                     b.Property<string>("Title");
+
+                    b.Property<DateTime>("TitleDate");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -306,6 +334,10 @@ namespace ScientificReport.Migrations
 
             modelBuilder.Entity("ScientificReport.Data.Models.Author", b =>
                 {
+                    b.HasOne("ScientificReport.Data.Models.DepartmentWork")
+                        .WithMany("Authors")
+                        .HasForeignKey("DepartmentWorkTopic");
+
                     b.HasOne("ScientificReport.Data.Models.Publication")
                         .WithMany("Authors")
                         .HasForeignKey("PublicationId");
@@ -320,6 +352,10 @@ namespace ScientificReport.Migrations
 
             modelBuilder.Entity("ScientificReport.Data.Models.Report", b =>
                 {
+                    b.HasOne("ScientificReport.Data.Models.DepartmentWork", "DepartmentWork")
+                        .WithMany()
+                        .HasForeignKey("DepartmentWorkTopic");
+
                     b.HasOne("ScientificReport.Data.Models.User")
                         .WithMany("Reports")
                         .HasForeignKey("UserId");

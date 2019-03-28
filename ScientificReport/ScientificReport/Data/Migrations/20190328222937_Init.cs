@@ -44,9 +44,11 @@ namespace ScientificReport.Migrations
                     Name = table.Column<string>(nullable: true),
                     Role = table.Column<int>(nullable: false),
                     Birthdate = table.Column<DateTime>(nullable: false),
-                    Graduation = table.Column<string>(nullable: true),
+                    DegreeLevel = table.Column<string>(nullable: true),
+                    DegreeDate = table.Column<DateTime>(nullable: false),
                     GraduationDate = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(nullable: true),
+                    TitleDate = table.Column<DateTime>(nullable: false),
                     Faculty = table.Column<string>(nullable: true),
                     Department = table.Column<string>(nullable: true),
                     IsAdmin = table.Column<bool>(nullable: false),
@@ -55,6 +57,19 @@ namespace ScientificReport.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DepartmentWork",
+                columns: table => new
+                {
+                    Topic = table.Column<string>(nullable: false),
+                    Intro = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepartmentWork", x => x.Topic);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,12 +208,20 @@ namespace ScientificReport.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
+                    DepartmentWorkTopic = table.Column<string>(nullable: true),
+                    Intro = table.Column<string>(nullable: true),
                     Contetnt = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reports_DepartmentWork_DepartmentWorkTopic",
+                        column: x => x.DepartmentWorkTopic,
+                        principalTable: "DepartmentWork",
+                        principalColumn: "Topic",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reports_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -214,11 +237,18 @@ namespace ScientificReport.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    DepartmentWorkTopic = table.Column<string>(nullable: true),
                     PublicationId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Authors_DepartmentWork_DepartmentWorkTopic",
+                        column: x => x.DepartmentWorkTopic,
+                        principalTable: "DepartmentWork",
+                        principalColumn: "Topic",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Authors_Publications_PublicationId",
                         column: x => x.PublicationId,
@@ -267,6 +297,11 @@ namespace ScientificReport.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Authors_DepartmentWorkTopic",
+                table: "Authors",
+                column: "DepartmentWorkTopic");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Authors_PublicationId",
                 table: "Authors",
                 column: "PublicationId");
@@ -275,6 +310,11 @@ namespace ScientificReport.Migrations
                 name: "IX_Publications_UserId",
                 table: "Publications",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reports_DepartmentWorkTopic",
+                table: "Reports",
+                column: "DepartmentWorkTopic");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_UserId",
@@ -310,6 +350,9 @@ namespace ScientificReport.Migrations
 
             migrationBuilder.DropTable(
                 name: "Publications");
+
+            migrationBuilder.DropTable(
+                name: "DepartmentWork");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

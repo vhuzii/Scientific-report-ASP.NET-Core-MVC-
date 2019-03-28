@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using ScientificReport.Data.Enums;
@@ -21,6 +22,6 @@ namespace ScientificReport.Data.Models
 
         public PublicationStatus Status { get; set; }
 
-        public IEnumerable<string> Authors { get; set; }
+        public IEnumerable<Author> Authors { get; set; }
     }
 }

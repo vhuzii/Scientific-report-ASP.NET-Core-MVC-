@@ -14,5 +14,6 @@ namespace ScientificReport.Data.DataAccess
        public virtual DbSet<Report> Reports { get; set; }
        public virtual DbSet<Publication> Publications { get; set; }
        public virtual DbSet<Author> Authors { get; set; }
+       public virtual DbSet<DepartmentWork> DepartmentWorks { get; set; }
 	}
 }

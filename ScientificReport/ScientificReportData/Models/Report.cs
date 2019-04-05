@@ -4,24 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using ScientificReport.Data.Enums;
 
-namespace ScientificReport.Data.Models
+namespace ScientificReportData.Models
 {
-    public class Publication
+    public class Report
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
-        
+
         public DateTime Date { get; set; }
-        
-        public string Time { get; set; }
 
-        public string Topic { get; set; }
+        public DepartmentWork DepartmentWork { get; set; }
 
-        public PublicationStatus Status { get; set; }
+        public string Intro { get; set; }
 
-        public ICollection<Author> Authors { get; set; }
+        public string Contetnt { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ScientificReport.Data.Models;
+using ScientificReportData.Models;
 
-namespace ScientificReport.Services
+namespace ScientificReportServices
 {
     public interface IReportService
     {

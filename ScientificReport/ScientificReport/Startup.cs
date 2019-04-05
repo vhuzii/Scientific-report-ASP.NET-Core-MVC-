@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ScientificReport.Data.DataAccess;
-using ScientificReport.Data.Models;
-using ScientificReport.Services;
+using ScientificReportData.Models;
+using ScientificReportServices;
 
 namespace ScientificReport
 {
@@ -38,7 +38,7 @@ namespace ScientificReport
 
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IUserService, UserService>();
-
+            services.AddScoped<IConference, ConferenceService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=ScientificReport;Trusted_Connection=True;ConnectRetryCount=0";

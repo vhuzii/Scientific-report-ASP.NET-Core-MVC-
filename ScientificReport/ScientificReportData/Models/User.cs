@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using ScientificReport.Data.Enums;
+using ScientificReportData.Enums;
 
-namespace ScientificReport.Data.Models
+namespace ScientificReportData.Models
 {
     public class User : IdentityUser
     {

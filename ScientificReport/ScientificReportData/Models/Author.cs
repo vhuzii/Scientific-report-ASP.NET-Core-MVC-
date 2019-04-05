@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ScientificReport.Data.Models 
+namespace ScientificReportData.Models 
 {
 	public class Author 
 	{

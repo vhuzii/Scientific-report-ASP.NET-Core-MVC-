@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ScientificReport.Migrations
+namespace ScientificReportData.Migrations
 {
-    public partial class Init : Migration
+    public partial class AddedConferencesTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,7 +60,25 @@ namespace ScientificReport.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DepartmentWork",
+                name: "Conferences",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Likes = table.Column<int>(nullable: false),
+                    Watches = table.Column<int>(nullable: false),
+                    ImgPath = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conferences", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DepartmentWorks",
                 columns: table => new
                 {
                     Topic = table.Column<string>(nullable: false),
@@ -69,7 +87,7 @@ namespace ScientificReport.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DepartmentWork", x => x.Topic);
+                    table.PrimaryKey("PK_DepartmentWorks", x => x.Topic);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,9 +235,9 @@ namespace ScientificReport.Migrations
                 {
                     table.PrimaryKey("PK_Reports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reports_DepartmentWork_DepartmentWorkTopic",
+                        name: "FK_Reports_DepartmentWorks_DepartmentWorkTopic",
                         column: x => x.DepartmentWorkTopic,
-                        principalTable: "DepartmentWork",
+                        principalTable: "DepartmentWorks",
                         principalColumn: "Topic",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -244,9 +262,9 @@ namespace ScientificReport.Migrations
                 {
                     table.PrimaryKey("PK_Authors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Authors_DepartmentWork_DepartmentWorkTopic",
+                        name: "FK_Authors_DepartmentWorks_DepartmentWorkTopic",
                         column: x => x.DepartmentWorkTopic,
-                        principalTable: "DepartmentWork",
+                        principalTable: "DepartmentWorks",
                         principalColumn: "Topic",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -343,6 +361,9 @@ namespace ScientificReport.Migrations
                 name: "Authors");
 
             migrationBuilder.DropTable(
+                name: "Conferences");
+
+            migrationBuilder.DropTable(
                 name: "Reports");
 
             migrationBuilder.DropTable(
@@ -352,7 +373,7 @@ namespace ScientificReport.Migrations
                 name: "Publications");
 
             migrationBuilder.DropTable(
-                name: "DepartmentWork");
+                name: "DepartmentWorks");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

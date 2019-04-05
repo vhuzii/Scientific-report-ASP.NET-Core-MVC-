@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScientificReport.Data.DataAccess;
 
-namespace ScientificReport.Migrations
+namespace ScientificReportData.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    [Migration("20190328222937_Init")]
-    partial class Init
+    partial class ReportContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,7 +129,7 @@ namespace ScientificReport.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.Author", b =>
+            modelBuilder.Entity("ScientificReportData.Models.Author", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +150,30 @@ namespace ScientificReport.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.DepartmentWork", b =>
+            modelBuilder.Entity("ScientificReportData.Models.Conference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImgPath");
+
+                    b.Property<int>("Likes");
+
+                    b.Property<string>("Title");
+
+                    b.Property<int>("Watches");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Conferences");
+                });
+
+            modelBuilder.Entity("ScientificReportData.Models.DepartmentWork", b =>
                 {
                     b.Property<string>("Topic")
                         .ValueGeneratedOnAdd();
@@ -163,10 +184,10 @@ namespace ScientificReport.Migrations
 
                     b.HasKey("Topic");
 
-                    b.ToTable("DepartmentWork");
+                    b.ToTable("DepartmentWorks");
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.Publication", b =>
+            modelBuilder.Entity("ScientificReportData.Models.Publication", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,7 +210,7 @@ namespace ScientificReport.Migrations
                     b.ToTable("Publications");
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.Report", b =>
+            modelBuilder.Entity("ScientificReportData.Models.Report", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,7 +235,7 @@ namespace ScientificReport.Migrations
                     b.ToTable("Reports");
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.User", b =>
+            modelBuilder.Entity("ScientificReportData.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -299,7 +320,7 @@ namespace ScientificReport.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ScientificReport.Data.Models.User")
+                    b.HasOne("ScientificReportData.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -307,7 +328,7 @@ namespace ScientificReport.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ScientificReport.Data.Models.User")
+                    b.HasOne("ScientificReportData.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -320,7 +341,7 @@ namespace ScientificReport.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ScientificReport.Data.Models.User")
+                    b.HasOne("ScientificReportData.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -328,37 +349,37 @@ namespace ScientificReport.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ScientificReport.Data.Models.User")
+                    b.HasOne("ScientificReportData.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.Author", b =>
+            modelBuilder.Entity("ScientificReportData.Models.Author", b =>
                 {
-                    b.HasOne("ScientificReport.Data.Models.DepartmentWork")
+                    b.HasOne("ScientificReportData.Models.DepartmentWork")
                         .WithMany("Authors")
                         .HasForeignKey("DepartmentWorkTopic");
 
-                    b.HasOne("ScientificReport.Data.Models.Publication")
+                    b.HasOne("ScientificReportData.Models.Publication")
                         .WithMany("Authors")
                         .HasForeignKey("PublicationId");
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.Publication", b =>
+            modelBuilder.Entity("ScientificReportData.Models.Publication", b =>
                 {
-                    b.HasOne("ScientificReport.Data.Models.User")
+                    b.HasOne("ScientificReportData.Models.User")
                         .WithMany("Publications")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ScientificReport.Data.Models.Report", b =>
+            modelBuilder.Entity("ScientificReportData.Models.Report", b =>
                 {
-                    b.HasOne("ScientificReport.Data.Models.DepartmentWork", "DepartmentWork")
+                    b.HasOne("ScientificReportData.Models.DepartmentWork", "DepartmentWork")
                         .WithMany()
                         .HasForeignKey("DepartmentWorkTopic");
 
-                    b.HasOne("ScientificReport.Data.Models.User")
+                    b.HasOne("ScientificReportData.Models.User")
                         .WithMany("Reports")
                         .HasForeignKey("UserId");
                 });

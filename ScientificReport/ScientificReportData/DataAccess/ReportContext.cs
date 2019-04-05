@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ScientificReport.Data.Models;
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ScientificReportData.Models;
 
 namespace ScientificReport.Data.DataAccess
 {
@@ -15,5 +15,6 @@ namespace ScientificReport.Data.DataAccess
        public virtual DbSet<Publication> Publications { get; set; }
        public virtual DbSet<Author> Authors { get; set; }
        public virtual DbSet<DepartmentWork> DepartmentWorks { get; set; }
-	}
+        public virtual DbSet<Conference> Conferences { get; set; }
+    }
 }

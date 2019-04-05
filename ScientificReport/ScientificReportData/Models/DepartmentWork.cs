@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ScientificReport.Data.Models
+namespace ScientificReportData.Models
 {
     public class DepartmentWork
     {

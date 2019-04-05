@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ScientificReport.Data.Models;
+using ScientificReportData.Models;
 
 namespace ScientificReport.Areas.Identity.Pages.Account
 {

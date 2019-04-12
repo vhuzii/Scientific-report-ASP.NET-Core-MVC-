@@ -38,7 +38,7 @@ namespace ScientificReport
 
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IConference, ConferenceService>();
+            services.AddScoped<IConferenceService, ConferenceService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=ScientificReport;Trusted_Connection=True;ConnectRetryCount=0";

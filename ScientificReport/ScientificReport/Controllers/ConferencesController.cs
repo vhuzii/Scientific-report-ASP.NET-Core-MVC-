@@ -12,9 +12,9 @@ namespace ScientificReport.Controllers
 {
     public class ConferencesController : Controller
     {
-        static private IConference _assets;
+        static private IConferenceService _assets;
        
-        public ConferencesController(IConference assets)
+        public ConferencesController(IConferenceService assets)
         {
             _assets = assets;            
         }
@@ -37,16 +37,18 @@ namespace ScientificReport.Controllers
         }
         public IActionResult Details(int id)
         {
-            var r = _assets.getById(id);
+            var result = _assets.getById(id);
+            result.Watches = result.Watches + 1;
+            _assets.Update(result);
             var model = new Conference()
             {
-                Id = r.Id,
-                Date = r.Date,
-                Description = r.Description,
-                ImgPath = r.ImgPath,
-                Likes = r.Likes,
-                Title = r.Title,
-                Watches = r.Watches
+                Id = result.Id,
+                Date = result.Date,
+                Description = result.Description,
+                ImgPath = result.ImgPath,
+                Likes = result.Likes,
+                Title = result.Title,
+                Watches = result.Watches
             };
             return View(model);
         }

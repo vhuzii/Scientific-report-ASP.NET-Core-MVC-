@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ScientificReportServices
 {
-    public class ConferenceService : IConference
+    public class ConferenceService : IConferenceService
     {
         private ReportContext _context;
 
@@ -60,6 +60,12 @@ namespace ScientificReportServices
         public int getWatchesById(int Id)
         {
             return getById(Id).Watches;
+        }
+
+        public void Update(Conference newElem)
+        {
+            _context.Update(newElem);
+            _context.SaveChanges();
         }
     }
 }

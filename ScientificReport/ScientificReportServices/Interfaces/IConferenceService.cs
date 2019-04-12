@@ -5,10 +5,11 @@ using System.Text;
 
 namespace ScientificReportServices
 {
-    public interface IConference
+    public interface IConferenceService
     {
         IEnumerable<Conference> getAll();
         void Add(Conference newElem);
+        void Update(Conference newElem);
         Conference getById(int Id);
         int getLikesById(int Id);
         int getWatchesById(int Id);

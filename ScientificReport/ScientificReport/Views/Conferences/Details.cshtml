@@ -4,8 +4,32 @@
 @{
 }
 @model Conference
-<img src="@Model.ImgPath" alt="photo" />
-<h2>@Model.Title</h2>
-<h4>@Model.Date</h4>
-<p>@Model.Description</p>`
-<h3>Participants:</h3>
+<div class="item-detailed">
+
+    <div>
+        <h2>@Model.Title</h2>
+        <h5>@Model.Date.ToShortDateString().Split(' ')[0]</h5>
+        <p class="description">@Model.Description</p>`
+        <h4>Participants:</h4>
+    </div>
+    <div>
+        <img src="@Model.ImgPath" alt="photo" class="img-detailed" />
+        <div class="likes-watches">
+            <div>
+
+                <div>
+                    <p class="text">Likes</p>
+                    <img src="~/img/Conferences/icons/likes.png" alt="Likes" class="small-ico" />
+                </div>
+                <p>@Model.Likes</p>
+            </div>
+            <div>
+                <div>
+                    <p class="text">Watches</p>
+                    <img src="~/img/Conferences/icons/watches.png" alt="Watches" class="small-ico" />
+                </div>
+                <p>@Model.Watches</p>
+            </div>
+        </div>
+    </div>
+</div>

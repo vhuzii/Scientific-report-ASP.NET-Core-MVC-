@@ -5,8 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ScientificReport.Data.Models;
-using ScientificReport.Services;
+
+using ScientificReportData.Models;
+using ScientificReportServices;
 
 namespace ScientificReport.Controllers
 {

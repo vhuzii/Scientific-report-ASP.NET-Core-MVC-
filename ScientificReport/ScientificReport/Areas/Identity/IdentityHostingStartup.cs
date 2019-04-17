@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ScientificReport.Data.DataAccess;
-using ScientificReport.Data.Models;
+using ScientificReportData.Models;
 
 [assembly: HostingStartup(typeof(ScientificReport.Areas.Identity.IdentityHostingStartup))]
 namespace ScientificReport.Areas.Identity

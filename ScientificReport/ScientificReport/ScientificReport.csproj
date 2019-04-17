@@ -18,7 +18,12 @@
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScientificReportData\ScientificReportData.csproj" />
+    <ProjectReference Include="..\ScientificReportServices\ScientificReportServices.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,7 +15,7 @@ namespace ScientificReportData.Models
 
         public DateTime Date { get; set; }
 
-        public DepartmentWork DepartmentWork { get; set; }
+        public string DepartmentWork { get; set; }
 
         public string Intro { get; set; }
 

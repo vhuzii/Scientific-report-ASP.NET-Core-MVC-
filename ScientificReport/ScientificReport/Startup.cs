@@ -49,7 +49,10 @@ namespace ScientificReport
 	            .AddEntityFrameworkStores<ReportContext>()
 				.AddDefaultUI()
 	            .AddDefaultTokenProviders();
-		}
+
+            var serv = services.BuildServiceProvider();
+            CreateUserRoles(serv).Wait();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -75,6 +78,21 @@ namespace ScientificReport
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            //var UserManager = serviceProvider.GetRequiredService<UserService>();
+
+            IdentityResult roleResult;
+            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
+            if (!roleCheck)
+            {
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            //IdentityUser user = await UserManager.FindByEmailAsync("admin@gmail.com");     <= use this to add admin rights -бодьо
+            //await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

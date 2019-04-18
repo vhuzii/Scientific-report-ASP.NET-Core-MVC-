@@ -11,23 +11,28 @@ namespace ScientificReportServices
 
     {
         public Report CreateReport(CreateReportModel createModel, User currentUser)
-        {           
+        {
             var report = new Report();
 
             report.Intro = GenerateIntro(currentUser);
             //todo the rest
-            return report;        
+            return report;
         }
 
         private string GenerateIntro(User user)
         {
             var intro = new StringBuilder();
             intro.Append(
-              $"Рік народження: {user.Birthdate.Year}" + Environment.NewLine
-             + $"Рік закінчення ВНЗ {user.GraduationDate}" + Environment.NewLine
-             + $"Науковий ступінь: {user.DegreeLevel} рік захисту {user.DegreeDate.Year}" +
+              $"Рік народження: {user.Birthdate.Year}")
+                .Append(Environment.NewLine
+             )
+                .Append($"Рік закінчення ВНЗ {user.GraduationDate}").Append(Environment.NewLine
+             )
+                .Append($"Науковий ступінь: {user.DegreeLevel} рік захисту {user.DegreeDate.Year}")
+                .Append(
              Environment.NewLine
-             + $"Вчене звання: {user.Title} рік присвоєння {user.TitleDate.Year}"
+             )
+                .Append($"Вчене звання: {user.Title} рік присвоєння {user.TitleDate.Year}"
             );
 
             return intro.ToString();

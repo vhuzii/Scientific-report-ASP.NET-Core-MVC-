@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rotativa.AspNetCore;
 using ScientificReport.Data.DataAccess;
 using ScientificReportData.Models;
 using ScientificReportServices;
@@ -78,7 +79,8 @@ namespace ScientificReport
                     name: "default",
                     template: "{controller=Report}/{action=Index}/{id?}");
             });
-        }
+            RotativaConfiguration.Setup(env);
+		}
 
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {

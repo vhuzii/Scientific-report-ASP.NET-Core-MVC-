@@ -22,4 +22,9 @@
     <ProjectReference Include="..\ScientificReportServices\ScientificReportServices.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Rotativa\" />
+  </ItemGroup>
+
 </Project>

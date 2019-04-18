@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-
+using Rotativa.AspNetCore;
 using ScientificReportData.Models;
 using ScientificReportServices;
 
@@ -32,7 +32,7 @@ namespace ScientificReport.Controllers
             var currentUser = _userService.CurrentUser;
             var report = _reportService.CreateReport(model, currentUser);
 
-            return Ok(report);
-        }
+			return new ViewAsPdf("CreateReport", report) { FileName = "Report.pdf" };
+		}
     }
 }

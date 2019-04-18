@@ -12,16 +12,16 @@ namespace ScientificReport.Controllers
 {
     public class ConferencesController : Controller
     {
-        static private IConferenceService _assets;
+        private readonly IConferenceService conferenceService;
        
-        public ConferencesController(IConferenceService assets)
+        public ConferencesController(IConferenceService conferenceService)
         {
-            _assets = assets;            
+            this.conferenceService = conferenceService;            
         }
 
         public IActionResult Index()
         {
-            var conferences = _assets.getAll();
+            var conferences = conferenceService.getAll();
             var result = conferences
                 .Select(r => new Conference()
                 {
@@ -37,9 +37,9 @@ namespace ScientificReport.Controllers
         }
         public IActionResult Details(int id)
         {
-            var result = _assets.getById(id);
+            var result = conferenceService.getById(id);
             result.Watches = result.Watches + 1;
-            _assets.Update(result);
+            conferenceService.Update(result);
             var model = new Conference()
             {
                 Id = result.Id,

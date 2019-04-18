@@ -13,8 +13,11 @@ namespace ScientificReportServices
         public Report CreateReport(CreateReportModel createModel, User currentUser)
         {
             var report = new Report();
+			// TODO Заповнити фейковідані юзера
+            var fakeUser = new User() {
 
-            report.Intro = GenerateIntro(currentUser);
+            };
+            report.Intro = GenerateIntro(fakeUser); // TODO замінити фейк бзера на currentUser
             //todo the rest
             return report;
         }

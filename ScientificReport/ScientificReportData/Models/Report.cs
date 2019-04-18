@@ -17,6 +17,8 @@ namespace ScientificReportData.Models
 
         public string DepartmentWork { get; set; }
 
+        public string Conferences { get; set; }
+
         public string Intro { get; set; }
 
         public string Contetnt { get; set; }

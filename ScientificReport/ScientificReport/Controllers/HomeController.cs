@@ -27,10 +27,10 @@ namespace ScientificReport.Controllers
             return View();
         }
 
-        public IActionResult CreateReport(CreateReportModel model)
+        public IActionResult CreateReport()
         {
             var currentUser = _userService.CurrentUser;
-            var report = _reportService.CreateReport(model, currentUser);
+            var report = _reportService.CreateReport(currentUser);
 
             return Ok(report);
         }

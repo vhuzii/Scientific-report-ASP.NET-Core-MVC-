@@ -26,6 +26,7 @@ namespace ScientificReportServices
             report.Date = DateTime.Today.Date;
             report.Intro = GenerateIntro();
             report.DepartmentWork = GenerateDepartmentWorks();
+            report.Conferences = GenerateConferences();
             //todo the rest
             return report;
         }
@@ -56,7 +57,26 @@ namespace ScientificReportServices
             {                
                 section.Append($"Teмa: {work.Topic}, {work.Category}, {work.Intro}")
                     .Append(Environment.NewLine)
+                    .Append(Environment.NewLine)
                     .Append(work.Content)
+                    .Append(Environment.NewLine)
+                    .Append(Environment.NewLine);
+            }
+
+            return section.ToString();
+        }
+
+        private string GenerateConferences()
+        {
+            var confs = _context.Conferences.Where(c => c.Participants.Contains(user.Name));
+            var section = new StringBuilder();
+
+            foreach (var conf in confs)
+            {
+                section.Append($"{conf.Title}")
+                    .Append(Environment.NewLine)
+                    .Append(conf.Date)
+                    .Append(Environment.NewLine)
                     .Append(Environment.NewLine);
             }
 

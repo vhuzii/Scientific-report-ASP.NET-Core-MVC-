@@ -8,6 +8,6 @@ namespace ScientificReportServices
 {
     public interface IReportService
     {
-        Report CreateReport(CreateReportModel createModel, User currentUser);
+        Report CreateReport(User currentUser);
     }
 }

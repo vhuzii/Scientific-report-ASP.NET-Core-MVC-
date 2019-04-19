@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rotativa.AspNetCore;
 using ScientificReport.Data.DataAccess;
 using ScientificReportData.Models;
 using ScientificReportServices;
@@ -60,7 +61,7 @@ namespace ScientificReport
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Report/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -73,9 +74,10 @@ namespace ScientificReport
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Report}/{action=Index}/{id?}");
             });
-        }
+            RotativaConfiguration.Setup(env);
+		}
 
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {

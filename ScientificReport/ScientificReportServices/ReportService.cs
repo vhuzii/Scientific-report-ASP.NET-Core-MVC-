@@ -18,18 +18,17 @@ namespace ScientificReportServices
             _context = context;
         }
 
-        public Report CreateReport(User currentUser)
-        {
-            user = currentUser;
-            var report = new Report();
-            report.Date = DateTime.Today.Date;
-            report.Intro = GenerateIntro();
-            report.DepartmentWork = GenerateDepartmentWorks();
-            report.Conferences = GenerateConferences();
-			// TODO Заповнити фейковідані юзера
-            var fakeUser = new User() {
-            };
-            report.Intro = GenerateIntro(fakeUser); // TODO замінити фейк бзера на currentUser
+        public Report CreateReport(User currentUser) {
+	        user = new User() {
+				Birthdate = DateTime.Now,
+			}; 
+			var report = new Report();
+
+			// Воно кидає ексепшн поки тому я закоментив
+            //report.Date = DateTime.Today.Date;
+            //report.Intro = GenerateIntro();
+            //report.DepartmentWork = GenerateDepartmentWorks();
+            //report.Conferences = GenerateConferences();
             //todo the rest
             return report;
         }
@@ -71,7 +70,7 @@ namespace ScientificReportServices
 
         private string GenerateConferences()
         {
-            var confs = _context.Conferences.Where(c => c.Participants.Contains(user.Name));
+            var confs = _context.Conferences.Where(c => c.Participants.Any(p => p.Name == user.Name));
             var section = new StringBuilder();
 
             foreach (var conf in confs)

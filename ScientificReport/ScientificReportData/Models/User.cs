@@ -6,12 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ScientificReportData.Enums;
+using ScientificReportData.Interfaces;
 
 namespace ScientificReportData.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser, IEntity<string>
     {
-        public string Name { get; set; }
+		public string Name { get; set; }
 
         public Role Role { get; set; }
 

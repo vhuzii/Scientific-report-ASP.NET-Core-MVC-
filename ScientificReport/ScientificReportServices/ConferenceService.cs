@@ -4,32 +4,32 @@ using ScientificReportData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ScientificReportData.Interfaces;
 
 namespace ScientificReportServices
 {
     public class ConferenceService : IConferenceService
     {
-        private ReportContext _context;
+        private IRepository<Conference, int> repository;
 
-        public ConferenceService(ReportContext context)
+        public ConferenceService(IRepository<Conference, int> repository)
         {
-            _context = context;
+            this.repository = repository;
         }
 
         public void Add(Conference newElem)
         {
-            _context.Add(newElem);
-            _context.SaveChanges();
+            repository.Create(newElem);
         }
 
         public IEnumerable<Conference> getAll()
         {
-            return _context.Conferences;
+            return repository.GetAll();
         }
 
-        public Conference getById(int Id)
+        public Conference getById(int id) 
         {
-            return _context.Conferences.FirstOrDefault(asset => asset.Id == Id);
+	        return repository.Get(id);
         }
 
         public DateTime getDateById(int Id)
@@ -64,8 +64,7 @@ namespace ScientificReportServices
 
         public void Update(Conference newElem)
         {
-            _context.Update(newElem);
-            _context.SaveChanges();
+            repository.Update(newElem);
         }
     }
 }

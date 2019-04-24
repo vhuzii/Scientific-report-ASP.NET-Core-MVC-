@@ -4,18 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ScientificReport.Data.DataAccess;
+using ScientificReportData.Interfaces;
 using ScientificReportData.Models;
 
 namespace ScientificReportServices
 {
     public class ReportService : IReportService
     {
-        private readonly ReportContext _context;
-        private User user;
+        private readonly IRepository<Report, int> reportRepository;
+        private readonly IRepository<Author, int> authorRepository;
+        private readonly IRepository<DepartmentWork, int> departmentWorkRepository;
+        private readonly IRepository<Conference, int> conferenceRepository;
+		private User user;
 
-        public ReportService(ReportContext context)
+        public ReportService(IRepository<Report, int> reportRepository, 
+	        IRepository<Author, int> authorRepository,
+	        IRepository<DepartmentWork, int> departmentWorkRepository,
+	        IRepository<Conference, int> conferenceRepository)
         {
-            _context = context;
+            this.reportRepository = reportRepository;
+            this.authorRepository = authorRepository;
+            this.departmentWorkRepository = departmentWorkRepository;
+            this.conferenceRepository = conferenceRepository;
         }
 
         public Report CreateReport(User currentUser) {
@@ -50,10 +60,10 @@ namespace ScientificReportServices
 
         private string GenerateDepartmentWorks()
         {
-            var userAsAuthor = _context.Authors.FirstOrDefault(a => a.Name == user.Name);
+            var userAsAuthor = authorRepository.GetAll().FirstOrDefault(a => a.Name == user.Name);
             if (userAsAuthor == null) return "";
-            var works = _context.DepartmentWorks.Where(w => w.Authors.Contains(userAsAuthor));
-            var section = new StringBuilder();
+            var works = departmentWorkRepository.GetAll().Where(w => w.Authors.Contains(userAsAuthor));
+			var section = new StringBuilder();
 
             foreach (var work in works)
             {                
@@ -70,7 +80,7 @@ namespace ScientificReportServices
 
         private string GenerateConferences()
         {
-            var confs = _context.Conferences.Where(c => c.Participants.Any(p => p.Name == user.Name));
+            var confs = conferenceRepository.GetAll().Where(c => c.Participants.Any(p => p.Name == user.Name));
             var section = new StringBuilder();
 
             foreach (var conf in confs)

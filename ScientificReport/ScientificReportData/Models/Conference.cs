@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ScientificReportData.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace ScientificReportData.Models
 {
-    public class Conference
+    public class Conference : IEntity<int>
     {
         public int Id {get;set;}
         public int Likes { get; set; }

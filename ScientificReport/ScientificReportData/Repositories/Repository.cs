@@ -12,7 +12,7 @@ namespace ScientificReportData.Repositories
 	/// </summary>
 	/// <typeparam name="T">Тип моделі</typeparam>
 	/// <typeparam name="S">Тип id</typeparam>
-	class Repository<T, S> : IRepository<T, S> where T : class, IEntity<S>
+	public class Repository<T, S> : IRepository<T, S> where T : class, IEntity<S>
 	{
 		private DbContext context;
 		protected DbSet<T> dbSet;

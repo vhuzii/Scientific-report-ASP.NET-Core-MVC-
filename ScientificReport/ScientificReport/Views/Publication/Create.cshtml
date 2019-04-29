@@ -3,35 +3,4 @@
     ViewData["Title"] = "Create";
 }
 
-<form>
-	<div class="form-group">
-		<label for="topicInput">Title:</label>
-		<input type="email" class="form-control" id="topicInput">
-	</div>
-	<div class="form-group">
-		<label for="typeInput">Type:</label>
-		<select class="form-control" id="typeInput">
-			<option>Type1</option>
-			<option>Type1</option>
-			<option>Type1</option>
-			<option>Type1</option>
-			<option>Type1</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="statusInput">Status:</label>
-		<select class="form-control" id="statusInput">
-			<option>Status1</option>
-			<option>Status2</option>
-			<option>Status3</option>
-			<option>Status4</option>
-			<option>Status4</option>
-		</select>
-	</div>
-	<div class="form-group">
-		<label for="authorInput">Authors:</label>
-		<input type="email" class="form-control" id="authorInput">
-	</div>
-	<button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
+@await Component.InvokeAsync("PublicationComponent")

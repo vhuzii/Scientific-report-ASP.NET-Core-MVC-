@@ -1,0 +1,25 @@
+﻿@model ScientificReportData.Models.Publication
+<form asp-action="SavePublication">
+    <div class="form-group">
+        <label asp-for="Topic">Title:</label>
+        <input asp-for="Topic" type="text" class="form-control" id="topicInput">
+    </div>
+    <div class="form-group">
+        <label asp-for="Time">Time:</label>
+        <input asp-for="Time" type="date" class="form-control" id="topicInput">
+    </div>
+    <div class="form-group">
+        <label asp-for="Status">Status:</label>
+        <select asp-for="Status" class="form-control" id="statusInput">
+            <option>Published</option>
+            <option>Printed</option>
+            <option>InProgres</option>
+            <option>InReview</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Authors" for="authorInput">Authors:</label>
+        <input asp-for="Authors" type="text"  class="form-control" id="authorInput">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

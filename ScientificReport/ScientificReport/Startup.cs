@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rotativa.AspNetCore;
 using ScientificReport.Data.DataAccess;
+using ScientificReportData;
 using ScientificReportData.Interfaces;
 using ScientificReportData.Models;
 using ScientificReportData.Repositories;
@@ -46,6 +47,8 @@ namespace ScientificReport
             services.AddScoped<IRepository<DepartmentWork, int>, Repository<DepartmentWork, int>>();
             services.AddScoped<IRepository<Author, int>, Repository<Author, int>>();
             services.AddScoped<IRepository<Report, int>, Repository<Report, int>>();
+            services.AddScoped<IRepository<Grant, int>, Repository<Grant, int>>();
+			services.AddScoped<UnitOfWork>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IConferenceService, ConferenceService>();

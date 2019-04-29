@@ -39,5 +39,7 @@ namespace ScientificReportData.Models
         public ICollection<Report> Reports { get; set; }
 
         public ICollection<Publication> Publications { get; set; }
-    }
+
+		public IEnumerable<Internship> Internships { get; set; }
+	}
 }

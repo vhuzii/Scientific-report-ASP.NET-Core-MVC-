@@ -4,35 +4,20 @@
 
 <div class="form-group report-block center">
     <label for="typeInput">Виберіть тип:</label>
-    <select class="form-control" id="selectList" onchange="GetPublicationForm()">
-        <option value="1">Участь у науково-дослідній тематиці підрозділy</option>
-        <option value="2">Участь у виконанні індивідуальних або колективних ґрантів</option>
-        <option value="3">Наукові стажування</option>
-        <option value="4">Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій</option>
-        <option value="5">Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації</option>
-        <option value="6">Праці, що вийшли з друку (бібліографічний опис згідно з державним стандартом)</option>
-        <option value="7">Праці, рекомендовані Вченою радою університету до друку (автори, назва праці, обсяг, дата подачі)</option>
-        <option value="8">Патентно-ліцензійна діяльність</option>
-        <option value="9">Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки</option>
-        <option value="10">Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</option>
-        <option value="11">Інше</option>
+    <ul>
+        <li><a asp-controller="Info" asp-action="DepartmentWorkForm"> Участь у науково-дослідній тематиці підрозділy</a></li>
+        <li><a asp-controller="Info" asp-action="GrantsForm">Участь у виконанні індивідуальних або колективних ґрантів</a></li>
+        <li><a asp-controller="Info" asp-action="">Наукові стажування</a></li>
+        <li><a asp-controller="Info" asp-action="Create">Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій</a></li>
+        <li><a asp-controller="Info" asp-action="Create">Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації</a></li>
+        <li><a asp-controller="Info" asp-action="PublicationForm">Наукові праці</a></li>
+        <li><a asp-controller="Info" asp-action="Create">Патентно-ліцензійна діяльність</a></li>
+        <li><a asp-controller="Info" asp-action="Create">Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки</a></li>
+        <li><a asp-controller="Info" asp-action="Create">Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</a></li>
+    </ul>
     </select>
 </div>
-<div id="1" class="publication-form">
-    <h5 class="pb-2 text-center pt-3">Участь у науково-дослідній тематиці підрозділу</h5>
-    <div class="report-block center">
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Тема" />
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Шифр" />
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Категорія (держбюджетна, госпдоговірна, в межах робочого часу)" />
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Назва" />
-<textarea class="form-control mt-2" type="text" name="name" value="" placeholder="Стисло зміст виконаної роботи (до семи рядків)"></textarea>
-    </div>
-</div>
-<div id="2" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">Участь у виконанні індивідуальних або колективних ґрантів </h5>
-    <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
 
-</div>
 <div id="3" class="publication-form">
     <h5 class="pb-2 text-center pt-3 report-block-header center">Наукові стажування </h5>
     <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
@@ -141,4 +126,3 @@
     }
 
 </script>
->>>>>>> develop

@@ -36,7 +36,7 @@ namespace ScientificReportServices
             {
                 Date = model.Date,
                 Authors = authors.ToArray(),
-                Status = EnumMappers.GetPublicationStatus(model.Status),
+                Status = model.Status,
                 Topic = model.Topic,
             };
 

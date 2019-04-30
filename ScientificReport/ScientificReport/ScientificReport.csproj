@@ -26,6 +26,8 @@
 
 
   <ItemGroup>
+    <Folder Include="Views\DepartmentWork\Components\" />
+    <Folder Include="Views\Publication\Components\PublicationComponent\" />
     <Folder Include="wwwroot\Rotativa\" />
   </ItemGroup>
 

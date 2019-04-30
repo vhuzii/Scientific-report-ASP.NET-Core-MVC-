@@ -18,11 +18,11 @@ namespace ScientificReportData.Models
         
         public DateTime Date { get; set; }
         
-        public string Time { get; set; }
+        public string Type { get; set; }
 
         public string Topic { get; set; }
 
-        public PublicationStatus Status { get; set; }
+        public string Status { get; set; }
 
         public ICollection<Author> Authors { get; set; }
     }

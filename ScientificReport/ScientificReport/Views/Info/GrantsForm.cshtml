@@ -1,0 +1,14 @@
+﻿@model ScientificReportData.Models.Grant
+
+<form asp-controller="Info" asp-action="SaveDepartmentWork">
+    <h5 class="pb-2 text-center pt-3 report-block-header center">Участь у виконанні індивідуальних або колективних ґрантів </h5>
+    <div class="report-block center">
+        <input asp-for="Name" class="form-control mt-2" type="text" name="name" value="" placeholder="Тема" />
+<textarea asp-for="Description" class="form-control mt-2" type="text" name="name" value="" placeholder="Стисло зміст виконаної роботи (до семи рядків)"></textarea>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<form>
+<textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
+</form>

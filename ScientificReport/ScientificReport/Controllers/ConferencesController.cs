@@ -35,6 +35,12 @@ namespace ScientificReport.Controllers
                 });
             return View(result);
         }
+
+        public IActionResult SaveConference()
+        {
+            return Ok();
+        }
+
         public IActionResult Details(int id)
         {
             var result = conferenceService.getById(id);

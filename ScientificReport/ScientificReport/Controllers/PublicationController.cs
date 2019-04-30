@@ -20,10 +20,7 @@ namespace ScientificReport.Controllers
             _pubServ = pubServ;
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+
 
         [HttpPost]
         public IActionResult SavePublication([FromForm]CreatePublicationModel model)

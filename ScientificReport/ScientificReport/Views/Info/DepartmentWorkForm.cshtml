@@ -1,0 +1,14 @@
+﻿
+@model ScientificReportData.Models.DepartmentWork
+
+
+<form asp-controller="Info" asp-action="SaveDepartmentWork">
+    <h5 class="pb-2 text-center pt-3">Участь у науково-дослідній тематиці підрозділу</h5>
+    <div class="report-block center">
+        <input asp-for="Intro" class="form-control mt-2" type="text" name="name" value="" placeholder="Тема" />
+        <input asp-for="Topic" class="form-control mt-2" type="text" name="name" value="" placeholder="Шифр" />
+        <input asp-for="Category" class="form-control mt-2" type="text" name="name" value="" placeholder="Категорія (держбюджетна, госпдоговірна, в межах робочого часу)" />
+<textarea asp-for="Content" class="form-control mt-2" type="text" name="name" value="" placeholder="Стисло зміст виконаної роботи (до семи рядків)"></textarea>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

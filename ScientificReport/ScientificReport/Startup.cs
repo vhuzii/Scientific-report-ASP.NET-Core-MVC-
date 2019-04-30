@@ -56,7 +56,8 @@ namespace ScientificReport
             services.AddScoped<IConferenceService, ConferenceService>();
             services.AddScoped<DbContext, ReportContext>();
             services.AddTransient<IPublicationService, PublicationService>();
-            
+            services.AddTransient<IReportItemsService, ReportItemsService>();
+
 
             services.AddIdentity<User, IdentityRole>()
 	            .AddEntityFrameworkStores<ReportContext>()

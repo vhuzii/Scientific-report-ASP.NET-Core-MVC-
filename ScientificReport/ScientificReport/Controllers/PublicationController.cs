@@ -8,15 +8,16 @@ using ScientificReport.Models;
 using ScientificReportData;
 using ScientificReportData.Enums;
 using ScientificReportData.Models;
+using ScientificReportServices.Interfaces;
 
 namespace ScientificReport.Controllers
 {
     public class PublicationController : Controller
     {
-        private readonly UnitOfWork _unitOfWork;
-        public PublicationController(UnitOfWork unitOfWork)
+        private readonly IPublicationService _pubServ;
+        public PublicationController( IPublicationService pubServ)
         {
-            _unitOfWork = unitOfWork;
+            _pubServ = pubServ;
         }
 
         public IActionResult Create()
@@ -27,27 +28,7 @@ namespace ScientificReport.Controllers
         [HttpPost]
         public IActionResult SavePublication([FromForm]CreatePublicationModel model)
         {
-            var authordNames = model.Authors.Split(" ");
-            List<Author> authors = new List<Author>();
-            foreach (var name in authordNames)
-            {
-                var author = _unitOfWork.GetAuthorByName(name);
-                if (author == null)
-                {
-                    new Author { Name = name };
-                    _unitOfWork.AuthorRepository.Create(author);
-                }
-                authors.Add(author);
-            }
-            var publ = new Publication
-            {
-                Date = model.Date,
-                Authors = authors.ToArray(),
-                Status = EnumMappers.GetPublicationStatus(model.Status),
-                Topic = model.Topic,
-            };
-
-            _unitOfWork.PublicationRepository.Create(publ);
+            _pubServ.AddPublication(model);
 
             return RedirectToAction("Create");
         }

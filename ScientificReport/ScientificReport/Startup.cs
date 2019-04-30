@@ -15,6 +15,7 @@ using ScientificReportData.Interfaces;
 using ScientificReportData.Models;
 using ScientificReportData.Repositories;
 using ScientificReportServices;
+using ScientificReportServices.Interfaces;
 
 namespace ScientificReport
 {
@@ -54,8 +55,10 @@ namespace ScientificReport
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IConferenceService, ConferenceService>();
             services.AddScoped<DbContext, ReportContext>();
+            services.AddTransient<IPublicationService, PublicationService>();
+            
 
-			services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
 	            .AddEntityFrameworkStores<ReportContext>()
 				.AddDefaultUI()
 	            .AddDefaultTokenProviders();

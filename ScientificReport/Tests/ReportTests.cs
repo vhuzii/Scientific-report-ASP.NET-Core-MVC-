@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Autofac.Extras.Moq;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using ScientificReport.Data.DataAccess;
 using ScientificReportData.Models;
@@ -6,63 +7,162 @@ using ScientificReportServices;
 using System;
 using System.Collections.Generic;
 
-namespace Tests {
-	[TestFixture]
-	public class ReportTests 
-	{
-        private readonly IConferenceService conferenceService;
+namespace Tests
+{
+    [TestFixture]
+    public class ReportTests
+    {
         // TODO: Feel free to write report tests here
+        public static Conference[] temp = new Conference[2];
+
+        public static Conference[] setSample()
+        {
+            List<Author> temp1 = new List<Author>();
+            var author = new Author
+            {
+                Name = "dad",
+                Id = 1,
+            };
+            temp1.Add(author);
+            var ex = new Conference
+            {
+                Date = new DateTime(2008, 3, 1, 7, 0, 0),
+                Id = 1,
+                Description = "sad",
+                ImgPath = "sss",
+                Likes = 145,
+                Title = "Math",
+                Watches = 300,
+                Participants = temp1,
+            };
+            temp[0] = ex;
+            var ex1 = new Conference
+            {
+                Date = DateTime.Now,
+                Id = 2,
+                Description = "sad1",
+                ImgPath = "sss1",
+                Likes = 1415,
+                Title = "Math1",
+                Watches = 3010,
+                Participants = temp1,
+            };
+            temp[1] = ex;
+            return temp;
+        }
         [Test]
-		public void ConferenceServiceTest_getAll() 
-		{
-            //Arrange
-            var options = new DbContextOptions<ReportContext>();
-            var report = new ReportContext(options);
-            var service = new ConferenceService(report);
+        public void ConferenceServiceTest_getAll()
+        {
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                    .Setup(x => x.getAll())
+                    .Returns(GetSampleConferences());
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Act
-            var result = service.getAll();
+                var expected = GetSampleConferences();
 
-            //Assert
-            Assert.IsInstanceOf(typeof(IEnumerable<Conference>), result);
-		}
+                var actual = cls.getAll();
+                //Assert
+                foreach (Conference a in expected)
+                    foreach (Conference b in actual)
+                        Assert.AreEqual(a.Id, b.Id);
+            };
+        }
+
+        private IEnumerable<Conference> GetSampleConferences()
+        {
+            Conference[] temp = new Conference[1];
+            List<Author> temp1 = new List<Author>();
+
+            var author = new Author
+            {
+                Name = "dad",
+                Id = 1,
+            };
+            temp1.Add(author);
+            var ex = new Conference
+            {
+                Date = DateTime.Now,
+                Id = 1,
+                Description = "sad",
+                ImgPath = "sss",
+                Likes = 145,
+                Title = "Math",
+                Watches = 300,
+                Participants = temp1,
+            };
+            temp[0] = ex;
+            return temp;
+        }
 
         [Test]
         public void ConferenceServiceTest_getbyId()
         {
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                    .Setup(x => x.getById(1))
+                    .Returns(GetSampleConference(1));
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Act
-            var result = conferenceService.getById(21);
+                var expected = GetSampleConference(1);
 
-            //Assert
-            Assert.IsInstanceOf(typeof(Conference), result);
+                var actual = cls.getById(1);
+                //Assert
+
+
+                Assert.AreEqual(actual.Likes, expected.Likes);
+            };
         }
 
-        [Test]
-        public void ConferenceServiceTest_getbyId_ResultTrue()
+        private Conference GetSampleConference(int id)
         {
-            //Arrange
-   
+            Conference[] temp = setSample();
 
-            //Act
-            var result = conferenceService.getById(21);
-            bool temp = false;
-            if (result.Likes == 145)
-                temp = true;
-                
-            //Assert
-            Assert.IsTrue(temp);
+            foreach (Conference a in temp)
+            {
+                if (a.Id == id)
+                    return a;
+            }
+            return temp[temp.Length - 1];
         }
+
 
         [Test]
         public void ConferenceServiceTest_getDatebyId()
         {
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                    .Setup(x => x.getDateById(1))
+                    .Returns(GetDatebyID(1));
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Act
-            var result = conferenceService.getDateById(21);
+                var expected = GetDatebyID(1);
 
-            //Assert
-            Assert.Equals("2019-04-05 15:57:23.9800000", result);
+                var actual = cls.getDateById(1);
+                //Assert
+
+                Assert.AreEqual(actual, expected);
+            };
+        }
+
+        private DateTime GetDatebyID(int a)
+        {
+            Conference[] temp = setSample();
+            foreach (Conference conf in temp)
+            {
+                if (conf.Id == a)
+                    return conf.Date;
+            }
+            return temp[temp.Length - 1].Date;
         }
 
 
@@ -70,61 +170,162 @@ namespace Tests {
         public void ConferenceServiceTest_getDescriptionbyId()
         {
 
-            //Act
-            var result = conferenceService.getDescriptionById(21);
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                    .Setup(x => x.getDescriptionById(1))
+                    .Returns(GetDescriptionbyID(1));
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Assert
-            Assert.Equals("The goal of this conference is to foster collaboration between applied" +
-                " mathematicians working in related fields at various institutions.\nMain topics:" +
-                " Boundary Integral Equation Methods, Boundary Element Methods, Finite Element Methods" +
-                "Finite Difference Methods for Direct and Inverse Problems; Newton" +
-                " - type Methods for Non - Linear Operator Equations and related Directions" +
-                " of Applied and Computational Mathematics; Problems in Computer Science.", result);
+                var expected = GetDescriptionbyID(1);
+
+                var actual = cls.getDescriptionById(1);
+                //Assert
+
+                Assert.AreEqual(actual, expected);
+            };
+        }
+
+        private string GetDescriptionbyID(int a)
+        {
+            Conference[] temp = setSample();
+            foreach (Conference conf in temp)
+            {
+                if (conf.Id == a)
+                    return conf.Description;
+            }
+            return temp[temp.Length - 1].Description;
         }
 
         [Test]
         public void ConferenceServiceTest_getImgPathbyId()
         {
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                .Setup(x => x.getImgPathById(1))
+                .Returns(GetPathbyID(1));
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Act
-            var result = conferenceService.getImgPathById(21);
+                var expected = GetPathbyID(1);
 
-            //Assert
-            Assert.Equals("/img/Conferences/2.jpg", result);
+                var actual = cls.getImgPathById(1);
+                //Assert
+
+                Assert.AreEqual(actual, expected);
+            }
+
+        }
+
+        private string GetPathbyID(int a)
+        {
+            Conference[] temp = setSample();
+            foreach (Conference conf in temp)
+            {
+                if (conf.Id == a)
+                    return conf.ImgPath;
+            }
+            return temp[temp.Length - 1].ImgPath;
         }
 
         [Test]
         public void ConferenceServiceTest_getLikesbyId()
         {
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                .Setup(x => x.getLikesById(1))
+                .Returns(GetlikesbyID(1));
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Act
-            var result = conferenceService.getLikesById(21);
+                var expected = GetlikesbyID(1);
 
-            //Assert
-            Assert.Equals(145, result);
+                var actual = cls.getLikesById(1);
+                //Assert
+
+                Assert.AreEqual(actual, expected);
+            }
+        }
+
+        private int GetlikesbyID(int a)
+        {
+            Conference[] temp = setSample();
+            foreach (Conference conf in temp)
+            {
+                if (conf.Id == a)
+                    return conf.Likes;
+            }
+            return temp[temp.Length - 1].Likes;
         }
 
         [Test]
         public void ConferenceServiceTest_getWatchesbyId()
         {
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                .Setup(x => x.getWatchesById(1))
+                .Returns(GetWatchesbyID(1));
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Act
-            var result = conferenceService.getWatchesById(21);
+                var expected = GetWatchesbyID(1);
 
-            //Assert
-            Assert.Equals(301, result);
+                var actual = cls.getWatchesById(1);
+                //Assert
+
+                Assert.AreEqual(actual, expected);
+            }
+        }
+
+        private int GetWatchesbyID(int a)
+        {
+            Conference[] temp = setSample();
+            foreach (Conference conf in temp)
+            {
+                if (conf.Id == a)
+                    return conf.Watches;
+            }
+            return temp[temp.Length - 1].Watches;
         }
 
         [Test]
         public void ConferenceServiceTest_getTitlebyId()
         {
+            using (var mack = AutoMock.GetLoose())
+            {
+                //Arrange
+                mack.Mock<IConferenceService>()
+                .Setup(x => x.getTitleById(1))
+                .Returns(GetTitlebyID(1));
+                //Act
+                var cls = mack.Create<IConferenceService>();
 
-            //Act
-            var result = conferenceService.getTitleById(1);
+                var expected = GetTitlebyID(1);
 
-            //Assert
-            Assert.Equals("Conference on Applied Mathimatics", result);
+                var actual = cls.getTitleById(1);
+                //Assert
+
+                Assert.AreEqual(actual, expected);
+            }
         }
 
+        private string GetTitlebyID(int a)
+        {
+            Conference[] temp = setSample();
+            foreach (Conference conf in temp)
+            {
+                if (conf.Id == a)
+                    return conf.Title;
+            }
+            return temp[temp.Length - 1].Title;
+        }
     }
 }

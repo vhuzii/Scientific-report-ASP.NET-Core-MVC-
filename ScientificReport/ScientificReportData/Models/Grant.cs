@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ScientificReportData.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using ScientificReportData.Interfaces;
 
-namespace ScientificReportData.Models 
+namespace ScientificReportData.Models
 {
-	public class Author : IEntity<int>
+	public class Grant : IEntity<int> 
 	{
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
+
 		public string Name { get; set; }
+
+		public ICollection<Author> Participants { get; set; }
 	}
 }

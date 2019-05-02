@@ -4,21 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ScientificReport.Data.DataAccess;
+using ScientificReportData;
+using ScientificReportData.Interfaces;
 using ScientificReportData.Models;
 
 namespace ScientificReportServices
 {
-    public class ReportService : IReportService
+    public class ReportService : IReportService 
     {
-        private readonly ReportContext _context;
-        private User user;
+	    private readonly UnitOfWork unitOfWork;
+		private User user;
 
-        public ReportService(ReportContext context)
+        public ReportService(UnitOfWork uow) 
         {
-            _context = context;
+	        this.unitOfWork = uow;
         }
 
-        public Report CreateReport(User currentUser) {
+        public Report CreateReport(User currentUser)
+        {
 	        user = new User() {
 				Birthdate = DateTime.Now,
 			}; 
@@ -50,10 +53,10 @@ namespace ScientificReportServices
 
         private string GenerateDepartmentWorks()
         {
-            var userAsAuthor = _context.Authors.FirstOrDefault(a => a.Name == user.Name);
+            var userAsAuthor = unitOfWork.AuthorRepository.GetAll().FirstOrDefault(a => a.Name == user.Name);
             if (userAsAuthor == null) return "";
-            var works = _context.DepartmentWorks.Where(w => w.Authors.Contains(userAsAuthor));
-            var section = new StringBuilder();
+            var works = unitOfWork.DepartmentWorkRepository.GetAll().Where(w => w.Authors.Contains(userAsAuthor));
+			var section = new StringBuilder();
 
             foreach (var work in works)
             {                
@@ -70,7 +73,7 @@ namespace ScientificReportServices
 
         private string GenerateConferences()
         {
-            var confs = _context.Conferences.Where(c => c.Participants.Any(p => p.Name == user.Name));
+            var confs = unitOfWork.ConferenceRepository.GetAll().Where(c => c.Participants.Any(p => p.Name == user.Name));
             var section = new StringBuilder();
 
             foreach (var conf in confs)
@@ -84,5 +87,78 @@ namespace ScientificReportServices
 
             return section.ToString();
         }
-    }
+
+        private string GenerateGrants() {
+	        var userGrants = unitOfWork.GrantRepository.GetAll().Where(c => c.Participants.Any(p => p.Name == user.Name));
+	        var grants = new StringBuilder();
+	        grants
+		        .Append("Приймав участь в таких грантах: ")
+		        .Append(Environment.NewLine);
+	        foreach (var grant in userGrants) 
+	        {
+		        grants.Append($"{grant.Name};")
+			    .Append(Environment.NewLine);
+			}
+
+	        return grants.ToString();
+		}
+
+        private string GenerateInternships() {
+	        var internships = new StringBuilder();
+	        internships
+		        .Append("Наукові стажування: ")
+		        .Append(Environment.NewLine);
+	        foreach (var internship in user.Internships)
+	        {
+		        internships.Append($"{internship.Name};")
+			        .Append(Environment.NewLine);
+	        }
+
+	        return internships.ToString();
+        }
+
+        private string GeneratePublications()
+        {
+	        var publications = new StringBuilder();
+	        publications
+		        .Append("Публікації: ")
+		        .Append(Environment.NewLine);
+			foreach (var userPublication in user.Publications) 
+			{
+				publications.Append(userPublication.Topic)
+					.Append($", Дата: {userPublication.Date}")
+					.Append(Environment.NewLine);
+				publications
+					.Append($"Автори: ");
+				foreach (var userPublicationAuthor in userPublication.Authors)
+				{
+					publications.Append($"{userPublicationAuthor.Name} ");
+				}
+			}
+
+			return publications.ToString();
+        }
+
+        private string GenerateArticles() {
+	        var publications = new StringBuilder();
+	        publications
+		        .Append("Публікації: ")
+		        .Append(Environment.NewLine);
+	        foreach (var userPublication in user.Publications) {
+		        publications.Append(userPublication.Topic)
+			        .Append($", Дата: {userPublication.Date}")
+			        .Append(Environment.NewLine);
+		        if (userPublication.Authors.Any()) 
+		        {
+			        publications
+				        .Append($"Автори: ");
+			        foreach (var userPublicationAuthor in userPublication.Authors) {
+				        publications.Append($"{userPublicationAuthor.Name} ");
+					}
+		        }
+	        }
+
+	        return publications.ToString();
+        }
+	}
 }

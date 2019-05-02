@@ -10,7 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rotativa.AspNetCore;
 using ScientificReport.Data.DataAccess;
+using ScientificReportData;
+using ScientificReportData.Interfaces;
 using ScientificReportData.Models;
+using ScientificReportData.Repositories;
 using ScientificReportServices;
 
 namespace ScientificReport
@@ -34,16 +37,24 @@ namespace ScientificReport
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddScoped<IReportService, ReportService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IConferenceService, ConferenceService>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var connection = @"Server=LOCALHOST\SQLEXPRESS;Database=ScientificReport;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ReportContext>
 	            (options => options.UseSqlServer(connection));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddScoped<IRepository<Conference, int>, Repository<Conference, int>>();
+            services.AddScoped<IRepository<DepartmentWork, int>, Repository<DepartmentWork, int>>();
+            services.AddScoped<IRepository<Author, int>, Repository<Author, int>>();
+            services.AddScoped<IRepository<Report, int>, Repository<Report, int>>();
+            services.AddScoped<IRepository<Grant, int>, Repository<Grant, int>>();
+			services.AddScoped<UnitOfWork>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IConferenceService, ConferenceService>();
+            services.AddScoped<DbContext, ReportContext>();
+
+			services.AddIdentity<User, IdentityRole>()
 	            .AddEntityFrameworkStores<ReportContext>()
 				.AddDefaultUI()
 	            .AddDefaultTokenProviders();

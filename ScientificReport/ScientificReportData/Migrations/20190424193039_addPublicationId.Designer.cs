@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScientificReport.Data.DataAccess;
 
 namespace ScientificReportData.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    partial class ReportContextModelSnapshot : ModelSnapshot
+    [Migration("20190424193039_addPublicationId")]
+    partial class addPublicationId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,23 +198,6 @@ namespace ScientificReportData.Migrations
                     b.ToTable("DepartmentWorks");
                 });
 
-            modelBuilder.Entity("ScientificReportData.Models.Internship", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Internship");
-                });
-
             modelBuilder.Entity("ScientificReportData.Models.Publication", b =>
                 {
                     b.Property<int>("Id")
@@ -394,13 +379,6 @@ namespace ScientificReportData.Migrations
                     b.HasOne("ScientificReportData.Models.Publication")
                         .WithMany("Authors")
                         .HasForeignKey("PublicationId");
-                });
-
-            modelBuilder.Entity("ScientificReportData.Models.Internship", b =>
-                {
-                    b.HasOne("ScientificReportData.Models.User")
-                        .WithMany("Internships")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ScientificReportData.Models.Publication", b =>

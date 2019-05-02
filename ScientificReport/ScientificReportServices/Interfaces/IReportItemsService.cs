@@ -7,5 +7,6 @@ namespace ScientificReportServices
         DepartmentWork AddDepartmentWork(DepartmentWork dw);
         Grant AddGrant(Grant gr);
         Publication AddPublication(Publication pb);
+        Author GetUserAsAuthor(User user);
     }
 }

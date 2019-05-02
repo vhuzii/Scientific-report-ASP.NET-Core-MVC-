@@ -15,10 +15,12 @@ namespace ScientificReport.Controllers
     {
         // GET: /<controller>/
         private readonly IReportItemsService _serv;
+        private readonly IUserService _userServ;
 
-        public InfoController(IReportItemsService serv)
+        public InfoController(IReportItemsService serv, IUserService userService)
         {
             _serv = serv;
+            _userServ = userService;
         }
 
         public IActionResult Create()
@@ -34,6 +36,10 @@ namespace ScientificReport.Controllers
         [HttpPost("SaveDepartmentWork")]
         public IActionResult SaveDepartmentWork([FromForm]DepartmentWork model)
         {
+            var userAuthor = _serv.GetUserAsAuthor(_userServ.CurrentUser);
+            model.Authors = new List<Author>();
+            model.Authors.Add(userAuthor);
+
             _serv.AddDepartmentWork(model);
 
             return RedirectToAction("Create");
@@ -47,6 +53,10 @@ namespace ScientificReport.Controllers
         [HttpPost]
         public IActionResult SaveGrant([FromForm]Grant model)
         {
+            var userAuthor = _serv.GetUserAsAuthor(_userServ.CurrentUser);
+            model.Participants = new List<Author>();
+            model.Participants.Add(userAuthor);
+
             _serv.AddGrant(model);
 
             return RedirectToAction("Create");
@@ -60,6 +70,10 @@ namespace ScientificReport.Controllers
         [HttpPost]
         public IActionResult SavePublication([FromForm]Publication model)
         {
+            var userAuthor = _serv.GetUserAsAuthor(_userServ.CurrentUser);
+            model.Authors = new List<Author>();
+            model.Authors.Add(userAuthor);
+
             _serv.AddPublication(model);
 
             return RedirectToAction("Create");

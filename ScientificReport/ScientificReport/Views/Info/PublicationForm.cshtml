@@ -1,12 +1,14 @@
 ﻿@model ScientificReportData.Models.Publication
-WHAT?
+
 <form asp-action="SavePublication">
     <div class="form-group">
-        <label asp-for="Topic">Title:</label>
+        <label asp-for="Topic">Назва</label>
         <input asp-for="Topic" type="text" class="form-control" id="topicInput">
+        <label asp-for="Date">Дата</label>
+        <input asp-for="Date" type="date" class="form-control" id="topicInput">
     </div>
     <div class="form-group">
-        <label asp-for="Type">Time:</label>
+        <label asp-for="Type">Тип Наукової роботи</label>
         <select asp-for="Type" type="date" class="form-control" id="topicInput">
             <option>Монографії</option>
             <option>Підручники </option>
@@ -23,7 +25,7 @@ WHAT?
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="Status">Status:</label>
+        <label asp-for="Status">Статус</label>
         <select asp-for="Status" class="form-control" id="statusInput">
             <option>Опубліковано</option>
             <option>Надруковано</option>

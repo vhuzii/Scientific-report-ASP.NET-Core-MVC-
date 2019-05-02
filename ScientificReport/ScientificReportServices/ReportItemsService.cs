@@ -2,6 +2,7 @@
 using ScientificReportData.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ScientificReportServices
@@ -25,6 +26,16 @@ namespace ScientificReportServices
         {
             var res = _unitOfWork.GrantRepository.Create(gr);
             return res;
+        }
+
+        public Author GetUserAsAuthor(User user)
+        {
+            var userAturhor = _unitOfWork.AuthorRepository.GetAll().FirstOrDefault(u => u.Name == user.Name);
+            if( userAturhor == null )
+            {
+                userAturhor = _unitOfWork.AuthorRepository.Create(new Author { Name = user.Name });
+            }
+            return userAturhor;
         }
 
         public Publication AddPublication(Publication pb)

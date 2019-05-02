@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ScientificReportData.Models;
 using ScientificReportServices;
@@ -15,9 +16,9 @@ namespace ScientificReport.Controllers
     {
         // GET: /<controller>/
         private readonly IReportItemsService _serv;
-        private readonly IUserService _userServ;
+        private readonly UserManager<User> _userServ;
 
-        public InfoController(IReportItemsService serv, IUserService userService)
+        public InfoController(IReportItemsService serv, UserManager<User> userService)
         {
             _serv = serv;
             _userServ = userService;
@@ -34,9 +35,10 @@ namespace ScientificReport.Controllers
         }
 
         [HttpPost("SaveDepartmentWork")]
-        public IActionResult SaveDepartmentWork([FromForm]DepartmentWork model)
+        public async Task<IActionResult> SaveDepartmentWork([FromForm]DepartmentWork model)
         {
-            var userAuthor = _serv.GetUserAsAuthor(_userServ.CurrentUser);
+            var currentUser = await _userServ.GetUserAsync(User);
+            var userAuthor = _serv.GetUserAsAuthor(currentUser);
             model.Authors = new List<Author>();
             model.Authors.Add(userAuthor);
 
@@ -51,9 +53,10 @@ namespace ScientificReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveGrant([FromForm]Grant model)
+        public async Task<IActionResult> SaveGrant([FromForm]Grant model)
         {
-            var userAuthor = _serv.GetUserAsAuthor(_userServ.CurrentUser);
+            var currentUser = await _userServ.GetUserAsync(User);
+            var userAuthor = _serv.GetUserAsAuthor(currentUser);
             model.Participants = new List<Author>();
             model.Participants.Add(userAuthor);
 
@@ -68,9 +71,10 @@ namespace ScientificReport.Controllers
         }
 
         [HttpPost]
-        public IActionResult SavePublication([FromForm]Publication model)
+        public async Task<IActionResult> SavePublication([FromForm]Publication model)
         {
-            var userAuthor = _serv.GetUserAsAuthor(_userServ.CurrentUser);
+            var currentUser = await _userServ.GetUserAsync(User);
+            var userAuthor = _serv.GetUserAsAuthor(currentUser);
             model.Authors = new List<Author>();
             model.Authors.Add(userAuthor);
 

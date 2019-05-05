@@ -50,7 +50,7 @@ namespace ScientificReport.Controllers
                 Title = result.Title,
                 Watches = result.Watches
             };
-            return View(model);
+            return View();
         }
     }
 }

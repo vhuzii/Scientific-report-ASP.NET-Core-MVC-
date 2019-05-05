@@ -18,16 +18,47 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.FullName"></label>
-                <input asp-for="Input.FullName" class="form-control" />               
+                <label asp-for="Input.FullName">Прізвище Ім'я</label>
+                <input asp-for="Input.FullName" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Input.Password"></label>
+                <label asp-for="Input.Birthdate">Дата Народження</label>
+                <input type="date" asp-for="Input.Birthdate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Faculty">Факультет</label>
+                <input asp-for="Input.Faculty" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Department">Кафедра</label>
+                <input asp-for="Input.Department" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.GraduationDate">Дата закінчення ВНЗ</label>
+                <input type="date" asp-for="Input.GraduationDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.DegreeLevel">Науковий Ступінь</label>
+                <input asp-for="Input.DegreeLevel" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.DegreeDate">Дата отримання ступеню</label>
+                <input type="date" asp-for="Input.DegreeDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Title">Вчене звання</label>
+                <input asp-for="Input.Title" class="form-control" />
+            </div>            <div class="form-group">
+                <label asp-for="Input.TitleDate">Дата отримання звання</label>
+                <input type="date" asp-for="Input.TitleDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password">Пароль</label>
                 <input asp-for="Input.Password" class="form-control" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
+                <label asp-for="Input.ConfirmPassword">Підтвердження Паролю</label>
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>

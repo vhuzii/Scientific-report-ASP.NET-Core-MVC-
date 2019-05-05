@@ -50,6 +50,38 @@ namespace ScientificReport.Areas.Identity.Pages.Account
             public string FullName { get; set; }
 
             [Required]
+            [Display(Name = "DegreeLevel")]
+            public string DegreeLevel { get; set; }
+
+            [Required]
+            [Display(Name = "Birthdate")]
+            public DateTime Birthdate { get; set; }
+
+            [Required]
+            [Display(Name = "DegreeDate")]
+            public DateTime DegreeDate { get; set; }
+
+            [Required]
+            [Display(Name = "GraduationDate")]
+            public DateTime GraduationDate { get; set; }
+
+            [Required]
+            [Display(Name = "TitleDate")]
+            public DateTime TitleDate { get; set; }
+
+            [Required]
+            [Display(Name = "Title")]
+            public string Title { get; set; }
+
+            [Required]
+            [Display(Name = "Faculty")]
+            public string Faculty { get; set; }
+
+            [Required]
+            [Display(Name = "Department")]
+            public string Department { get; set; }
+
+            [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -71,7 +103,20 @@ namespace ScientificReport.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email, Name = Input.FullName };
+                var user = new User
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    Name = Input.FullName,
+                    Birthdate = Input.Birthdate,
+                    DegreeDate = Input.DegreeDate,
+                    DegreeLevel = Input.DegreeLevel,
+                    GraduationDate = Input.GraduationDate,
+                    Title = Input.Title,
+                    TitleDate = Input.TitleDate,
+                    Faculty = Input.Faculty,
+                    Department = Input.Department
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

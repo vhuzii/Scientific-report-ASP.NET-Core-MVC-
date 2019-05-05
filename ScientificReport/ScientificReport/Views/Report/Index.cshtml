@@ -7,7 +7,7 @@
 	<h3 class="display-5">Тут буде виводитися коротка інформація репорту</h3>
 	@if (@Model != null) {
 		<div>Email: @Model.Email</div>
-		<a class="btn btn-success" asp-controller="Report" asp-action="CreateReport">
+		<a class="btn btn-success" asp-controller="Report" asp-action="CreateReportAsync">
 			<strong>Generate Report</strong>
 		</a>
 	}

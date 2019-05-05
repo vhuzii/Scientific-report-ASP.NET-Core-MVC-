@@ -33,8 +33,8 @@ namespace ScientificReport.Controllers
         {
 			var currentUser = await _userManager.GetUserAsync(User);
 			var report = _reportService.CreateReport(currentUser);
-
-			return new ViewAsPdf("CreateReport", report) { FileName = "Report.pdf" };
+            var viewModel = _reportService.CreateViewModel(currentUser);
+			return new ViewAsPdf("CreateReport", viewModel) { FileName = "Report.pdf" };
 		}
     }
 }

@@ -58,7 +58,16 @@ namespace ScientificReport
             services.AddTransient<IReportItemsService, ReportItemsService>();
 
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(opt =>            
+            {
+
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequiredUniqueChars = 0;
+                opt.Password.RequiredLength = 6;
+            })
 	            .AddEntityFrameworkStores<ReportContext>()
 				.AddDefaultUI()
 	            .AddDefaultTokenProviders();

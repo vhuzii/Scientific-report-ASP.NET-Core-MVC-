@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "";
 }
-@model ScientificReportData.Models.Report
+@model ScientificReportData.Models.ReportViewModel
 
 <style>
     ol {
@@ -61,17 +61,43 @@
     </h3>
     <br />
     <div class="report-block">
-        <b>Відомості про вченого:</b><br />
-        Рік народження : <br /> <!-- Add User Data   -->
-        Рік закінчення ВНЗ :<br />
-        Науковий ступінь, рік захисту:<br />
-        Вчене звання, рік присвоєння:<br />
+        <b>Відомості про вченого: @Model.User.Name </b><br />
+        Рік народження : @Model.User.Birthdate.ToShortDateString()<br />
+        Рік закінчення ВНЗ @Model.User.GraduationDate.ToShortDateString() :<br />
+        Науковий ступінь, рік захисту @Model.User.DegreeLevel, @Model.User.DegreeDate.ToShortDateString() :<br />
+        Вчене звання, рік присвоєння: @Model.User.Title, @Model.User.TitleDate.ToShortDateString() <br />
     </div>
     <ol>
-        <li>
-            Участь у науково-дослідній тематиці підрозділу − шифр теми, категорія (держбюджетна, госпдоговірна,
-            в межах робочого часу), назва, стисло зміст виконаної роботи (до семи рядків).
-        </li>
+        @if (Model.DepartmentWorks.Count != 0)
+        {
+            foreach (var dep in Model.DepartmentWorks)
+            {
+
+                <li>
+                    Участь у науково-дослідній тематиці підрозділу
+                </li>
+                <li>
+                    <ul style="list-style: none;">
+                        <li>
+                            @dep.Topic
+                        </li>
+                        <li>
+                            @dep.Intro
+                        </li>
+                        <li>
+                            @dep.Category
+                        </li>
+                        <li>
+                            @dep.Content
+                        </li>
+                        <li>
+                            @dep.Authors.Select(a => a.Name).Aggregate((a, b) => a + ",  " + b))
+                        </li>
+                    </ul>
+                </li>
+            }
+
+        }
         <li>
             Участь у виконанні індивідуальних або колективних ґрантів (окрім ґрантів на поїздки) − згідно з додатком 3.
         </li>
@@ -85,6 +111,37 @@
             Керівництво студентською науковою роботою, спільні публікації, керівництво студентськими гуртками,
             підготовка студентів для участі у Всеукраїнських конкурсах студентських наукових робіт тощо.
         </li>
+
+        @if (Model.Publications.Count != 0)
+        {
+            foreach (var pub in Model.Publications)
+            {
+
+                <li>
+                    Наукові публікації
+                </li>
+                <li>
+                    <ul style="list-style: none;">
+                        <li>
+                            @pub.Topic
+                        </li>
+                        <li>
+                            @pub.Type
+                        </li>
+                        <li>
+                            @pub.Status
+                        </li>
+                        <li>
+                            @pub.Date.ToShortDateString()
+                        </li>
+                        <li>
+                            @pub.Authors.Select(a => a.Name).Aggregate((a, b) => a + ",  " + b))
+                        </li>
+                    </ul>
+                </li>
+            }
+
+        }
         <li>
             <div>
                 <table style="border: 1px solid black;" class="center">

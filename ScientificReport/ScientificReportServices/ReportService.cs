@@ -27,13 +27,28 @@ namespace ScientificReportServices
 			}; 
 			var report = new Report();
 
-			// Воно кидає ексепшн поки тому я закоментив
-            //report.Date = DateTime.Today.Date;
-            //report.Intro = GenerateIntro();
-            //report.DepartmentWork = GenerateDepartmentWorks();
-            //report.Conferences = GenerateConferences();
-            //todo the rest
+            report.Date = DateTime.Today.Date;
+            report.Intro = GenerateIntro();
+            report.DepartmentWork = GenerateDepartmentWorks();
+            unitOfWork.ReportRepository.Create(report);
             return report;
+        }
+
+        public ReportViewModel CreateViewModel(User currentUser)
+        {
+            var publications = unitOfWork.PublicationRepository.GetAll().Where(p => p.Authors.Any(a => a.Name == currentUser.Name))?.ToList();
+            var grants = unitOfWork.GrantRepository.GetAll().Where(p => p.Participants.Any(a => a.Name == currentUser.Name))?.ToList();
+            var depWorks = unitOfWork.DepartmentWorkRepository.GetAll().Where(p => p.Authors.Any(a => a.Name == currentUser.Name))?.ToList();
+            var conferences = unitOfWork.ConferenceRepository.GetAll().Where(p => p.Participants.Any(a => a.Name == currentUser.Name))?.ToList();
+            var result = new ReportViewModel
+            {
+                User = currentUser,
+                Publications = publications ?? new List<Publication>(),
+                DepartmentWorks = depWorks ?? new List<DepartmentWork>(),
+                Conferences = conferences ?? new List<Conference>(),
+                Grants = grants ?? new List<Grant>()
+            };
+            return result;
         }
 
         private string GenerateIntro()
@@ -77,7 +92,7 @@ namespace ScientificReportServices
             var section = new StringBuilder();
 
             foreach (var conf in confs)
-            {
+            {   
                 section.Append($"{conf.Title}")
                     .Append(Environment.NewLine)
                     .Append(conf.Date)

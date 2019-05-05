@@ -17,5 +17,6 @@ namespace ScientificReport.Data.DataAccess
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<DepartmentWork> DepartmentWorks { get; set; }
         public virtual DbSet<Conference> Conferences { get; set; }
+        public virtual DbSet<Grant> Grants { get; set; }
     }
 }

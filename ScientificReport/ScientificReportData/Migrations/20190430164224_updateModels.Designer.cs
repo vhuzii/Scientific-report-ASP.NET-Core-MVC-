@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScientificReport.Data.DataAccess;
 
 namespace ScientificReportData.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    partial class ReportContextModelSnapshot : ModelSnapshot
+    [Migration("20190430164224_updateModels")]
+    partial class updateModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,8 +141,6 @@ namespace ScientificReportData.Migrations
 
                     b.Property<int?>("DepartmentWorkId");
 
-                    b.Property<int?>("GrantId");
-
                     b.Property<string>("Name");
 
                     b.Property<int?>("PublicationId");
@@ -150,8 +150,6 @@ namespace ScientificReportData.Migrations
                     b.HasIndex("ConferenceId");
 
                     b.HasIndex("DepartmentWorkId");
-
-                    b.HasIndex("GrantId");
 
                     b.HasIndex("PublicationId");
 
@@ -198,21 +196,6 @@ namespace ScientificReportData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DepartmentWorks");
-                });
-
-            modelBuilder.Entity("ScientificReportData.Models.Grant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Grants");
                 });
 
             modelBuilder.Entity("ScientificReportData.Models.Internship", b =>
@@ -409,10 +392,6 @@ namespace ScientificReportData.Migrations
                     b.HasOne("ScientificReportData.Models.DepartmentWork")
                         .WithMany("Authors")
                         .HasForeignKey("DepartmentWorkId");
-
-                    b.HasOne("ScientificReportData.Models.Grant")
-                        .WithMany("Participants")
-                        .HasForeignKey("GrantId");
 
                     b.HasOne("ScientificReportData.Models.Publication")
                         .WithMany("Authors")

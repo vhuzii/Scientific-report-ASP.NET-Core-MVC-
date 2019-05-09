@@ -60,6 +60,8 @@ namespace ScientificReport
             services.AddTransient<IReportItemsService, ReportItemsService>();
 
 
+            services.AddScoped<RoleManager<IdentityRole>>();
+
             services.AddIdentity<User, IdentityRole>(opt =>            
             {
 

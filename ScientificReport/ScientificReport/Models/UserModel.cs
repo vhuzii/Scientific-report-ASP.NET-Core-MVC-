@@ -9,7 +9,8 @@ namespace ScientificReport.Models
     {
         public string Id { get; set; }
         public string FullName { get; set; }
-        public string Role { get; set; }
+        public string Faculty { get; set; }
+        public string Department { get; set; }
         public bool Status { get; set; }
     }
 }

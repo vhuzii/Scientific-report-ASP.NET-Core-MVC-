@@ -33,19 +33,31 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="Create">Add Publication</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="Create">Add Info</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Conferences" asp-action="Index">Conferences</a>
                         </li>
-                        @{  
+                        @{
                             if (User.IsInRole("Admin"))
                             {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Management</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Admin">Management</a>
+                                </li>
                             }
-                         }
+                            else if (User.IsInRole("FacultyAdmin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="FacultyAdmin">Management</a>
+                                </li>
+                            }
+                            else if (User.IsInRole("DepartmentAdmin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="DepartmentAdmin">Management</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
 	            @await Html.PartialAsync("_LoginPartial")

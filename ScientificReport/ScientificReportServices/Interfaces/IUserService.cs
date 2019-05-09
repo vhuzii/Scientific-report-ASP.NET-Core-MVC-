@@ -10,5 +10,7 @@ namespace ScientificReportServices
     {
         User CurrentUser { get; set; }
         IEnumerable<User> getAll();
-    }
+        void Update(User updateElement);
+        User getById(string id);
+        }
 }

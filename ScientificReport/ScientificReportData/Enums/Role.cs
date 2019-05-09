@@ -7,8 +7,9 @@ namespace ScientificReportData.Enums
 {
     public enum Role
     {
-        Teacher,
-        DepartmentHead,
-        Dean
+	    FacultyAdmin,
+		Admin,
+		Teacher,
+		DepartmentAdmin,
     }
 }

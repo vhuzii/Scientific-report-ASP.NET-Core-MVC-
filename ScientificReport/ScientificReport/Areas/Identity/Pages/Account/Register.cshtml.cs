@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ScientificReportData;
 using ScientificReportData.Models;
+using ScientificReportServices;
 
 namespace ScientificReport.Areas.Identity.Pages.Account
 {
@@ -20,17 +22,22 @@ namespace ScientificReport.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        
+        private readonly IUserService _userService;
 
+        
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -81,6 +88,12 @@ namespace ScientificReport.Areas.Identity.Pages.Account
             [Display(Name = "Department")]
             public string Department { get; set; }
 
+            
+            [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
+            
+
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -118,6 +131,7 @@ namespace ScientificReport.Areas.Identity.Pages.Account
                     Department = Input.Department
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddToRoleAsync(user, Input.Role);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -140,7 +154,7 @@ namespace ScientificReport.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
+            
             // If we got this far, something failed, redisplay form
             return Page();
         }

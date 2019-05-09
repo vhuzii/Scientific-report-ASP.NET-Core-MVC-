@@ -9,6 +9,6 @@ namespace ScientificReportServices
     public interface IUserService
     {
         User CurrentUser { get; set; }
-        
+        IEnumerable<User> getAll();
     }
 }

@@ -38,17 +38,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Conferences" asp-action="Index">Conferences</a>
                         </li>
-                       
+                        @{  
+                            if (User.IsInRole("Admin"))
+                            {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Management</a>
                             </li>
-                        
+                            }
+                         }
                     </ul>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/Identity/Account/Register">Register</a></li>
-                    <li><a href="/Identity/Account/Login">Login</a></li>
-                </ul>
+	            @await Html.PartialAsync("_LoginPartial")
             </div>
         </nav>
     </header>

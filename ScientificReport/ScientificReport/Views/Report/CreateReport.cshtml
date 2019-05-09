@@ -1,248 +1,361 @@
 ﻿@{
-    Layout = "";
+   Layout = "";
 }
 @model ScientificReportData.Models.ReportViewModel
 
 <style>
-    ol {
-        counter-reset: item
-    }
+   ol {
+      counter-reset: item
+   }
 
-    li {
-        display: block
-    }
+   li {
+      display: block
+   }
 
-        li:before {
-            content: counters(item, ".") " ";
-            counter-increment: item
-        }
+      li:before {
+         content: counters(item, ".") " ";
+         counter-increment: item
+      }
 
-    table {
-        width: 95%;
-        border-collapse: collapse;
-    }
+   table {
+      width: 95%;
+      border-collapse: collapse;
+   }
 
-    li, p {
-        padding-bottom: 5px;
-    }
+   li, p {
+      padding-bottom: 5px;
+   }
 
-    p {
-        padding: 0;
-        padding-bottom: 5px;
-    }
+   p {
+      padding: 0;
+      padding-bottom: 5px;
+   }
 
-    tr {
-        width: 30%;
-    }
+   tr {
+      width: 30%;
+   }
 
-    td {
-        padding-left: 5px;
-    }
+   td {
+      padding-left: 5px;
+   }
 
-    table, th, td {
-        border: 1px solid black;
-    }
+   table, th, td {
+      border: 1px solid black;
+   }
 
-    .report-block {
-        width: 90%;
-    }
+   .report-block {
+      width: 90%;
+   }
 
-    .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
+   .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+   }
 </style>
 <div class="center report-block" style="  font-size:18px;
         font-family:'Times New Roman';">
-    <h3 class="center" style="text-align:center; text-decoration:underline; width:60%;">
-        Індивідуальний звіт про наукову роботу у       2019       році
-        доцент каф. програмування  UsersName
-    </h3>
-    <br />
-    <div class="report-block">
-        <b>Відомості про вченого: @Model.User.Name </b><br />
-        Рік народження : @Model.User.Birthdate.ToShortDateString()<br />
-        Рік закінчення ВНЗ @Model.User.GraduationDate.ToShortDateString() :<br />
-        Науковий ступінь, рік захисту @Model.User.DegreeLevel, @Model.User.DegreeDate.ToShortDateString() :<br />
-        Вчене звання, рік присвоєння: @Model.User.Title, @Model.User.TitleDate.ToShortDateString() <br />
-    </div>
-    <ol>
-        @if (Model.DepartmentWorks.Count != 0)
-        {
-            foreach (var dep in Model.DepartmentWorks)
+   <h3 class="center" style="text-align:center; text-decoration:underline; width:60%;">
+      Індивідуальний звіт про наукову роботу у       2019       році
+      доцент каф. програмування  UsersName
+   </h3>
+   <br />
+   <div class="report-block">
+      <b>Відомості про вченого: @Model.User.Name </b><br />
+      Рік народження : @Model.User.Birthdate.ToShortDateString()<br />
+      Рік закінчення ВНЗ @Model.User.GraduationDate.ToShortDateString() :<br />
+      Науковий ступінь, рік захисту @Model.User.DegreeLevel, @Model.User.DegreeDate.ToShortDateString() :<br />
+      Вчене звання, рік присвоєння: @Model.User.Title, @Model.User.TitleDate.ToShortDateString() <br />
+   </div>
+   <ol>
+      <li>
+         Участь у науково-дослідній тематиці підрозділу
+      </li>
+      <li>
+         @if ( Model.DepartmentWorks.Count != 0 )
+         {
+            foreach ( var dep in Model.DepartmentWorks )
             {
-
-                <li>
-                    Участь у науково-дослідній тематиці підрозділу
-                </li>
-                <li>
-                    <ul style="list-style: none;">
-                        <li>
-                            @dep.Topic
-                        </li>
-                        <li>
-                            @dep.Intro
-                        </li>
-                        <li>
-                            @dep.Category
-                        </li>
-                        <li>
-                            @dep.Content
-                        </li>
-                        <li>
-                            @dep.Authors.Select(a => a.Name).Aggregate((a, b) => a + ",  " + b))
-                        </li>
-                    </ul>
-                </li>
+               <ul style="list-style: none;">
+                  <li>
+                     Шифр:  @dep.Topic
+                  </li>
+                  <li>
+                     Тема: @dep.Intro
+                  </li>
+                  <li>
+                     Категорія: @dep.Category
+                  </li>
+                  <li>
+                     Опис
+                     @dep.Content
+                  </li>
+                  <li>
+                     Автори: @dep.Authors.Select( a => a.Name ).Aggregate( ( a, b ) => a + ",  " + b )
+                  </li>
+               </ul>
             }
-
-        }
-        <li>
-            Участь у виконанні індивідуальних або колективних ґрантів (окрім ґрантів на поїздки) − згідно з додатком 3.
-        </li>
-        <li>
-            Наукові стажування.
-        </li>
-        <li>
-            Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій.
-        </li>
-        <li>
-            Керівництво студентською науковою роботою, спільні публікації, керівництво студентськими гуртками,
-            підготовка студентів для участі у Всеукраїнських конкурсах студентських наукових робіт тощо.
-        </li>
-
-        @if (Model.Publications.Count != 0)
-        {
-            foreach (var pub in Model.Publications)
+         }
+      </li>
+      <li>
+         Участь у виконанні індивідуальних або колективних ґрантів (окрім ґрантів на поїздки) − згідно з додатком 3.
+      </li>
+      <li>
+         @if ( Model.Grants.Count != 0 )
+         {
+            foreach ( var gra in Model.Grants )
             {
-
-                <li>
-                    Наукові публікації
-                </li>
-                <li>
-                    <ul style="list-style: none;">
-                        <li>
-                            @pub.Topic
-                        </li>
-                        <li>
-                            @pub.Type
-                        </li>
-                        <li>
-                            @pub.Status
-                        </li>
-                        <li>
-                            @pub.Date.ToShortDateString()
-                        </li>
-                        <li>
-                            @pub.Authors.Select(a => a.Name).Aggregate((a, b) => a + ",  " + b))
-                        </li>
-                    </ul>
-                </li>
+               <ul style="list-style: none;">
+                  <li>
+                     Назва гранту: @gra.Name
+                  </li>
+                  <li>
+                     Опис
+                     @gra.Description
+                  </li>
+                  <li>
+                     Учасники: @gra.Participants.Select( a => a.Name ).Aggregate( ( a, b ) => a + ",  " + b )
+                  </li>
+               </ul>
             }
+         }
+      </li>
+      <li>
+         Наукові стажування.
+      </li>
+      <li>
+         @if ( Model.RepItems.Count != 0 )
+         {
+            var stags = Model.RepItems.Where( r => r.Type == "Науковістажування" )?.ToList();
+            if ( stags.Count != 0 )
+            {
+               foreach ( var gra in stags )
+               {
+                  <ul style="list-style: none;">
+                     <li>
+                        @gra.Content
+                     </li>
+                  </ul>
+               }
+            }
+         }
+      </li>
+      <li>
+         Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій.
+      </li>
+      <li>
+         @if ( Model.RepItems.Count != 0 )
+         {
+            var stags = Model.RepItems.Where( r => r.Type == "Науковекерівництво" )?.ToList();
+            if ( stags.Count != 0 )
+            {
+               foreach ( var gra in stags )
+               {
+                  <ul style="list-style: none;">
+                     <li>
+                        @gra.Content
+                     </li>
+                  </ul>
+               }
+            }
+         }
+      </li>
+      <li>
+         Керівництво студентською науковою роботою, спільні публікації, керівництво студентськими гуртками,
+         підготовка студентів для участі у Всеукраїнських конкурсах студентських наукових робіт тощо.
+      </li>
+      <li>
+         @if ( Model.RepItems.Count != 0 )
+         {
+            var stags = Model.RepItems.Where( r => r.Type == "Керівництвостудентською" )?.ToList();
+            if ( stags.Count != 0 )
+            {
+               foreach ( var gra in stags )
+               {
+                  <ul style="list-style: none;">
+                     <li>
+                        @gra.Content
+                     </li>
+                  </ul>
+               }
+            }
+         }
+      </li>
+      @if ( Model.Publications.Count != 0 )
+      {
+         foreach ( var pub in Model.Publications )
+         {
 
-        }
-        <li>
-            <div>
-                <table style="border: 1px solid black;" class="center">
-                    <tr>
-                        <td>Загальна кількість наукових публікацій</td>
-                        <td>Разом</td>
-                        <td>За звітний період</td>
-                    </tr>
-                    <tr>
-                        <td>Монографії</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Підручники </td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Навчальні посібники</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Статті</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Інші наукові видання</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Тези доповідей на конференціях</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Патенти</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-                <ol>
-                    <li>
-                        Праці, що вийшли з друку (бібліографічний опис згідно з державним стандартом):
-                        <ol>
-                            <li>Монографії</li>
-                            <li>Підручники</li>
-                            <li>Навчальні посібники</li>
-                            <li>Інші наукові видання (словники, переклади наукових праць, науковий коментар, бібліографічний покажчик тощо)</li>
-                            <li>
-                                Статті
-                                <ol>
-                                    <li>Статті у виданнях, які мають імпакт-фактор</li>
-                                    <li>Статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus та інших</li>
-                                    <li>Статті в інших закордонних виданнях</li>
-                                    <li>Статті у фахових виданнях України</li>
-                                    <li>Статті в інших виданнях України</li>
-                                </ol>
-                            </li>
-                            <li>
-                                Тези доповідей
-                                <ol>
-                                    <li>Тези доповідей на міжнародних конференціях</li>
-                                    <li>Тези доповідей на вітчизняних конференціях</li>
-                                </ol>
-                            </li>
-                            <li>Перелік міжнародних конференцій за кордоном, на яких представлено результати досліджень.</li>
-                        </ol>
-                    </li>
-                    <li>
-                        Праці, рекомендовані Вченою радою університету до друку
-                        (автори, назва праці, обсяг, дата подачі):
-                        <ol>
-                            <li>Монографії</li>
-                            <li>Підручники</li>
-                            <li>Навчальні посібники</li>
-                            <li>Інші наукові видання (словники, переклади наукових праць, науковий коментар, бібліографічний покажчик тощо)</li>
-                            <li>Статті, прийняті до друку</li>
-                        </ol>
-                    </li>
+            <li>
+               Наукові публікації
+            </li>
+            <li>
+               <ul style="list-style: none;">
+                  <li>
+                     @pub.Topic
+                  </li>
+                  <li>
+                     @pub.Type
+                  </li>
+                  <li>
+                     @pub.Status
+                  </li>
+                  <li>
+                     @pub.Date.ToShortDateString()
+                  </li>
+                  <li>
+                     @pub.Authors.Select( a => a.Name ).Aggregate( ( a, b ) => a + ",  " + b ))
+                  </li>
+               </ul>
+            </li>
+         }
 
-
-                </ol>
-            </div>
-        </li>
-        <li>
-            Патентно-ліцензійна діяльність
+      }
+      <li>
+         <div>
+            <table style="border: 1px solid black;" class="center">
+               <tr>
+                  <td>Загальна кількість наукових публікацій</td>
+                  <td>Разом</td>
+                  <td>За звітний період</td>
+               </tr>
+               <tr>
+                  <td>Монографії</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Монографії" )?.Total</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Монографії" )?.Year</td>
+               </tr>
+               <tr>
+                  <td>Підручники </td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Підручники" ).Total</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Підручники" ).Year</td>
+               </tr>
+               <tr>
+                  <td>Навчальні посібники</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Навчальні посібники" )?.Total</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Навчальні посібники" )?.Year</td>
+               </tr>
+               <tr>
+                  <td>Статті</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Статті" )?.Total</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Статті" )?.Year</td>
+               </tr>
+               <tr>
+                  <td>Інші наукові видання</td>
+                  <td> @Model.PubSummary.FirstOrDefault( p => p.PubName == "Інші наукові видання" )?.Total</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Інші наукові видання" )?.Year</td>
+               </tr>
+               <tr>
+                  <td>Тези доповідей на конференціях</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Тези доповідей на конференціях" )?.Total</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Тези доповідей на конференціях" )?.Year</td>
+               </tr>
+               <tr>
+                  <td>Патенти</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Патенти" )?.Total</td>
+                  <td>@Model.PubSummary.FirstOrDefault( p => p.PubName == "Патенти" )?.Year</td>
+               </tr>
+            </table>
             <ol>
-                <li>
-                    Заявки на винахід (корисну модель) (на видачу патенту на винахід (корисну модель))
-                    − автори, назва, № заявки, дата подачі, заявник(и)
-                </li>
-                <li>Патенти на винахід (корисну модель) − автори, назва, № патенту, дата видачі, заявник(и)</li>
+               <li>
+                  Праці, що вийшли з друку (бібліографічний опис згідно з державним стандартом):
+                  <ol>
+                     <li>Монографії</li>
+                     <li>Підручники</li>
+                     <li>Навчальні посібники</li>
+                     <li>Інші наукові видання (словники, переклади наукових праць, науковий коментар, бібліографічний покажчик тощо)</li>
+                     <li>
+                        Статті
+                        <ol>
+                           <li>Статті у виданнях, які мають імпакт-фактор</li>
+                           <li>Статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus та інших</li>
+                           <li>Статті в інших закордонних виданнях</li>
+                           <li>Статті у фахових виданнях України</li>
+                           <li>Статті в інших виданнях України</li>
+                        </ol>
+                     </li>
+                     <li>
+                        Тези доповідей
+                        <ol>
+                           <li>Тези доповідей на міжнародних конференціях</li>
+                           <li>Тези доповідей на вітчизняних конференціях</li>
+                        </ol>
+                     </li>
+                     <li>Перелік міжнародних конференцій за кордоном, на яких представлено результати досліджень.</li>
+                  </ol>
+               </li>
+               <li>
+                  Праці, рекомендовані Вченою радою університету до друку
+                  (автори, назва праці, обсяг, дата подачі):
+                  <ol>
+                     <li>Монографії</li>
+                     <li>Підручники</li>
+                     <li>Навчальні посібники</li>
+                     <li>Інші наукові видання (словники, переклади наукових праць, науковий коментар, бібліографічний покажчик тощо)</li>
+                     <li>Статті, прийняті до друку</li>
+                  </ol>
+               </li>
+
+
             </ol>
-        </li>
-        <li>Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки</li>
-        <li>Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</li>
-        <li>Інше</li>
-    </ol>
+         </div>
+      </li>
+      <li>
+         Патентно-ліцензійна діяльність
+      </li>
+      <li>
+         @if ( Model.RepItems.Count != 0 )
+         {
+            var stags = Model.RepItems.Where( r => r.Type == "Патентно-ліцензійнадіяльність" )?.ToList();
+            if ( stags.Count != 0 )
+            {
+               foreach ( var gra in stags )
+               {
+                  <ul style="list-style: none;">
+                     <li>
+                        @gra.Content
+                     </li>
+                  </ul>
+               }
+            }
+         }
+      </li>
+      <li>Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки</li>
+      <li>
+         @if ( Model.RepItems.Count != 0 )
+         {
+            var stags = Model.RepItems.Where( r => r.Type == "Рецензуваннята" )?.ToList();
+            if ( stags.Count != 0 )
+            {
+               foreach ( var gra in stags )
+               {
+                  <ul style="list-style: none;">
+                     <li>
+                        @gra.Content
+                     </li>
+                  </ul>
+               }
+            }
+         }
+      </li>
+      <li>Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</li>
+      <li>
+         @if ( Model.RepItems.Count != 0 )
+         {
+            var stags = Model.RepItems.Where( r => r.Type == "Членствоу" )?.ToList();
+            if ( stags.Count != 0 )
+            {
+               foreach ( var gra in stags )
+               {
+                  <ul style="list-style: none;">
+                     <li>
+                        @gra.Content
+                     </li>
+                  </ul>
+               }
+            }
+         }
+      </li>
+      <li>Інше</li>
+   </ol>
 
 </div>

@@ -15,13 +15,15 @@ namespace ScientificReportData
 		public readonly IRepository<Conference, int> ConferenceRepository;
 		public readonly IRepository<Grant, int> GrantRepository;
 		public readonly IRepository<Publication, int> PublicationRepository;
+		public readonly IRepository<ReportItem, int> ReportItemRepository;
 
-        public UnitOfWork(IRepository<Report, int> reportRepository,
+      public UnitOfWork(IRepository<Report, int> reportRepository,
 			IRepository<Author, int> authorRepository,
 			IRepository<DepartmentWork, int> departmentWorkRepository,
 			IRepository<Conference, int> conferenceRepository,
 			IRepository<Grant, int> grantRepository,
-			IRepository<Publication, int> publicationRepository) 
+			IRepository<Publication, int> publicationRepository,
+			IRepository<ReportItem, int> reportItemRepository ) 
 		{
 			this.ReportRepository = reportRepository;
 			this.AuthorRepository = authorRepository;
@@ -29,6 +31,7 @@ namespace ScientificReportData
 			this.ConferenceRepository = conferenceRepository;
 			this.GrantRepository = grantRepository;
 			this.PublicationRepository = publicationRepository;
+         this.ReportItemRepository = reportItemRepository; 
         }
 
         public Author GetAuthorByName(string name)

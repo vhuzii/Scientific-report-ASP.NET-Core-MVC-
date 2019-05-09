@@ -18,6 +18,7 @@ namespace ScientificReport.Controllers
         {
             this.userService = UserService;
         }
+
         public IActionResult Index()
         {
             var users = userService.getAll();

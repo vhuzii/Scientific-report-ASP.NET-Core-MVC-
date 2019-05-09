@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model KeyValuePair<IEnumerable<UserModel>, IEnumerable<UserModel>>
+
+
+<div id="assets">
+    <h3 style="text-align:center">Users Catalog</h3>
+
+    <div id="assetsTable">
+        <table class="table table-condensed" id="ToApproveTable">
+            <thread>
+                <tr>
+                    <th>FullName</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                </tr>
+            </thread>
+            <tbody>
+                @foreach (var asset in Model.Key)
+                {
+                    <tr class="AssetRow" id="@asset.Id">
+                        <td class="">
+                           @asset.FullName
+                        </td>
+                        <td class="">
+                            @asset.Role
+                        </td>
+                        <td>
+                            <button type="button" onclick="" class="btn btn-success">Approve</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div id="assetsTable">
+        <table class="table table-condensed" id="ApprovedTable">
+            <thread>
+                <tr>
+                    <th>FullName</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                </tr>
+            </thread>
+            <tbody>
+                @foreach (var asset in Model.Value)
+                {
+                <tr class="AssetRow" id="@asset.Id">
+                    <td class="">
+                        @asset.FullName
+                    </td>
+                    <td class="">
+                        @asset.Role.ToString()
+                    </td>
+                    <td>
+                        <button type="button" onclick="" class="btn btn-danger">Cancel</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

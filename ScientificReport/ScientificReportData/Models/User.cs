@@ -13,9 +13,7 @@ namespace ScientificReportData.Models
     public class User : IdentityUser, IEntity<string>
     {
 		public string Name { get; set; }
-
-        public Role Role { get; set; }
-
+              
         public DateTime Birthdate { get; set; }
 
         public string DegreeLevel { get; set; }

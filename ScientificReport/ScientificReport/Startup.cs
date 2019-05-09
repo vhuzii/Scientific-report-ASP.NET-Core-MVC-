@@ -51,11 +51,7 @@ namespace ScientificReport
             services.AddScoped<IRepository<Grant, int>, Repository<Grant, int>>();
             services.AddScoped<IRepository<User, string>, Repository<User, string>>();
             services.AddScoped<IRepository<Publication, int>, Repository<Publication, int>>();
-<<<<<<< HEAD
             services.AddScoped<IRepository<ReportItem, int>, Repository<ReportItem, int>>();
-=======
-            
->>>>>>> develop
             services.AddScoped<UnitOfWork>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IUserService, UserService>();

@@ -81,7 +81,9 @@ namespace ScientificReport.Controllers
          var currentUser = await _userServ.GetUserAsync( User );
          var userAuthor = _serv.GetUserAsAuthor( currentUser );
          model.Authors = new List<Author>();
-         model.Authors.Add( userAuthor );
+         model.Authors.Add( new Author {
+             Name = userAuthor.Name
+         } );
 
          _serv.AddPublication( model );
 

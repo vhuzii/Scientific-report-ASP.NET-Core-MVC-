@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ScientificReportData.Models
 {
-   public class PublSummary
+   public struct PublSummary
    {
       public string PubName { get; set; }
       public int Year { get; set; }

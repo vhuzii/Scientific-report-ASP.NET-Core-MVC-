@@ -25,14 +25,13 @@ namespace ScientificReport.Controllers
                 .Select(result => new UserModel
                 {
                     Id = result.Id,
-                    FullName = result.Name,
-                    Role = result.Role.ToString(),
+                    FullName = result.Name,                    
                     Status = result.IsApproved
                 });
             var modelApproved = from i in models where i.Status == true select i;
             var modelnotApproved = from i in models where i.Status == false select i;
             KeyValuePair<IEnumerable<UserModel>, IEnumerable<UserModel>> model = new KeyValuePair<IEnumerable<UserModel>, IEnumerable<UserModel>>(modelApproved, modelnotApproved);
-            return View();
+            return View(model);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ScientificReport.Models
         public static async Task InitializeAsync(ReportContext context, IServiceProvider service)
         {
             var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
-            var roleNames = new[] { "Admin", "FacultyAdmin", "DepartmentAdmin" , "Teacher"};
+            var roleNames = new[] { "Teacher", "Admin", "FacultyAdmin", "DepartmentAdmin" };
             IdentityResult roleResult;
             foreach(var roleName in roleNames)
             {

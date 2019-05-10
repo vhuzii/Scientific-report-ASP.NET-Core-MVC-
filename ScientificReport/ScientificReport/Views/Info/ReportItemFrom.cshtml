@@ -1,0 +1,15 @@
+﻿
+@{
+   ViewData["Title"] = "ReportItemFrom";
+}
+@model ScientificReportData.Models.ReportItem
+
+<form asp-controller="Info" asp-action="SaveReportItem">
+   <div class="report-block center">
+      <h5 asp-for="Type" class="form-control mt-2" type="text">@ViewData["itemType"]</h5>
+      <input asp-for="Type" class="form-control mt-2" type="text" value="@ViewData["shortType"]" readonly style="display:none" />
+
+<textarea asp-for="Content" class="form-control mt-2" type="text" placeholder="Стисло зміст виконаної роботи (до семи рядків)"></textarea>
+      <button type="submit" class="btn btn-primary">Submit</button>
+   </div>
+</form>

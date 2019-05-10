@@ -40,7 +40,7 @@ namespace ScientificReport
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=ScientificReport;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=LOCALHOST\SQLEXPRESS;Database=ScientificReport;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<ReportContext>
 	            (options => options.UseSqlServer(connection));
 
@@ -51,7 +51,7 @@ namespace ScientificReport
             services.AddScoped<IRepository<Grant, int>, Repository<Grant, int>>();
             services.AddScoped<IRepository<User, string>, Repository<User, string>>();
             services.AddScoped<IRepository<Publication, int>, Repository<Publication, int>>();
-            
+            services.AddScoped<IRepository<ReportItem, int>, Repository<ReportItem, int>>();
             services.AddScoped<UnitOfWork>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IUserService, UserService>();
@@ -73,7 +73,7 @@ namespace ScientificReport
                 opt.Password.RequiredLength = 6;
             })
 	            .AddEntityFrameworkStores<ReportContext>()
-				.AddDefaultUI()
+		   		.AddDefaultUI()
 	            .AddDefaultTokenProviders();
 
             var serv = services.BuildServiceProvider();
@@ -94,7 +94,7 @@ namespace ScientificReport
                 app.UseHsts();
             }
             app.UseAuthentication();
-			app.UseHttpsRedirection();
+		   	app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

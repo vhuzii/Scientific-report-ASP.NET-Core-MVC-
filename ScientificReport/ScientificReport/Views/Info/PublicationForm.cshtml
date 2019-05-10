@@ -1,36 +1,32 @@
 ﻿@model ScientificReportData.Models.Publication
 
 <form asp-action="SavePublication">
-    <div class="form-group">
-        <label asp-for="Topic">Назва</label>
-        <input asp-for="Topic" type="text" class="form-control" id="topicInput">
-        <label asp-for="Date">Дата</label>
-        <input asp-for="Date" type="date" class="form-control" id="topicInput">
-    </div>
-    <div class="form-group">
-        <label asp-for="Type">Тип Наукової роботи</label>
-        <select asp-for="Type" type="date" class="form-control" id="topicInput">
-            <option>Монографії</option>
-            <option>Підручники </option>
-            <option>Навчальні посібники </option>
-            <option>Інші наукові видання (словники, переклади наукових праць, науковий коментар, бібліографічний покажчик тощо)</option>
-            <option>Статті у виданнях, які мають імпакт-фактор </option>
-            <option>Статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus та інших </option>
-            <option>Статті в інших закордонних виданнях </option>
-            <option>Статті у фахових виданнях України </option>
-            <option>Статті в інших виданнях України </option>
-            <option>Тези доповідей на міжнародних конференціях </option>
-            <option>Тези доповідей на вітчизняних конференціях </option>
-            <option>Перелік міжнародних конференцій за кордоном, на яких представлено результати досліджень </option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label asp-for="Status">Статус</label>
-        <select asp-for="Status" class="form-control" id="statusInput">
-            <option>Опубліковано</option>
-            <option>Надруковано</option>
-            <option>В розробці</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+   <h5 class="pb-2 text-center pt-3">Публікації</h5>
+   <div class="form-group">
+      <label asp-for="Topic">Назва</label>
+      <input asp-for="Topic" type="text" class="form-control" id="topicInput">
+      <label asp-for="Date">Дата</label>
+      <input asp-for="Date" type="date" class="form-control" id="topicInput">
+   </div>
+   <div class="form-group">
+      <label asp-for="Type">Тип Наукової роботи</label>
+      <select asp-for="Type" type="date" class="form-control" id="topicInput">
+          <option>Монографії</option>
+          <option>Підручники</option>
+          <option>Навчальні посібники</option>
+          <option>Статті</option>
+          <option>Патенти</option>
+          <option>Тези доповідей на конференціях</option>
+          <option>Інші наукові видання</option>
+      </select>
+   </div>
+   <div class="form-group">
+      <label asp-for="Status">Статус</label>
+      <select asp-for="Status" class="form-control" id="statusInput">
+         <option>Опубліковано</option>
+         <option>Надруковано</option>
+         <option>В розробці</option>
+      </select>
+   </div>
+   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

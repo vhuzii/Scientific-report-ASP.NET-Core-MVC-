@@ -4,14 +4,20 @@
 @model User
 
 <div class="text-center">
-	<h3 class="display-5">Тут буде виводитися коротка інформація репорту</h3>
-	@if (@Model != null) {
+	@if (@Model != null && (@Model.IsApproved || @Model.IsAdmin) ) {
 		<div>Email: @Model.Email</div>
 		<a class="btn btn-success" asp-controller="Report" asp-action="CreateReportAsync">
 			<strong>Generate Report</strong>
 		</a>
 	}
+	else if(@Model == null){
+		<h3>Залогіньтеся, щоб побачити інформацію</h3>
+	}
 	else {
-		<div>Залогіньтеся, щоб побачити інформацію</div>
+		<div id="warning">
+			<h2 style="text-align:center;">Увага!</h2>
+			<p>Щоб переглянути інформацію зарєєструйтесь, дочекайтесь підтвердженняю</p>
+			<p>Після того, як вам на email-адресу прийде сповіщення, вийдіть і ввійдіть в систему.</p>
+		</div>
 	}
 </div>

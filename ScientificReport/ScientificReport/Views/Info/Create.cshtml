@@ -3,126 +3,16 @@
 }
 
 <div class="form-group report-block center">
-    <label for="typeInput">Виберіть тип:</label>
-    <ul>
+    <h3 for="typeInput">Виберіть тип</h3>
+    <ul  style="list-style-type : none">
         <li><a asp-controller="Info" asp-action="DepartmentWorkForm"> Участь у науково-дослідній тематиці підрозділy</a></li>
         <li><a asp-controller="Info" asp-action="GrantsForm">Участь у виконанні індивідуальних або колективних ґрантів</a></li>
-        <li><a asp-controller="Info" asp-action="">Наукові стажування</a></li>
-        <li><a asp-controller="Info" asp-action="Create">Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій</a></li>
-        <li><a asp-controller="Info" asp-action="Create">Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації</a></li>
+        <li><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Наукові стажування" >Наукові стажування</a></li>
+        <li><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій">Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій</a></li>
+        <li><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації">Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації</a></li>
         <li><a asp-controller="Info" asp-action="PublicationForm">Наукові праці</a></li>
-        <li><a asp-controller="Info" asp-action="Create">Патентно-ліцензійна діяльність</a></li>
-        <li><a asp-controller="Info" asp-action="Create">Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки</a></li>
-        <li><a asp-controller="Info" asp-action="Create">Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</a></li>
+        <li><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Патентно-ліцензійна діяльність">Патентно-ліцензійна діяльність</a></li>
+        <li><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки">Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки</a></li>
+        <li><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо">Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</a></li>
     </ul>
-    </select>
 </div>
-
-<div id="3" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">Наукові стажування </h5>
-    <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
-
-</div>
-<div id="4" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">
-        Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій
-    </h5>
-    <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
-
-</div>
-<div id="5" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">
-        Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації
-    </h5>
-    <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
-
-</div>
-<div id="6" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">
-        Праці, що вийшли з друку (бібліографічний опис згідно з державним стандартом)
-    </h5>
-    <div class="report-block center">
-        <select class="form-control" id="selectOldPrint">
-            <option value="61">Монографії</option>
-            <option value="62">Підручники </option>
-            <option value="63">Навчальні посібники </option>
-            <option value="64">Інші наукові видання (словники, переклади наукових праць, науковий коментар, бібліографічний покажчик тощо)</option>
-            <option value="65">Статті у виданнях, які мають імпакт-фактор </option>
-            <option value="66">Статті в інших виданнях, які включені до міжнародних наукометричних баз даних Web of Science, Scopus та інших </option>
-            <option value="67">Статті в інших закордонних виданнях </option>
-            <option value="68">Статті у фахових виданнях України </option>
-            <option value="69">Статті в інших виданнях України </option>
-            <option value="610">Тези доповідей на міжнародних конференціях </option>
-            <option value="611">Тези доповідей на вітчизняних конференціях </option>
-            <option value="612">Перелік міжнародних конференцій за кордоном, на яких представлено результати досліджень </option>
-        </select>
-        <textarea class="form-control mt-2  " type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
-
-    </div>
-</div>
-<div id="7" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">
-        Праці, рекомендовані Вченою радою університету до друку (автори, назва праці, обсяг, дата подачі)
-    </h5>
-    <div class="report-block center">
-        <select class="form-control" id="selectOldPrint">
-            <option value="71">Монографії</option>
-            <option value="72">Підручники </option>
-            <option value="73">Навчальні посібники </option>
-            <option value="74">Інші наукові видання (словники, переклади наукових праць, науковий коментар, бібліографічний покажчик тощо)</option>
-            <option value="75">Статті, прийняті до друку </option>
-        </select>
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Автор" />
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Назва праці" />
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Обсяг" />
-        <input class="form-control mt-2" type="date" name="name" value="" placeholder="Дата подачі" />
-    </div>
-</div>
-<div id="8" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">
-        Патентно-ліцензійна діяльність
-    </h5>
-    <div class="report-block center">
-        <select class="form-control" id="selectPatent">
-            <option value="81">Заявки на винахід (корисну модель) (на видачу патенту на винахід (корисну модель))</option>
-            <option value="82">Патенти на винахід (корисну модель) </option>
-        </select>
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Автори" />
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Назва" />
-        <input class="form-control mt-2" type="number" name="name" value="" placeholder="№ патенту/заявки на винахід" />
-        <input class="form-control mt-2" type="date" name="name" value="" placeholder="Дата" />
-        <input class="form-control mt-2" type="text" name="name" value="" placeholder="Заявник(и)" />
-    </div>
-</div>
-<div id="9" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки </h5>
-    <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
-
-</div>
-<div id="10" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів  </h5>
-    <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
-
-</div>
-<div id="11" class="publication-form">
-    <h5 class="pb-2 text-center pt-3 report-block-header center">Інше </h5>
-    <textarea class="form-control mt-2 report-block center" type="text" name="name" value="" placeholder="Інформація щодо вибраного пункту"></textarea>
-
-</div>
-
-<button type="submit" class="btn btn-success center mt-2">Add info</button>
-<script>
-    let selectList = document.getElementById('selectList');
-    let dataArr = document.getElementsByClassName('publication-form');
-    for (var i = 1; i < dataArr.length; i++) {
-        dataArr[i].style.display = 'none';
-    }
-    function GetPublicationForm() {
-        for (var i = 0; i < dataArr.length; i++) {
-            dataArr[i].style.display = 'none';
-        }
-        let selectedOptionValue = selectList.options[selectList.selectedIndex].value;
-        document.getElementById(selectedOptionValue).style.display = 'block';
-    }
-
-</script>

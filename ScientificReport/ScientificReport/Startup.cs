@@ -55,6 +55,7 @@ namespace ScientificReport
 
             services.AddScoped<UnitOfWork>();
             services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IUserConferenceService,UserConferenceService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IConferenceService, ConferenceService>();
             services.AddScoped<DbContext, ReportContext>();

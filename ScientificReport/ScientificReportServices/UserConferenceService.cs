@@ -1,4 +1,5 @@
-﻿using ScientificReportData.Models;
+﻿using ScientificReportData.Interfaces;
+using ScientificReportData.Models;
 using ScientificReportData.Repositories;
 using ScientificReportServices.Interfaces;
 using System;
@@ -7,11 +8,11 @@ using System.Text;
 
 namespace ScientificReportServices
 {
-    class UserConferenceService : IUserConferenceService
+    public class UserConferenceService : IUserConferenceService
     {
-        private Repository<UserConference, int> repository;
+        private IRepository<UserConference, int> repository;
 
-        public UserConferenceService(Repository<UserConference,int> repository)
+        public UserConferenceService(IRepository<UserConference, int> repository)
         {
             this.repository = repository;
         }
@@ -24,6 +25,11 @@ namespace ScientificReportServices
         public UserConference getById(int id)
         {
             return repository.Get(id);
+        }
+
+        public IEnumerable<UserConference> getAll()
+        {
+            return repository.GetAll();
         }
     }
 }

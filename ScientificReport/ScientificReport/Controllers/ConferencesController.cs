@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ScientificReport.Models;
+using ScientificReportData;
 using ScientificReportData.Models;
 using ScientificReportServices;
 using ScientificReportServices.Interfaces;
@@ -17,12 +18,14 @@ namespace ScientificReport.Controllers
         private readonly IConferenceService conferenceService;
         private readonly IUserService userService;
         private readonly IUserConferenceService userConferenceService;
+        private readonly UnitOfWork uOW;
        
-        public ConferencesController(IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService)
+        public ConferencesController(IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService,UnitOfWork uOW)
         {
             this.conferenceService = conferenceService;
             this.userService = userService;
             this.userConferenceService = userConferenceService;
+            this.uOW = uOW;
         }
 
         public IActionResult Index()
@@ -49,7 +52,15 @@ namespace ScientificReport.Controllers
 
         public IActionResult AddToUserConference(int id, string userId)
         {
-            var thisConferenceUsers = userConferenceService.getAll();
+            var conferenceUsers = userConferenceService.getAll();
+            bool tookPart = false;
+            foreach (var item in conferenceUsers)
+            {
+                if (item.ConferenceId == id && item.UserId == userId)
+                {
+                    tookPart = true;
+                }
+            }
             ConferenceDetailsModel model = new ConferenceDetailsModel();
             model.TakePart = false;
             UserConference element = new UserConference()
@@ -57,9 +68,19 @@ namespace ScientificReport.Controllers
                 ConferenceId = id,
                 UserId = userId
             };
-            userConferenceService.Add(element);
-            thisConferenceUsers = userConferenceService.getAll();
-            foreach (var item in thisConferenceUsers)
+            model.TakePart = tookPart;
+            if (!model.TakePart)
+            {
+                userConferenceService.Add(element);
+                conferenceUsers = userConferenceService.getAll();
+            }
+
+            var thisConferenceUsers = conferenceUsers
+                .Where(res => res.ConferenceId == id)
+                .Select(res => res.UserId);
+            var thisConferenceUserNames = from i in thisConferenceUsers select uOW.UserRepository.Get(i).Name;
+            model.UserNames = thisConferenceUserNames;
+            foreach (var item in conferenceUsers)
             {
                 if(item.ConferenceId==id&&item.UserId==userId)
                 {
@@ -85,16 +106,24 @@ namespace ScientificReport.Controllers
 
         public IActionResult Details(int id,string userId)
         {
-            var thisConferenceUsers = userConferenceService.getAll();
+            var conferenceUsers = userConferenceService.getAll();
             ConferenceDetailsModel model = new ConferenceDetailsModel();
             model.TakePart = false;
-            foreach (var item in thisConferenceUsers)
+            foreach (var item in conferenceUsers)
             {
                 if (item.ConferenceId == id && item.UserId == userId)
                 {
                     model.TakePart = true;
                 }
             }
+           
+            
+            var thisConferenceUsers = conferenceUsers
+                .Where(res => res.ConferenceId == id)
+                .Select(res => res.UserId);
+            var thisConferenceUserNames = from i in thisConferenceUsers select uOW.UserRepository.Get(i).Name;
+            model.UserNames = thisConferenceUserNames;
+
             var result = conferenceService.getById(id);
             result.Watches = result.Watches + 1;
             conferenceService.Update(result);

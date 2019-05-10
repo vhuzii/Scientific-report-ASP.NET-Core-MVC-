@@ -15,6 +15,14 @@
         <h5>@Model.ConferenceInfo.Date.ToShortDateString().Split(' ')[0]</h5>
         <p class="description">@Model.ConferenceInfo.Description</p>`
         <h4>Participants:</h4>
+        <div>
+            <ul class="list-group list-group-flush">
+                @foreach (var i in Model.UserNames)
+                {
+                    <li class="list-group-item">@i</li>
+                }
+            </ul>
+        </div>
     </div>
     <div>
         <img src="@Model.ConferenceInfo.ImgPath" alt="photo" class="img-detailed" />

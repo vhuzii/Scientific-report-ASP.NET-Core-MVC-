@@ -2,11 +2,13 @@
 	ViewData["Title"] = "ABTO Звіт";
 }
 @model User
-
 <div class="text-center">
 	@if (@Model != null && (@Model.IsApproved || @Model.IsAdmin) ) {
-		<div>Email: @Model.Email</div>
-		<a class="btn btn-success" asp-controller="Report" asp-action="CreateReportAsync">
+        <img src="~/img/1.png"/>
+        <div>
+            <h3 style="text-align:center; margin-top:30px;">Welcome to <b>AVTO-ЗВІТ</b></h3>
+        </div>
+		<a class="btn btn-success" style="margin-top:30px;" asp-controller="Report" asp-action="CreateReportAsync">
 			<strong>Generate Report</strong>
 		</a>
 	}

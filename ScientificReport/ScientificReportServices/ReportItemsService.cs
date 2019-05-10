@@ -43,5 +43,11 @@ namespace ScientificReportServices
             var res = _unitOfWork.PublicationRepository.Create(pb);
             return res;
         }
-    }
+
+      public ReportItem AddReportItem( ReportItem ri )
+      {
+         var res = _unitOfWork.ReportItemRepository.Create( ri );
+         return res;
+      }
+   }
 }

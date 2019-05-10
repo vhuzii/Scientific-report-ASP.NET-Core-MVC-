@@ -108,9 +108,7 @@ namespace ScientificReport.Controllers
                 Title = result.Title,
                 Watches = result.Watches
             };
-            
             model.ConferenceInfo = data;
-          
             return View(model);
         }
     }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ScientificReportData 
+namespace ScientificReportData
 {
 	public class UnitOfWork 
 	{
@@ -14,6 +14,7 @@ namespace ScientificReportData
 		public readonly IRepository<DepartmentWork, int> DepartmentWorkRepository;
 		public readonly IRepository<Conference, int> ConferenceRepository;
 		public readonly IRepository<Grant, int> GrantRepository;
+    public readonly IRepository<ReportItem, int> ReportItemRepository;
 		public readonly IRepository<Publication, int> PublicationRepository;
         public readonly IRepository<UserConference, int> UserConferenceRepository;
         public readonly IRepository<User, string> UserRepository;
@@ -23,9 +24,10 @@ namespace ScientificReportData
 			IRepository<DepartmentWork, int> departmentWorkRepository,
 			IRepository<Conference, int> conferenceRepository,
 			IRepository<Grant, int> grantRepository,
+      IRepository<ReportItem, int> reportItemRepository,
 			IRepository<Publication, int> publicationRepository,
-            IRepository<UserConference, int> userConferenceRepository,
-            IRepository<User, string> userRepository) 
+      IRepository<UserConference, int> userConferenceRepository,
+      IRepository<User, string> userRepository) 
 		{
 			this.ReportRepository = reportRepository;
 			this.AuthorRepository = authorRepository;
@@ -33,13 +35,14 @@ namespace ScientificReportData
 			this.ConferenceRepository = conferenceRepository;
 			this.GrantRepository = grantRepository;
 			this.PublicationRepository = publicationRepository;
-            this.UserConferenceRepository = userConferenceRepository;
-            this.UserRepository = userRepository;
+      this.UserConferenceRepository = userConferenceRepository;
+      this.ReportItemRepository = reportItemRepository;
+      this.UserRepository = userRepository;
         }
 
         public Author GetAuthorByName(string name)
         {
             return AuthorRepository.GetAll().FirstOrDefault(a => a.Name == name);
         }
-	}
+    }
 }

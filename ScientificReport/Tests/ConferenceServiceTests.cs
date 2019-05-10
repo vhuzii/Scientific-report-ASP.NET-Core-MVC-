@@ -10,11 +10,10 @@ using System.Collections.Generic;
 namespace Tests
 {
     [TestFixture]
-    public class ReportTests
+    public class ConferenceServiceTests
     {
         // TODO: Feel free to write report tests here
         public static Conference[] temp = new Conference[2];
-
         public static Conference[] setSample()
         {
             List<Author> temp1 = new List<Author>();
@@ -23,6 +22,8 @@ namespace Tests
                 Name = "dad",
                 Id = 1,
             };
+            var eps1 = author.Id;
+            var eps2 = author.Name;
             temp1.Add(author);
             var ex = new Conference
             {
@@ -47,7 +48,9 @@ namespace Tests
                 Watches = 3010,
                 Participants = temp1,
             };
-            temp[1] = ex;
+            var sps = ex1.Participants;
+            temp[1] = ex1;
+            
             return temp;
         }
         [Test]
@@ -123,13 +126,13 @@ namespace Tests
         private Conference GetSampleConference(int id)
         {
             Conference[] temp = setSample();
-
+            Conference result = null;
             foreach (Conference a in temp)
             {
                 if (a.Id == id)
-                    return a;
+                    result = a;
             }
-            return temp[temp.Length - 1];
+            return result;
         }
 
 
@@ -157,12 +160,13 @@ namespace Tests
         private DateTime GetDatebyID(int a)
         {
             Conference[] temp = setSample();
+            DateTime result = DateTime.Today;
             foreach (Conference conf in temp)
             {
                 if (conf.Id == a)
-                    return conf.Date;
+                    result =  conf.Date;
             }
-            return temp[temp.Length - 1].Date;
+            return result;
         }
 
 
@@ -191,12 +195,13 @@ namespace Tests
         private string GetDescriptionbyID(int a)
         {
             Conference[] temp = setSample();
+            string result = "";
             foreach (Conference conf in temp)
             {
                 if (conf.Id == a)
-                    return conf.Description;
+                    result = conf.Description;
             }
-            return temp[temp.Length - 1].Description;
+            return result;
         }
 
         [Test]
@@ -224,12 +229,13 @@ namespace Tests
         private string GetPathbyID(int a)
         {
             Conference[] temp = setSample();
+            string result = "";
             foreach (Conference conf in temp)
             {
                 if (conf.Id == a)
-                    return conf.ImgPath;
+                    result = conf.ImgPath;
             }
-            return temp[temp.Length - 1].ImgPath;
+            return result;
         }
 
         [Test]
@@ -256,12 +262,13 @@ namespace Tests
         private int GetlikesbyID(int a)
         {
             Conference[] temp = setSample();
+            int result = 0;
             foreach (Conference conf in temp)
             {
                 if (conf.Id == a)
-                    return conf.Likes;
+                    result =  conf.Likes;
             }
-            return temp[temp.Length - 1].Likes;
+            return result;
         }
 
         [Test]
@@ -288,12 +295,13 @@ namespace Tests
         private int GetWatchesbyID(int a)
         {
             Conference[] temp = setSample();
+            int result = 0;
             foreach (Conference conf in temp)
             {
                 if (conf.Id == a)
-                    return conf.Watches;
+                    result = conf.Watches;
             }
-            return temp[temp.Length - 1].Watches;
+            return result;
         }
 
         [Test]
@@ -320,12 +328,13 @@ namespace Tests
         private string GetTitlebyID(int a)
         {
             Conference[] temp = setSample();
+            string result = "";
             foreach (Conference conf in temp)
             {
                 if (conf.Id == a)
-                    return conf.Title;
+                    result =  conf.Title;
             }
-            return temp[temp.Length - 1].Title;
+            return result;
         }
     }
 }

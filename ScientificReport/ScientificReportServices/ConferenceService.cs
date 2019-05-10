@@ -1,5 +1,4 @@
 ﻿using ScientificReport.Data.DataAccess;
-using ScientificReportData;
 using ScientificReportData.Models;
 using System;
 using System.Collections.Generic;

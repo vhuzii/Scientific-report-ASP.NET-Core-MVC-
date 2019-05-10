@@ -60,6 +60,10 @@ namespace ScientificReportData.Repositories
 			context.SaveChanges();
 			return entity;
 		}
-
-	}
+       /* virtual public void UPdate(T item)
+        {
+            context.Update(item);
+            context.SaveChanges();
+        }*/
+    }
 }

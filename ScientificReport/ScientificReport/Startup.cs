@@ -79,7 +79,6 @@ namespace ScientificReport
 	            .AddDefaultTokenProviders();
 
             var serv = services.BuildServiceProvider();
-            //CreateUserRoles(serv).Wait();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,20 +107,5 @@ namespace ScientificReport
             });
             RotativaConfiguration.Setup(env);
 		}
-
-        private async Task CreateUserRoles(IServiceProvider serviceProvider)
-        {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            //var UserManager = serviceProvider.GetRequiredService<UserService>();
-
-            IdentityResult roleResult;
-            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
-            if (!roleCheck)
-            {
-                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
-            }
-            //IdentityUser user = await UserManager.FindByEmailAsync("admin@gmail.com");     <= use this to add admin rights -бодьо
-            //await UserManager.AddToRoleAsync(user, "Admin");
-        }
     }
 }

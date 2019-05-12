@@ -1,5 +1,7 @@
-﻿using ScientificReportData;
+﻿using Microsoft.EntityFrameworkCore;
+using ScientificReportData;
 using ScientificReportData.Models;
+using ScientificReportData.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +36,10 @@ namespace ScientificReportServices
 
         public ReportViewModel CreateViewModel(User currentUser)
         {
-            var publications = unitOfWork.PublicationRepository.GetAll().Where(p => p.Authors.Any(a => a.Name == currentUser.Name))?.ToList();
-            var grants = unitOfWork.GrantRepository.GetAll().Where(p => p.Participants.Any(a => a.Name == currentUser.Name))?.ToList();
-            var depWorks = unitOfWork.DepartmentWorkRepository.GetAll().Where(p => p.Authors.Any(a => a.Name == currentUser.Name))?.ToList();
-            var conferences = unitOfWork.ConferenceRepository.GetAll().Where(p => p.Participants.Any(a => a.Name == currentUser.Name))?.ToList();
+            var publications = unitOfWork.PublicationRepository.Set.Include( p => p.Authors).Where(p => p.Authors != null && p.Authors.Any(a => a.Name == currentUser.Name))?.ToList();
+            var grants = unitOfWork.GrantRepository.Set.Include(p => p.Participants).Where(p => p.Participants.Any(a => p.Participants != null && a.Name == currentUser.Name))?.ToList();
+            var depWorks = unitOfWork.DepartmentWorkRepository.Set.Include(p => p.Authors).Where(p => p.Authors != null && p.Authors.Any(a => a.Name == currentUser.Name))?.ToList();
+            var conferences = unitOfWork.ConferenceRepository.Set.Include(p => p.Participants).Where(p => p.Participants != null && p.Participants.Any(a => a.Name == currentUser.Name))?.ToList();
             var repItems = unitOfWork.ReportItemRepository.GetAll().Where(p => p.User == currentUser.Name)?.ToList();
             var publTypesGroup = publications.GroupBy(p => p.Type)?.ToList();
             var recentPubls = publications.Where(p => p.Date > DateTime.Now.AddYears(-1)).GroupBy(p => p.Type)?.ToList();
@@ -50,8 +52,8 @@ namespace ScientificReportServices
                     summary.Add(new PublSummary
                     {
                         PubName = t,
-                        Year = recentPubls?.First(p => p.Key == t).Count() ?? 0,
-                        Total = publTypesGroup?.First(p => p.Key == t).Count() ?? 0
+                        Year = recentPubls?.FirstOrDefault(p => p.Key == t)?.Count() ?? 0,
+                        Total = publTypesGroup?.FirstOrDefault(p => p.Key == t)?.Count() ?? 0
                     });
                 }
             }
@@ -66,7 +68,7 @@ namespace ScientificReportServices
                 PubSummary = summary
             };
             return result;
-        }
+        }      
 
         private string GenerateIntro()
         {
@@ -85,9 +87,7 @@ namespace ScientificReportServices
 
         private string GenerateDepartmentWorks()
         {
-            var userAsAuthor = unitOfWork.AuthorRepository.GetAll().FirstOrDefault(a => a.Name == user.Name);
-            if (userAsAuthor == null) return "";
-            var works = unitOfWork.DepartmentWorkRepository.GetAll().Where(w => w.Authors.Contains(userAsAuthor));
+            var works = unitOfWork.DepartmentWorkRepository.GetAll().Where(w => w.Authors != null && w.Authors.Any( p => p.Name == user.UserName));
             var section = new StringBuilder();
 
             foreach (var work in works)
@@ -105,7 +105,7 @@ namespace ScientificReportServices
 
         private string GenerateConferences()
         {
-            var confs = unitOfWork.ConferenceRepository.GetAll().Where(c => c.Participants.Any(p => p.Name == user.Name));
+            var confs = unitOfWork.ConferenceRepository.GetAll().Where(c => c.Participants != null && c.Participants.Any(p => p.Name == user.Name));
             var section = new StringBuilder();
 
             foreach (var conf in confs)
@@ -122,7 +122,7 @@ namespace ScientificReportServices
 
         private string GenerateGrants()
         {
-            var userGrants = unitOfWork.GrantRepository.GetAll().Where(c => c.Participants.Any(p => p.Name == user.Name));
+            var userGrants = unitOfWork.GrantRepository.GetAll().Where(c => c.Participants != null && c.Participants.Any(p => p.Name == user.Name));
             var grants = new StringBuilder();
             grants
                .Append("Приймав участь в таких грантах: ")
@@ -166,7 +166,7 @@ namespace ScientificReportServices
                    .Append($"Автори: ");
                 foreach (var userPublicationAuthor in userPublication.Authors)
                 {
-                    publications.Append($"{userPublicationAuthor.Name} ");
+                    publications.Append($"{userPublicationAuthor} ");
                 }
             }
 
@@ -190,7 +190,7 @@ namespace ScientificReportServices
                        .Append($"Автори: ");
                     foreach (var userPublicationAuthor in userPublication.Authors)
                     {
-                        publications.Append($"{userPublicationAuthor.Name} ");
+                        publications.Append($"{userPublicationAuthor} ");
                     }
                 }
             }

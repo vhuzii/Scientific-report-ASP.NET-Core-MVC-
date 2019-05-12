@@ -1,105 +1,133 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ScientificReport.Models;
 using ScientificReportData.Models;
 using ScientificReportServices;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ScientificReport.Controllers
 {
-   public class InfoController : Controller
-   {
-      // GET: /<controller>/
-      private readonly IReportItemsService _serv;
-      private readonly UserManager<User> _userServ;
+    public class InfoController : Controller
+    {
+        // GET: /<controller>/
+        private readonly IReportItemsService _serv;
+        private readonly UserManager<User> _userServ;
 
-      public InfoController( IReportItemsService serv, UserManager<User> userService )
-      {
-         _serv = serv;
-         _userServ = userService;
-      }
+        public InfoController(IReportItemsService serv, UserManager<User> userService)
+        {
+            _serv = serv;
+            _userServ = userService;
+        }
 
-      public IActionResult Create()
-      {
-         return View();
-      }
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-      public IActionResult DepartmentWorkForm()
-      {
-         return View();
-      }
+        public IActionResult DepartmentWorkForm()
+        {
+            return View();
+        }
 
-      public IActionResult ReportItemFrom( string itemType )
-      {
-         ViewData["itemType"] = itemType;
-         ViewData["shortType"] = itemType.Split(" ").Take(2).Aggregate( (a,b) => a + b);
-         return View();
-      }
+        public IActionResult ReportItemFrom(string itemType)
+        {
+            ViewData["itemType"] = itemType;
+            ViewData["shortType"] = itemType.Split(" ").Take(2).Aggregate((a, b) => a + b);
+            return View();
+        }
 
-      [HttpPost( "SaveDepartmentWork" )]
-      public async Task<IActionResult> SaveDepartmentWork( [FromForm]DepartmentWork model )
-      {
-         var currentUser = await _userServ.GetUserAsync( User );
-         var userAuthor = _serv.GetUserAsAuthor( currentUser );
-         model.Authors = new List<Author>();
-         model.Authors.Add( userAuthor );
+        [HttpPost("SaveDepartmentWork")]
+        public async Task<IActionResult> SaveDepartmentWork([FromForm]DepartmentWork model)
+        {
+            var currentUser = await _userServ.GetUserAsync(User);
+            var userAsAuthor = _serv.GetUserAsAuthor(currentUser.Name);
+            model.Authors = new List<Author>();
+            model.Authors.Add(userAsAuthor);
 
-         _serv.AddDepartmentWork( model );
+            _serv.AddDepartmentWork(model);
 
-         return RedirectToAction( "Create" );
-      }
+            return RedirectToAction("Create");
+        }
 
-      public IActionResult GrantsForm()
-      {
-         return View();
-      }
+        public IActionResult GrantsForm()
+        {
+            return View();
+        }
 
-      [HttpPost]
-      public async Task<IActionResult> SaveGrant( [FromForm]Grant model )
-      {
-         var currentUser = await _userServ.GetUserAsync( User );
-         var userAuthor = _serv.GetUserAsAuthor( currentUser );
-         model.Participants = new List<Author>();
-         model.Participants.Add( userAuthor );
+        [HttpPost]
+        public async Task<IActionResult> SaveGrant([FromForm]Grant model)
+        {
+            var currentUser = await _userServ.GetUserAsync(User);
+            var userAsAuthor = _serv.GetUserAsAuthor(currentUser.Name);
+            model.Participants = new List<Author>();
+            model.Participants.Add(userAsAuthor);
 
-         _serv.AddGrant( model );
+            _serv.AddGrant(model);
 
-         return RedirectToAction( "Create" );
-      }
+            return RedirectToAction("Create");
+        }
 
-      public IActionResult PublicationForm()
-      {
-         return View();
-      }
+        public IActionResult PublicationForm()
+        {
+            return View();
+        }
 
-      [HttpPost]
-      public async Task<IActionResult> SavePublication( [FromForm]Publication model )
-      {
-         var currentUser = await _userServ.GetUserAsync( User );
-         var userAuthor = _serv.GetUserAsAuthor( currentUser );
-         model.Authors = new List<Author>();
-         model.Authors.Add( new Author {
-             Name = userAuthor.Name
-         } );
+        [HttpPost]
+        public async Task<IActionResult> SavePublication([FromForm]CreatePublicationModel model)
+        {
+            var currentUser = await _userServ.GetUserAsync(User);
+            if (model.Authors.IndexOf(currentUser.Name) == -1)
+            {
+                model.Authors += ", " + currentUser.Name;
+            }
 
-         _serv.AddPublication( model );
+            _serv.AddPublication(model);
 
-         return RedirectToAction( "Create" );
-      }
+            return RedirectToAction("Create");
+        }
 
-      [HttpPost]
-      public async Task<IActionResult> SaveReportItem( [FromForm]ReportItem model )
-      {
-         var currentUser = await _userServ.GetUserAsync( User );
-         model.User = currentUser.Name;
+        [HttpPost]
+        public IActionResult SearchPubilcation([FromForm] SearchPublicationModel searchParam)
+        {
+            var searchRes = _serv.SearchPublications(searchParam.Name, searchParam.Author);
+            if (searchRes.Publications == null)
+            {
+                return View("SearchPublication", new SearchPublicationModel
+                {
+                    Error = "Пошук не дав результатів"
+                });
+            }
+            return View("PublicationTable", searchRes);
+        }
 
-         _serv.AddReportItem( model );
+        public IActionResult SearchPubilcationForm()
+        {
+            return View("SearchPublication");
+        }
 
-         return RedirectToAction( "Create" );
-      }
+        [HttpGet]
+        public IActionResult AddAuthor([FromQuery]int pubId, [FromQuery]string author)
+        {
+            author = System.Net.WebUtility.UrlDecode(author);
+            _serv.AddAuthor(pubId, author);
+            return Ok();
+        }
 
-   }  
+        [HttpPost]
+        public async Task<IActionResult> SaveReportItem([FromForm]ReportItem model)
+        {
+            var currentUser = await _userServ.GetUserAsync(User);
+            model.User = currentUser.Name;
+
+            _serv.AddReportItem(model);
+
+            return RedirectToAction("Create");
+        }
+
+    }
 }

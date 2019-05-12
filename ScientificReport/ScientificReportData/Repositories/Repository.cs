@@ -17,6 +17,8 @@ namespace ScientificReportData.Repositories
 		private DbContext context;
 		protected DbSet<T> dbSet;
 
+        public DbSet<T> Set => dbSet;
+
 		public Repository(DbContext context)
 		{
 			this.context = context;

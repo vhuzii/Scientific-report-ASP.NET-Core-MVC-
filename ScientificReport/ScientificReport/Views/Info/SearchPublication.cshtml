@@ -1,0 +1,15 @@
+﻿@model SearchPublicationModel
+
+@if (Model != null && !string.IsNullOrEmpty(Model.Error))
+{
+    <h3>@Model.Error</h3>
+}
+
+<h2>Шукати публікації</h2>
+<div class="form-group">
+    <form asp-controller="Info" asp-action="SearchPubilcation">
+        <input asp-for="Name" class="form-control" placeholder="Пошук за назвою">
+        <input asp-for="Author" class="form-control" placeholder="Пошук за автором">
+        <button style="margin-top:10px;"  class="btn btn-primary" type="submit" asp-controller="Info" asp-action="SearchPubilcation">Пошук</button>
+    </form>
+</div>

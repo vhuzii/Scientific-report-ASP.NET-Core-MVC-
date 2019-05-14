@@ -107,6 +107,32 @@ namespace ScientificReport.Controllers
             return View("Index", model);
         }
 
-        
+        public IActionResult Disapprove(string id)
+        {
+            User user = userService.getById(id);
+            user.IsApproved = false;
+            userService.Update(user);
+            var users = userService.getAll();
+            string theme = "Your account at АUТО_ЗВІТ was disapproved";
+            string messageS = "Dear, " + user.Name + "! Your account at АUТО_ЗВІТ was disapproved!" +
+                " If you are sure that it was done mistakenly, please, inform your admin!";
+
+            SendMessage(user.Email, theme, messageS);
+
+            var models = users
+                .Select(result => new UserModel
+                {
+                    Id = result.Id,
+                    FullName = result.Name,
+                    Faculty = result.Faculty,
+                    Department = result.Department,
+                    Status = result.IsApproved
+                });
+            var modelApproved = from i in models where i.Status == true select i;
+            var modelnotApproved = from i in models where i.Status == false select i;
+            KeyValuePair<IEnumerable<UserModel>, IEnumerable<UserModel>> model = new KeyValuePair<IEnumerable<UserModel>, IEnumerable<UserModel>>(modelApproved, modelnotApproved);
+            return View("Index", model);
+        }
+
     }
 }

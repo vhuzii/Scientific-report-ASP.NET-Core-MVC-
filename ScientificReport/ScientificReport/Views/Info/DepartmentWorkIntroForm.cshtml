@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "DepartmentFormIntroForm";
+}
+
+@model ScientificReportData.Models.DepartmentWorkIntro
+
+<form asp-controller="Info" asp-action="SaveDepartmentWorkIntro">
+	<h5 class="pb-2 text-center pt-3 report-block-header center">Додати тему для наукової роботи</h5>
+	<div class="report-block center">
+		<input asp-for="Intro" class="form-control mt-2" type="text"  placeholder="Тема" />
+		<button style="margin-top:8px;" type="submit" class="btn btn-primary">Submit</button>
+	</div>
+</form>

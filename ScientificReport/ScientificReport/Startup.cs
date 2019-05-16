@@ -53,7 +53,8 @@ namespace ScientificReport
             services.AddScoped<IRepository<Publication, int>, Repository<Publication, int>>();
             services.AddScoped<IRepository<UserConference, int>, Repository<UserConference, int>>();
             services.AddScoped<IRepository<ReportItem, int>, Repository<ReportItem, int>>();
-            services.AddScoped<UnitOfWork>();
+            services.AddScoped<IRepository<DepartmentWorkIntro, int>, Repository<DepartmentWorkIntro, int>>();
+			services.AddScoped<UnitOfWork>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IPublicationService, PublicationService>();
             services.AddScoped<IUserConferenceService,UserConferenceService>();

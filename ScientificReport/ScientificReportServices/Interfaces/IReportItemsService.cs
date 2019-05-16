@@ -1,4 +1,5 @@
-﻿using ScientificReportData.Models;
+﻿using System.Collections.Generic;
+using ScientificReportData.Models;
 using ScientificReportData.Models.Responses;
 
 namespace ScientificReportServices
@@ -12,5 +13,7 @@ namespace ScientificReportServices
         PubliEditViewModel SearchPublications(string searchParam, string author);
         void AddAuthor(int pubId, string author);
         Author GetUserAsAuthor(string usename);
-    }
+        IEnumerable<string> GetPublicationIntrosByUser(User user);
+		void AddDepartmentWorkIntro(DepartmentWorkIntro model);
+	}
 }

@@ -77,5 +77,15 @@ namespace ScientificReportServices
         {
             return _publServ.SearchPublications(searchParam, author);
         }
-    }
+
+		public IEnumerable<string> GetPublicationIntrosByUser(User user) 
+		{
+			return this._unitOfWork.DepartmentWorkTopicRepository.GetAll().Where(intro => intro.Faculty == user.Faculty).Select(s => s.Intro);
+		}
+
+		public void AddDepartmentWorkIntro(DepartmentWorkIntro model) 
+		{
+			_unitOfWork.DepartmentWorkTopicRepository.Create(model);
+		}
+	}
 }

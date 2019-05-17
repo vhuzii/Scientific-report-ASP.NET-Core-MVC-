@@ -1,14 +1,27 @@
 ﻿
+@using System.Collections
 @model ScientificReportData.Models.DepartmentWork
+@{
+	var topics = ViewData["availableTopics"] as IEnumerable<System.String>;
+}
 
-
-<form asp-controller="Info" asp-action="SaveDepartmentWork">
-    <h5 class="pb-2 text-center pt-3">Участь у науково-дослідній тематиці підрозділу</h5>
-    <div class="report-block center">
-        <input asp-for="Intro" class="form-control mt-2" type="text" placeholder="Тема" />
-        <input asp-for="Topic" class="form-control mt-2" type="text" placeholder="Шифр" />
-        <input asp-for="Category" class="form-control mt-2" type="text" placeholder="Категорія (держбюджетна, госпдоговірна, в межах робочого часу)" />
-<textarea asp-for="Content" class="form-control mt-2" type="text" placeholder="Стисло зміст виконаної роботи (до семи рядків)"></textarea>
-        <button style="margin-top:8px;" type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
+@if (topics.Any()) {
+	<form asp-controller="Info" asp-action="SaveDepartmentWork">
+		<h5 class="pb-2 text-center pt-3">Участь у науково-дослідній тематиці підрозділу</h5>
+		<div class="report-block center">
+			<input asp-for="Topic" class="form-control mt-2" type="text" placeholder="Шифр" />
+			<div style="font-size: 120%; padding: 10px;">Teма:</div>
+			<select asp-for="Intro" class="form-control">
+				@foreach (var intro in topics) {
+					<option value="@intro">@intro</option>
+				}
+			</select>
+			<input asp-for="Topic" class="form-control mt-2" type="text" placeholder="Шифр" />
+			<input asp-for="Category" class="form-control mt-2" type="text" placeholder="Категорія (держбюджетна, госпдоговірна, в межах робочого часу)" />
+			<textarea asp-for="Content" class="form-control mt-2" type="text" placeholder="Стисло зміст виконаної роботи (до семи рядків)"></textarea>
+			<button style="margin-top:8px;" type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</form>
+} else {
+	<h5 class="pb-2 text-center pt-3">Адмін факультету не вніс тем для наукових робіт</h5>
+}

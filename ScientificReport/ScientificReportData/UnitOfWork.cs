@@ -14,20 +14,22 @@ namespace ScientificReportData
 		public readonly IRepository<DepartmentWork, int> DepartmentWorkRepository;
 		public readonly IRepository<Conference, int> ConferenceRepository;
 		public readonly IRepository<Grant, int> GrantRepository;
-    public readonly IRepository<ReportItem, int> ReportItemRepository;
+		public readonly IRepository<ReportItem, int> ReportItemRepository;
 		public readonly IRepository<Publication, int> PublicationRepository;
         public readonly IRepository<UserConference, int> UserConferenceRepository;
         public readonly IRepository<User, string> UserRepository;
+        public readonly IRepository<DepartmentWorkIntro, int> DepartmentWorkTopicRepository;
 
-        public UnitOfWork(IRepository<Report, int> reportRepository,
+		public UnitOfWork(IRepository<Report, int> reportRepository,
 			IRepository<Author, int> authorRepository,
 			IRepository<DepartmentWork, int> departmentWorkRepository,
 			IRepository<Conference, int> conferenceRepository,
 			IRepository<Grant, int> grantRepository,
-      IRepository<ReportItem, int> reportItemRepository,
+			IRepository<ReportItem, int> reportItemRepository,
 			IRepository<Publication, int> publicationRepository,
-      IRepository<UserConference, int> userConferenceRepository,
-      IRepository<User, string> userRepository) 
+			IRepository<UserConference, int> userConferenceRepository,
+			IRepository<User, string> userRepository,
+			IRepository<DepartmentWorkIntro, int> departmentWorkTopicRepository) 
 		{
 			this.ReportRepository = reportRepository;
 			this.AuthorRepository = authorRepository;
@@ -35,10 +37,11 @@ namespace ScientificReportData
 			this.ConferenceRepository = conferenceRepository;
 			this.GrantRepository = grantRepository;
 			this.PublicationRepository = publicationRepository;
-      this.UserConferenceRepository = userConferenceRepository;
-      this.ReportItemRepository = reportItemRepository;
-      this.UserRepository = userRepository;
-        }
+		    this.UserConferenceRepository = userConferenceRepository;
+		    this.ReportItemRepository = reportItemRepository;
+		    this.UserRepository = userRepository;
+		    this.DepartmentWorkTopicRepository = departmentWorkTopicRepository;
+		}
 
         public Author GetAuthorByName(string name)
         {

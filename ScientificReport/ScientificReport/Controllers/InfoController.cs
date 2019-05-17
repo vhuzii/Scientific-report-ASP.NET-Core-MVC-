@@ -29,9 +29,12 @@ namespace ScientificReport.Controllers
             return View();
         }
 
-        public IActionResult DepartmentWorkForm()
+        public async Task<IActionResult> DepartmentWorkForm()
         {
-            return View();
+	        var currentUser = await _userServ.GetUserAsync(User);
+	        var availableTopics = _serv.GetPublicationIntrosByUser(currentUser);
+	        ViewData["availableTopics"] = availableTopics;
+			return View();
         }
 
         public IActionResult ReportItemFrom(string itemType)
@@ -77,7 +80,12 @@ namespace ScientificReport.Controllers
             return View();
         }
 
-        [HttpPost]
+        public IActionResult DepartmentWorkIntroForm()
+        {
+	        return View();
+        }
+
+		[HttpPost]
         public async Task<IActionResult> SavePublication([FromForm]CreatePublicationModel model)
         {
             var currentUser = await _userServ.GetUserAsync(User);
@@ -129,5 +137,14 @@ namespace ScientificReport.Controllers
             return RedirectToAction("Create");
         }
 
-    }
+        [HttpPost]
+        public async Task<IActionResult> SaveDepartmentWorkIntro([FromForm]DepartmentWorkIntro model) {
+	        var currentUser = await _userServ.GetUserAsync(User);
+	        model.Faculty = currentUser.Faculty;
+
+	        _serv.AddDepartmentWorkIntro(model);
+	        return RedirectToAction("Create");
+        }
+
+	}
 }

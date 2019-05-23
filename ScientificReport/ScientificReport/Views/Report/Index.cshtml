@@ -2,24 +2,57 @@
 	ViewData["Title"] = "ABTO Звіт";
 }
 @model User
-<div class="text-center">
-	@if (@Model != null && (@Model.IsApproved || @Model.IsAdmin) ) {
-        <img src="~/img/1.png"/>
-        <div>
-            <h3 style="text-align:center; margin-top:30px;">Welcome to <b>AVTO-ЗВІТ</b></h3>
-        </div>
-		<a class="btn btn-success" style="margin-top:30px;" asp-controller="Report" asp-action="CreateReportAsync">
-			<strong>Generate Report</strong>
-		</a>
-	}
-	else if(@Model == null){
-		<h3>Залогіньтеся, щоб побачити інформацію</h3>
-	}
-	else {
-		<div id="warning">
-			<h2 style="text-align:center;">Увага!</h2>
-			<p>Щоб переглянути інформацію зарєєструйтесь, дочекайтесь підтвердженняю</p>
-			<p>Після того, як вам на email-адресу прийде сповіщення, вийдіть і ввійдіть в систему.</p>
-		</div>
-	}
-</div>
+    <div class="text-center">
+        @if (@Model != null && (@Model.IsApproved || @Model.IsAdmin))
+        {
+            <img src="~/img/1.png" />
+            <div>
+                <h3 style="text-align:center; margin-top:30px;">Welcome to <b>AVTO-ЗВІТ</b></h3>
+            </div>
+            <a class="btn btn-success" style="margin-top:30px;" asp-controller="Report" asp-action="CreateReportAsync">
+                <strong>Generate Report</strong>
+            </a>
+        }
+        else if (@Model == null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show w-75 pt-5 pb-5" style="margin-left:auto; margin-right:auto;" role="alert">
+                <h4>Будь ласка, ввійдіть в систему, щоб побачити інформацію</h4>
+               
+            </div>
+
+            <img src="https://uain.press/_uploads/2018/09/13_53367-768x511.jpg" class="w-75" style="border-radius:10px; margin-bottom:20px;" />
+            <div class="row w-75 " style="margin-left:auto; margin-right:auto;">
+                <div class="col">
+                    <a href="https://www.facebook.com/franko.lviv.ua" class="btn btn-primary btn-lg">Ми у facebook! <i class="fab fa-facebook-square"></i></a>
+                </div>
+                <div class="col">
+                    <a href="https://www.instagram.com/lviv_university/?utm_source=ig_profile_share&igshid=6kfwggy4vs67&fbclid=IwAR23zObnvlN3uC_LTOoX1A5qb9IK0u-EQ6CnEsKPaPwLrY4-3m0ZTgWR_98" class="btn btn-danger btn-lg">Ми у instagram! <i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="col">
+                    <a href="https://twitter.com/LVIV_UNIVERSITY" class="btn btn-info btn-lg">Ми у twitter! <i class="fab fa-twitter-square"></i></a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning alert-dismissible fade show w-75" style="margin-left:auto; margin-right:auto;" role="alert">
+                <div id="warning">
+                    <h2 style="text-align:center;">Увага!</h2>
+                    <p>Будь ласка, дочекайтесь підтвердження реєстрації <br />
+                    Після того, як вам на email-адресу прийде сповіщення, вийдіть і ввійдіть в систему.</p>
+                </div>               
+            </div>
+            <img src="https://uain.press/_uploads/2018/09/13_53367-768x511.jpg" class="w-75" style="border-radius:10px; margin-bottom:20px;" />
+            <div class="row w-75 " style="margin-left:auto; margin-right:auto;">
+                <div class="col">
+                    <a href="https://www.facebook.com/franko.lviv.ua" class="btn btn-primary btn-lg">Ми у facebook! <i class="fab fa-facebook-square"></i></a>
+                </div>
+                <div class="col">
+                    <a href="https://www.instagram.com/lviv_university/?utm_source=ig_profile_share&igshid=6kfwggy4vs67&fbclid=IwAR23zObnvlN3uC_LTOoX1A5qb9IK0u-EQ6CnEsKPaPwLrY4-3m0ZTgWR_98" class="btn btn-danger btn-lg">Ми у instagram! <i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="col">
+                    <a href="https://twitter.com/LVIV_UNIVERSITY" class="btn btn-info btn-lg">Ми у twitter! <i class="fab fa-twitter-square"></i></a>
+                </div>
+            </div>
+        }
+    </div>

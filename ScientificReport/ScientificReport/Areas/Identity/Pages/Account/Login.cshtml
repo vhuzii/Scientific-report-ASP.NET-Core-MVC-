@@ -5,9 +5,9 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-5">
+<h1 class="text-center">Вхід в систему</h1>
+<div class="row pt-1">
+    <div class="col-md-6 offset-1">
         <section>
             <form id="account" method="post">
                 <h4>Use a local account to log in.</h4>
@@ -19,32 +19,26 @@
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Input.Password"></label>
+                    <label asp-for="Input.Password">Пароль</label>
                     <input asp-for="Input.Password" class="form-control" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+               
                 <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
+                    <button type="submit" class="btn btn-primary">Ввійти</button>
                 </div>
                 <div class="form-group">
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Забули пароль?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Зареєструватись</a>
                     </p>
                 </div>
             </form>
         </section>
     </div>
+    <img src="~/img/lviv.png" alt="Alternate Text" style="height:93vh; position :fixed; bottom:0; left:20%;z-index:-1000;" />
 </div>
 
 @section Scripts {

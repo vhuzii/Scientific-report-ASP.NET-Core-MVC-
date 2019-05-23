@@ -21,44 +21,69 @@
      
 </style>
 
+
+
 <div class="text-center">
-	@if (@Model != null && (@Model.IsApproved || @Model.IsAdmin) ) {
+    @if (@Model != null && (@Model.IsApproved || @Model.IsAdmin) ) {
         <img src="~/img/1.png"/>
-	    <div>
+        <div>
             <h3 style="text-align:center; margin-top:30px;">Welcome to <b>AVTO-ЗВІТ</b></h3>
         </div>
-	    <label for="start">Start date:</label>
+        <label for="start">Start date:</label>
 
-	    <input type="date" id="start" name="report-start"
-               value="2018-07-22"
+        <input type="date" id="start" name="report-start"
+               value=""
                min="1950-01-01" max="2050-01-01">
 
-	    <label for="end">End date:</label>
-	    <input type="date" id="end" name="report-end"
-               value="2018-07-22"
+        <label for="end">End date:</label>
+        <input type="date" id="end" name="report-end"
+               value=""
                min="1950-01-01" max="2050-01-01">
-        @if (true)
-         {
-             <a class="btn btn-success" style="margin-top: 30px;" asp-controller="Report" asp-action="CreateReportAsync">
-                 <strong>Generate Report</strong>
-             </a>
-        }
-        else
-        {
-            <a class="btn btn-success" style="margin-top: 30px;" asp-controller="Report" asp-action="CreateReportByDateAsync">
-                <strong>Generate Report</strong>
-            </a>
-        }
-	    
-	}
-	else if(@Model == null){
-		<h3>Залогіньтеся, щоб побачити інформацію</h3>
-	}
-	else {
-	    <div id="warning">
+        
+        <a id="createReport" class="btn btn-success" style="margin-top: 30px;"asp-controller="Report" asp-action="CreateReportByDateAsync">
+            <strong>Generate Report</strong>
+        </a>
+    }
+    else if(@Model == null){
+        <h3>Залогіньтеся, щоб побачити інформацію</h3>
+    }
+    else {
+        <div id="warning">
             <h2 style="text-align: center;">Увага!</h2>
             <p>Щоб переглянути інформацію зарєєструйтесь, дочекайтесь підтвердженняю</p>
             <p>Після того, як вам на email-адресу прийде сповіщення, вийдіть і ввійдіть в систему.</p>
         </div>
-	}
+    }
 </div>
+
+@*<script>
+
+    var btn = document.getElementById('createReport');
+    var start = document.getElementById('start');
+    var end = document.getElementById('end');
+
+    btn.onclick = function () {
+        @ViewBag.start = start.value;
+        @ViewBag.end = end.value;
+        var value = { start: start.value, end: end.value };
+        sendData(value);
+    };
+    function sendData(filters) {
+        
+        $.ajax({
+            url: '/Report/CreateReportByDateAsync',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                debugger; $('body').html(result);
+
+            }).fail(function (xhr) {
+                //console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+</script>*@

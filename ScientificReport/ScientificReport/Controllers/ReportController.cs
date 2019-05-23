@@ -38,12 +38,12 @@ namespace ScientificReport.Controllers
             var viewModel = _reportService.CreateViewModel(currentUser);
 			return new ViewAsPdf("CreateReport", viewModel) { FileName = "Report.pdf" };
 		}
-        public async Task<IActionResult> CreateReportByDateAsync(DateTime start, DateTime end)
+        public async Task<IActionResult> CreateReportByDateAsync(string start, string end)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var report = _reportService.CreateReport(currentUser);
-            DateTime st = new DateTime(2015,5,5);
-            DateTime nd = new DateTime(2016, 5, 5);
+            DateTime st = start != null ? st = Convert.ToDateTime(start) : st = new DateTime(2019, 5, 24);
+            DateTime nd = end != null ? nd = Convert.ToDateTime(end) : nd = new DateTime(2150, 12, 12); ;
             var viewModel = _reportService.CreateViewModel(currentUser,st,nd);
             return new ViewAsPdf("CreateReport", viewModel) { FileName = "Report.pdf" };
         }

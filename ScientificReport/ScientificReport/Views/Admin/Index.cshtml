@@ -62,7 +62,7 @@
                             @asset.Department
                         </td>
                         <td>
-                            <button type="button" onclick="" disabled class="btn btn-danger">Approved</button>
+                            <a asp-route-id="@asset.Id" asp-controller="Admin" asp-action="Disapprove" class="btn btn-danger">Disapprove</a>
                         </td>
                     </tr>
                 }

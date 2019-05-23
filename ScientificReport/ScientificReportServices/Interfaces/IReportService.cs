@@ -10,5 +10,6 @@ namespace ScientificReportServices
     {
         Report CreateReport(User currentUser);
         ReportViewModel CreateViewModel(User currentUser);
+        ReportViewModel CreateViewModel(User curUser, DateTime start, DateTime End);
     }
 }

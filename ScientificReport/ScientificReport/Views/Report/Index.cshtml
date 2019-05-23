@@ -1,25 +1,64 @@
 ﻿@{
 	ViewData["Title"] = "ABTO Звіт";
 }
+@using System.Linq.Expressions
+@using System.Security.Cryptography
 @model User
+
+<style>
+    label {
+        font: 1rem 'Fira Sans', sans-serif;
+    }
+
+    input,
+    label {
+        margin: .4rem 0;
+    }
+
+    .note {
+        font-size: .8em;
+    }
+     
+</style>
+
 <div class="text-center">
 	@if (@Model != null && (@Model.IsApproved || @Model.IsAdmin) ) {
         <img src="~/img/1.png"/>
-        <div>
+	    <div>
             <h3 style="text-align:center; margin-top:30px;">Welcome to <b>AVTO-ЗВІТ</b></h3>
         </div>
-		<a class="btn btn-success" style="margin-top:30px;" asp-controller="Report" asp-action="CreateReportAsync">
-			<strong>Generate Report</strong>
-		</a>
+	    <label for="start">Start date:</label>
+
+	    <input type="date" id="start" name="report-start"
+               value="2018-07-22"
+               min="1950-01-01" max="2050-01-01">
+
+	    <label for="end">End date:</label>
+	    <input type="date" id="end" name="report-end"
+               value="2018-07-22"
+               min="1950-01-01" max="2050-01-01">
+        @if (true)
+         {
+             <a class="btn btn-success" style="margin-top: 30px;" asp-controller="Report" asp-action="CreateReportAsync">
+                 <strong>Generate Report</strong>
+             </a>
+        }
+        else
+        {
+            <a class="btn btn-success" style="margin-top: 30px;" asp-controller="Report" asp-action="CreateReportByDateAsync">
+                <strong>Generate Report</strong>
+            </a>
+        }
+	    
 	}
 	else if(@Model == null){
 		<h3>Залогіньтеся, щоб побачити інформацію</h3>
 	}
 	else {
-		<div id="warning">
-			<h2 style="text-align:center;">Увага!</h2>
-			<p>Щоб переглянути інформацію зарєєструйтесь, дочекайтесь підтвердженняю</p>
-			<p>Після того, як вам на email-адресу прийде сповіщення, вийдіть і ввійдіть в систему.</p>
-		</div>
+	    <div id="warning">
+            <h2 style="text-align: center;">Увага!</h2>
+            <p>Щоб переглянути інформацію зарєєструйтесь, дочекайтесь підтвердженняю</p>
+            <p>Після того, як вам на email-адресу прийде сповіщення, вийдіть і ввійдіть в систему.</p>
+        </div>
 	}
 </div>

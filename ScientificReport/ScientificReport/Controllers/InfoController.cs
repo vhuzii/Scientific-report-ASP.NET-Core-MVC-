@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ScientificReport.Models;
 using ScientificReportData.Models;
@@ -51,7 +52,7 @@ namespace ScientificReport.Controllers
             var userAsAuthor = _serv.GetUserAsAuthor(currentUser.Name);
             model.Authors = new List<Author>();
             model.Authors.Add(userAsAuthor);
-
+            model.Date = DateTime.Now;
             _serv.AddDepartmentWork(model);
 
             return RedirectToAction("Create");
@@ -69,7 +70,7 @@ namespace ScientificReport.Controllers
             var userAsAuthor = _serv.GetUserAsAuthor(currentUser.Name);
             model.Participants = new List<Author>();
             model.Participants.Add(userAsAuthor);
-
+            model.Date = DateTime.Now;
             _serv.AddGrant(model);
 
             return RedirectToAction("Create");
@@ -93,7 +94,7 @@ namespace ScientificReport.Controllers
             {
                 model.Authors += ", " + currentUser.Name;
             }
-
+            model.Date = DateTime.Now;
             _serv.AddPublication(model);
 
             return RedirectToAction("Create");
@@ -131,7 +132,7 @@ namespace ScientificReport.Controllers
         {
             var currentUser = await _userServ.GetUserAsync(User);
             model.User = currentUser.Name;
-
+            model.Date = DateTime.Now;
             _serv.AddReportItem(model);
 
             return RedirectToAction("Create");
@@ -141,8 +142,7 @@ namespace ScientificReport.Controllers
         public async Task<IActionResult> SaveDepartmentWorkIntro([FromForm]DepartmentWorkIntro model) {
 	        var currentUser = await _userServ.GetUserAsync(User);
 	        model.Faculty = currentUser.Faculty;
-
-	        _serv.AddDepartmentWorkIntro(model);
+            _serv.AddDepartmentWorkIntro(model);
 	        return RedirectToAction("Create");
         }
 

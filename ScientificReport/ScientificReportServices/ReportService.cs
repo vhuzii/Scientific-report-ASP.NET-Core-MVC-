@@ -34,6 +34,8 @@ namespace ScientificReportServices
             return report;
         }
 
+
+
         public ReportViewModel CreateViewModel(User currentUser)
         {
             var publications = unitOfWork.PublicationRepository.Set.Include( p => p.Authors).Where(p => p.Authors != null && p.Authors.Any(a => a.Name == currentUser.Name))?.ToList();
@@ -68,7 +70,43 @@ namespace ScientificReportServices
                 PubSummary = summary
             };
             return result;
-        }      
+        }
+
+        public ReportViewModel CreateViewModel(User currentUser,DateTime start, DateTime end)
+        {
+            var publications = unitOfWork.PublicationRepository.Set.Include(p => p.Authors).Where(p => p.Authors != null && p.Authors.Any(a => a.Name == currentUser.Name)).Where(d =>d.Date > start && d.Date < end)?.ToList();
+            var grants = unitOfWork.GrantRepository.Set.Include(p => p.Participants).Where(p => p.Participants.Any(a => p.Participants != null && a.Name == currentUser.Name)).Where(d => d.Date > start && d.Date < end)?.ToList();
+            var depWorks = unitOfWork.DepartmentWorkRepository.Set.Include(p => p.Authors).Where(p => p.Authors != null && p.Authors.Any(a => a.Name == currentUser.Name)).Where(d => d.Date > start && d.Date < end)?.ToList();
+            var conferences = unitOfWork.ConferenceRepository.Set.Include(p => p.Participants).Where(p => p.Participants != null && p.Participants.Any(a => a.Name == currentUser.Name)).Where(d => d.Date > start && d.Date < end)?.ToList();
+            var repItems = unitOfWork.ReportItemRepository.GetAll().Where(p => p.User == currentUser.Name).Where(d => d.Date > start && d.Date < end)?.ToList();
+            var publTypesGroup = publications.Where(d => d.Date > start && d.Date < end).GroupBy(p => p.Type)?.ToList();
+            var recentPubls = publications.Where(d => d.Date > start && d.Date < end).GroupBy(p => p.Type)?.ToList();
+            var publTypes = publTypesGroup?.Select(g => g.Key).ToList();
+            var summary = new List<PublSummary>();
+            if (publTypes != null)
+            {
+                foreach (var t in publTypes)
+                {
+                    summary.Add(new PublSummary
+                    {
+                        PubName = t,
+                        Year = recentPubls?.FirstOrDefault(p => p.Key == t)?.Count() ?? 0,
+                        Total = publTypesGroup?.FirstOrDefault(p => p.Key == t)?.Count() ?? 0
+                    });
+                }
+            }
+            var result = new ReportViewModel
+            {
+                User = currentUser,
+                Publications = publications ?? new List<Publication>(),
+                DepartmentWorks = depWorks ?? new List<DepartmentWork>(),
+                Conferences = conferences ?? new List<Conference>(),
+                Grants = grants ?? new List<Grant>(),
+                RepItems = repItems ?? new List<ReportItem>(),
+                PubSummary = summary
+            };
+            return result;
+        }
 
         private string GenerateIntro()
         {

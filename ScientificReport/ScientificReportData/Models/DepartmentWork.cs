@@ -18,6 +18,7 @@ namespace ScientificReportData.Models
 		public string Category { get; set; }
         public string Intro { get; set; }
         public string Content { get; set; }
+        public DateTime Date { get; set; }
     }
 
 }

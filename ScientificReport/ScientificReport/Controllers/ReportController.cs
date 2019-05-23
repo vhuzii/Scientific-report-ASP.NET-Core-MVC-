@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata.Internal;
 using Rotativa.AspNetCore;
 using ScientificReportData.Models;
 using ScientificReportServices;
@@ -37,5 +38,14 @@ namespace ScientificReport.Controllers
             var viewModel = _reportService.CreateViewModel(currentUser);
 			return new ViewAsPdf("CreateReport", viewModel) { FileName = "Report.pdf" };
 		}
+        public async Task<IActionResult> CreateReportByDateAsync(DateTime start, DateTime end)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var report = _reportService.CreateReport(currentUser);
+            DateTime st = new DateTime(2015,5,5);
+            DateTime nd = new DateTime(2016, 5, 5);
+            var viewModel = _reportService.CreateViewModel(currentUser,st,nd);
+            return new ViewAsPdf("CreateReport", viewModel) { FileName = "Report.pdf" };
+        }
     }
 }

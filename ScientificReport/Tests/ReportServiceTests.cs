@@ -397,14 +397,14 @@ namespace Tests
             {
                 //Arrange
                 mack.Mock<IReportService>()
-                    .Setup(x => x.CreateViewModel(user))
+                    .Setup(x => x.CreateViewModel(user,DateTime.MinValue,DateTime.MaxValue ))
                     .Returns(GetSampleViewModel(resulting));
                 //Act
                 var cls = mack.Create<IReportService>();
 
                 var expected = GetSampleViewModel(resulting);
 
-                var actual = cls.CreateViewModel(user);
+                var actual = cls.CreateViewModel(user,DateTime.MinValue,DateTime.MaxValue );
                 //Assert
                 Assert.AreEqual(actual,expected);
             };

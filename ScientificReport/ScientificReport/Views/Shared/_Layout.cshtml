@@ -53,19 +53,19 @@
                             if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Admin">Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Admin">Керування</a>
                                 </li>
                             }
                             else if (User.IsInRole("FacultyAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="FacultyAdmin">Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="FacultyAdmin">Керування</a>
                                 </li>
                             }
                             else if (User.IsInRole("DepartmentAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="DepartmentAdmin">Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="DepartmentAdmin">Керування</a>
                                 </li>
                             }
                         }

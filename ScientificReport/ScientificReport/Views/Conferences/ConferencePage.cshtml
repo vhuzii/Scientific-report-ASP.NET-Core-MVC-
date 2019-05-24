@@ -23,13 +23,13 @@
     <img src="~/img/lviv2.png" alt="Alternate Text" style="width:75vw; position :fixed; bottom:0; left:12%;z-index:-1000;" />
 </div>
 <script>
-
-    var btn = document.getElementById('btnn');
-    var result = document.getElementById('ti').value + '*' + document.getElementById('de').value +
+    let btn = document.getElementById('btnn');
+    
+    btn.onclick = function () {
+      
+        let result = document.getElementById('ti').value + '*' + document.getElementById('de').value + '*'+
         document.getElementById('da').value + '*' + document.getElementById('sr').value;   
 
-    btn.onclick = function () {
-        
         var value = { co:result };
         sendData(value);
     };

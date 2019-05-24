@@ -9,6 +9,6 @@ namespace ScientificReportServices
     public interface IReportService
     {
         Report CreateReport(User currentUser);
-        ReportViewModel CreateViewModel(User currentUser);
+        ReportViewModel CreateViewModel(User curUser, DateTime start, DateTime End);
     }
 }

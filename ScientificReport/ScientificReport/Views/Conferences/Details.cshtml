@@ -51,9 +51,9 @@
         }
         else
         {
-            <button type="button" disabled id="@Model.ConferenceInfo.Id" class="btn btn-success center">
-                Ви взяли участь в цій конференції
-            </button>
+            <a asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-controller="Conferences" asp-action="DeleteUserFromConference" class="btn btn-danger center">
+                Скасувати участь
+            </a>
         }
     </div>
 </div>

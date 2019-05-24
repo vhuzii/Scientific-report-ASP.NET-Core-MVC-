@@ -10,5 +10,6 @@ namespace ScientificReportServices
         void Add(UserConference newElem);
         UserConference getById(int Id);
         IEnumerable<UserConference> getAll();
+        void Delete(UserConference userToDelete);
     }
 }

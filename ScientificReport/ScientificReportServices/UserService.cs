@@ -16,8 +16,8 @@ namespace ScientificReportServices
 
         public UserService(UnitOfWork uow)
         {
-            this.unitOfWork = uow;            
-        }        
+            this.unitOfWork = uow;
+        }
 
         public IEnumerable<User> getAll()
         {
@@ -32,5 +32,11 @@ namespace ScientificReportServices
         {
             return unitOfWork.UserRepository.Get(id);
         }
+        public void Delete(User user)
+        {
+            unitOfWork.UserRepository.Delete(user.Id);
+        }
+            
+
     }
 }

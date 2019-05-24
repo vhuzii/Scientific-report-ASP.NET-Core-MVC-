@@ -4,12 +4,19 @@
 {
     <h3>@Model.Error</h3>
 }
-
-<h2>Шукати публікації</h2>
-<div class="form-group">
+<style>
+    input {
+        margin-top: 10px;
+    }
+</style>
+<h2 class="pl-1">Пошук публікацій</h2>
+<div class="form-group" style="background-color:rgba(255,255,255,0.5); padding-bottom:10px; border-radius:10px; ">
     <form asp-controller="Info" asp-action="SearchPubilcation">
         <input asp-for="Name" class="form-control" placeholder="Пошук за назвою">
         <input asp-for="Author" class="form-control" placeholder="Пошук за автором">
-        <button style="margin-top:10px;"  class="btn btn-primary" type="submit" asp-controller="Info" asp-action="SearchPubilcation">Пошук</button>
+        <button style="margin-top:10px; float:right; width:100px;" class="btn btn-primary" type="submit" asp-controller="Info" asp-action="SearchPubilcation">Пошук</button>
     </form>
+</div>
+<div>
+    <img src="~/img/lviv2.png" alt="Alternate Text" style="width:75vw; position :fixed; bottom:0; left:12%;z-index:-1000;" />
 </div>

@@ -4,12 +4,12 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center">Реєстрація</h1>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5 offset-1"  style="background-color:rgba(255,255,255,0.9); padding-bottom:10px; border-radius:10px;">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
+            <h4>Створення нового аккаунту</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -74,6 +74,9 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
+    
+        <img src="~/img/lviv.png" alt="Alternate Text" style="height:93vh; position :fixed; bottom:0; left:20%;z-index:-1000;"/>
+    
 </div>
 
 @section Scripts {

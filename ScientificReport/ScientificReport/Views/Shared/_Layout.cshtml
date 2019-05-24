@@ -24,12 +24,13 @@
               integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Report" asp-action="Index">ScientificReport</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Report" asp-action="Index"><img src="~/img/1.png" style="width:35px; padding-right:5px;"/>AUTO<b>ЗВІТ</b></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -38,31 +39,33 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated && (user != null && (user.IsAdmin || user.IsApproved)))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="Create">Compose Report</a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="SearchPubilcationForm">Публікації</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Conferences" asp-action="Index">Conferences</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Conferences" asp-action="Index">Конференції</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark " asp-area="" asp-controller="Info" asp-action="Create">Згенерувати звіт</a>
+                            </li>
+
                             if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Admin">Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Admin">Керування</a>
                                 </li>
                             }
                             else if (User.IsInRole("FacultyAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="FacultyAdmin">Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="FacultyAdmin">Керування</a>
                                 </li>
                             }
                             else if (User.IsInRole("DepartmentAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="DepartmentAdmin">Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-route-id="@UserManager.GetUserId(User)" asp-controller="Admin" asp-action="DepartmentAdmin">Керування</a>
                                 </li>
                             }
                         }
@@ -79,7 +82,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="background-color:rgba(255,255,255,0.8);">
         <div class="container">
             &copy; 2019 - ScientificReport
         </div>

@@ -31,5 +31,9 @@ namespace ScientificReportServices
         {
             return repository.GetAll();
         }
+        public void Delete(UserConference userToDelete)
+        {
+            repository.Delete(userToDelete.Id);
+        }
     }
 }

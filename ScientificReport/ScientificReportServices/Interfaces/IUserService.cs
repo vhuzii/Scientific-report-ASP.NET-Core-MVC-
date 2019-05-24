@@ -12,5 +12,6 @@ namespace ScientificReportServices
         IEnumerable<User> getAll();
         void Update(User updateElement);
         User getById(string id);
-        }
+        void Delete(User user);
+    }
 }

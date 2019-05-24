@@ -18,14 +18,12 @@ namespace ScientificReport.Controllers
         private readonly IConferenceService conferenceService;
         private readonly IUserService userService;
         private readonly IUserConferenceService userConferenceService;
-        private readonly UnitOfWork uOW;
        
-        public ConferencesController(IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService,UnitOfWork uOW)
+        public ConferencesController(IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService)
         {
             this.conferenceService = conferenceService;
             this.userService = userService;
             this.userConferenceService = userConferenceService;
-            this.uOW = uOW;
         }
 
         public IActionResult Index()
@@ -113,7 +111,7 @@ namespace ScientificReport.Controllers
             var thisConferenceUsers = conferenceUsers
                 .Where(res => res.ConferenceId == id)
                 .Select(res => res.UserId);
-            var thisConferenceUserNames = from i in thisConferenceUsers select uOW.UserRepository.Get(i).Name;
+            var thisConferenceUserNames = from i in thisConferenceUsers select userService.getById(i).Name;
             model.UserNames = thisConferenceUserNames;
             foreach (var item in conferenceUsers)
             {
@@ -156,7 +154,7 @@ namespace ScientificReport.Controllers
             var thisConferenceUsers = conferenceUsers
                 .Where(res => res.ConferenceId == id)
                 .Select(res => res.UserId);
-            var thisConferenceUserNames = from i in thisConferenceUsers select uOW.UserRepository.Get(i).Name;
+            var thisConferenceUserNames = from i in thisConferenceUsers select userService.getById(i).Name;
             model.UserNames = thisConferenceUserNames;
 
             var result = conferenceService.getById(id);
@@ -174,6 +172,44 @@ namespace ScientificReport.Controllers
             };
             model.ConferenceInfo = data;
             return View(model);
+        }
+        public IActionResult DeleteUserFromConference(int id,string userId)
+        {
+            var conferenceUsers = userConferenceService.getAll();
+            
+            var ConferenceUsers = conferenceUsers
+                .Where(res => res.ConferenceId == id)
+                .Select(res => res);
+            var userToDel =( from i in ConferenceUsers where i.UserId==userId select i ).ToList();
+
+            userConferenceService.Delete(userToDel[0]);
+            ConferenceDetailsModel model = new ConferenceDetailsModel();
+            
+            model.TakePart = false;
+            
+
+            conferenceUsers = userConferenceService.getAll();
+            var thisConferenceUsers = conferenceUsers
+                .Where(res => res.ConferenceId == id)
+                .Select(res => res.UserId);
+            var thisConferenceUserNames = from i in thisConferenceUsers select userService.getById(i).Name;
+            model.UserNames = thisConferenceUserNames;
+
+            var result = conferenceService.getById(id);
+            result.Watches = result.Watches + 1;
+            conferenceService.Update(result);
+            var data = new Conference()
+            {
+                Id = result.Id,
+                Date = result.Date,
+                Description = result.Description,
+                ImgPath = result.ImgPath,
+                Likes = result.Likes,
+                Title = result.Title,
+                Watches = result.Watches
+            };
+            model.ConferenceInfo = data;
+            return View("Details",model);
         }
     }
 }

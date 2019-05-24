@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ScientificReportData.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace ScientificReportData.Models
 {
@@ -16,5 +18,7 @@ namespace ScientificReportData.Models
         public string Description { get; set; }
 
 		public ICollection<Author> Participants { get; set; }
-	}
+
+        public DateTime Date { get; set; }
+    }
 }

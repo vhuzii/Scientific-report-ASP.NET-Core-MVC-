@@ -30,17 +30,17 @@
             <div>
 
                 <div>
-                    <p class="text">Likes</p>
-                    <img src="~/img/Conferences/icons/likes.png" alt="Likes" class="small-ico" />
+                    <p class="text ">Likes</p>
+                    <img src="~/img/Conferences/icons/likes.png" alt="Likes" class="small-ico " />
                 </div>
-                <p>@Model.ConferenceInfo.Likes</p>
+                <p class="pl-1">@Model.ConferenceInfo.Likes</p>
             </div>
             <div>
                 <div>
                     <p class="text">Watches</p>
                     <img src="~/img/Conferences/icons/watches.png" alt="Watches" class="small-ico" />
                 </div>
-                <p>@Model.ConferenceInfo.Watches</p>
+                <p class="pl-1">@Model.ConferenceInfo.Watches</p>
             </div>
         </div>
         @if (Model.TakePart == false)

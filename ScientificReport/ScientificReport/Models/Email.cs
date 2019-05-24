@@ -5,7 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using MailKit.Net.Smtp;
 using System.Threading.Tasks;
+/*
+ 
+jdwhfleqyhynlsqm
 
+autozvitlnu@gmail.com 
+
+ */
 namespace ScientificReport.Models
 {
     public class Email
@@ -14,7 +20,7 @@ namespace ScientificReport.Models
         {
             var emailMessage = new MimeMessage();
             //Change Email Address
-            emailMessage.From.Add(new MailboxAddress("ScintificReport - AUTOZVIT", "andri.yovbak@gmail.com"));
+            emailMessage.From.Add(new MailboxAddress("ScintificReport - AUTOZVIT", "autozvitlnu@gmail.com"));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -25,7 +31,7 @@ namespace ScientificReport.Models
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync("smtp.gmail.com", 465, true);
-                await client.AuthenticateAsync("andri.yovbak@gmail.com", "nfvmpioukmgsphpq");
+                await client.AuthenticateAsync("autozvitlnu@gmail.com", "jdwhfleqyhynlsqm");
                 await client.SendAsync(emailMessage);               
                 await client.DisconnectAsync(true);
             }

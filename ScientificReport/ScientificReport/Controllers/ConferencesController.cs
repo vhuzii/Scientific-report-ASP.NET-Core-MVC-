@@ -44,7 +44,42 @@ namespace ScientificReport.Controllers
                 });
             return View(result);
         }
-
+        public IActionResult ConferencePage()
+        {
+            return View();
+        }
+        
+        
+        public IActionResult AddConference(string co )
+        {            
+            string[] arr = co.Split('*');
+            string[] q = arr[2].Split('-');
+            DateTime date = new DateTime(int.Parse(q[0]), int.Parse(q[1]), int.Parse(q[2]));
+            Conference newConf = new Conference()
+            {
+                Title =arr[0],
+                Description=arr[1],
+                Date=date,
+                ImgPath =arr[3],
+                Likes=0,
+                Watches=0               
+                
+            };
+            conferenceService.Add(newConf);
+            var conferences = conferenceService.getAll();
+            var result = conferences
+                .Select(r => new Conference()
+                {
+                    Id = r.Id,
+                    Date = r.Date,
+                    Description = r.Description,
+                    ImgPath = r.ImgPath,
+                    Likes = r.Likes,
+                    Title = r.Title,
+                    Watches = r.Watches
+                });
+            return View("Index", result);
+        }
         public IActionResult SaveConference()
         {
             return Ok();

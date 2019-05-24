@@ -30,7 +30,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Report" asp-action="Index">ScientificReport</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Report" asp-action="Index"><img src="~/img/1.png" style="width:35px; padding-right:5px;"/>AUTO<b>ЗВІТ</b></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,15 +39,17 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated && (user != null && (user.IsAdmin || user.IsApproved)))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="Create">Compose Report</a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="SearchPubilcationForm">Публікації</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Conferences" asp-action="Index">Conferences</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Conferences" asp-action="Index">Конференції</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark " asp-area="" asp-controller="Info" asp-action="Create">Згенерувати звіт</a>
+                            </li>
+
                             if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">

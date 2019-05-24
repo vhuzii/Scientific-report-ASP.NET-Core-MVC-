@@ -24,8 +24,9 @@
 
 
 <div class="text-center">
-    @if (@Model != null && (@Model.IsApproved || @Model.IsAdmin) ) {
-        <img src="~/img/1.png"/>
+    @if (@Model != null && (@Model.IsApproved || @Model.IsAdmin))
+    {
+        <img src="~/img/1.png" />
         <div>
             <h3 style="text-align:center; margin-top:30px;">Welcome to <b>AVTO-ЗВІТ</b></h3>
         </div>
@@ -39,15 +40,21 @@
         <input type="date" id="end" name="report-end"
                value=""
                min="1950-01-01" max="2050-01-01">
-        
-        <a id="createReport" class="btn btn-success" style="margin-top: 30px;"asp-controller="Report" asp-action="CreateReportByDateAsync">
-            <strong>Generate Report</strong>
+        //"asp-controller="Report" asp-action="CreateReportByDateAsync"
+        <a id="createReport" class="btn btn-success" style="margin-top: 30px" ;>
+            <strong>Set Date</strong>
+        </a>
+
+        <a id="createReport1" class="btn btn-success" style="margin-top: 30px" asp-controller="Report" asp-action="CreateReport" ;>
+            <strong>Download Report</strong>
         </a>
     }
-    else if(@Model == null){
+    else if (@Model == null)
+    {
         <h3>Залогіньтеся, щоб побачити інформацію</h3>
     }
-    else {
+    else
+    {
         <div id="warning">
             <h2 style="text-align: center;">Увага!</h2>
             <p>Щоб переглянути інформацію зарєєструйтесь, дочекайтесь підтвердженняю</p>
@@ -56,15 +63,14 @@
     }
 </div>
 
-@*<script>
+<script>
 
     var btn = document.getElementById('createReport');
     var start = document.getElementById('start');
     var end = document.getElementById('end');
 
     btn.onclick = function () {
-        @ViewBag.start = start.value;
-        @ViewBag.end = end.value;
+
         var value = { start: start.value, end: end.value };
         sendData(value);
     };
@@ -79,11 +85,11 @@
             data: filters
         })
             .done(function (result) {
-                debugger; $('body').html(result);
+                 
 
             }).fail(function (xhr) {
-                //console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+                
             });
 
     }
-</script>*@
+</script>

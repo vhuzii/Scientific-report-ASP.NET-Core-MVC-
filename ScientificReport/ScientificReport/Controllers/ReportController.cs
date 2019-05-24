@@ -18,7 +18,8 @@ namespace ScientificReport.Controllers
     {
         private readonly IReportService _reportService;
         private readonly UserManager<User> _userManager;
-
+        public static DateTime st;
+        public static DateTime nd;
 		public ReportController(IReportService reportService, IUserService userService, UserManager<User> userManager)
         {
             this._reportService = reportService;
@@ -35,9 +36,22 @@ namespace ScientificReport.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var report = _reportService.CreateReport(currentUser);
-            DateTime st = start != null ? st = Convert.ToDateTime(start) : st = new DateTime(2019, 5, 20);
-            DateTime nd = end != null ? nd = Convert.ToDateTime(end) : nd = new DateTime(2150, 12, 12); ;
+            st = start != null ? st = Convert.ToDateTime(start) : st = new DateTime(1, 1, 1);
+            nd = end != null ? nd = Convert.ToDateTime(end) : nd = new DateTime(2150, 12, 12); 
             var viewModel = _reportService.CreateViewModel(currentUser,st,nd);
+
+            return new ViewAsPdf("CreateReport", viewModel) { FileName = "Report.pdf" };
+        }
+
+        public async Task<IActionResult> CreateReport()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var report = _reportService.CreateReport(currentUser);
+            if (nd == DateTime.MinValue)
+            {
+                nd = new DateTime(2150, 12, 12);
+            }
+            var viewModel = _reportService.CreateViewModel(currentUser, st, nd);
             return new ViewAsPdf("CreateReport", viewModel) { FileName = "Report.pdf" };
         }
     }

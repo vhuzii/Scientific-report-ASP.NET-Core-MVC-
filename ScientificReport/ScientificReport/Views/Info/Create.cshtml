@@ -1,0 +1,21 @@
+﻿@{
+	ViewData["Title"] = "Create";
+}
+
+<div class="form-group report-block center">
+	<h3 for="typeInput" class="pl-4">Виберіть тип</h3>
+	<ul class="list-group list-group-flush" style="list-style-type : none">
+		<li class="list-group-item"><a asp-controller="Info" asp-action="DepartmentWorkForm">Участь у науково-дослідній тематиці підрозділy</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="GrantsForm">Участь у виконанні індивідуальних або колективних ґрантів</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Наукові стажування">Наукові стажування</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій">Наукове керівництво аспірантами, здобувачами, наукове консультування при написанні докторських дисертацій</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації">Керівництво студентською науковою роботою, студентськими гуртками, підготовка студентів, спільні публікації</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="PublicationForm">Наукові праці</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Патентно-ліцензійна діяльність">Патентно-ліцензійна діяльність</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки">Рецензування та опонування дисертацій, відгуки на автореферати, експертні висновки</a></li>
+		<li class="list-group-item"><a asp-controller="Info" asp-action="ReportItemFrom" asp-route-itemType="Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо">Членство у спеціалізованих вчених, експертних радах, редколегіях наукових журналів тощо</a></li>
+		@if (User.IsInRole("FacultyAdmin")) {
+			<li class="list-group-item"><a asp-controller="Info" asp-action="DepartmentWorkIntroForm" asp-route-itemType="Додати тему наукової роботи">Додати тему наукової роботи</a></li>
+		}
+</ul>
+	</div>

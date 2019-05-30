@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    input, textarea {
+        margin-top: 10px;
+    }
+</style>
+<h3 class="pl-1 pb-2">Додати нову конференцію</h3>
+<div class="form-group" style="background-color:rgba(255,255,255,0.6); padding-bottom:10px; border-radius:10px; ">
+    <form>
+        <input id="ti" type="text"class="form-control" placeholder="Назва конференції">
+        <textarea id="de" class="form-control" placeholder="Опис конференції"></textarea>
+        <input id="da" type="date"class="form-control" placeholder="">
+        <input id="sr" type="text" class="form-control" placeholder="URL тла конференції">
+        <button id="btnn" style="margin-top:10px; float:right; width:100px;" class="btn btn-primary" type="submit" >Додати</button>
+    </form>
+</div>
+
+<div>
+    <img src="~/img/lviv2.png" alt="Alternate Text" style="width:75vw; position :fixed; bottom:0; left:12%;z-index:-1000;" />
+</div>
+<script>
+    let btn = document.getElementById('btnn');
+    
+    btn.onclick = function () {
+      
+        let result = document.getElementById('ti').value + '*' + document.getElementById('de').value + '*'+
+        document.getElementById('da').value + '*' + document.getElementById('sr').value;   
+
+        var value = { co:result };
+        sendData(value);
+    };
+    function sendData(filters) {
+        
+        $.ajax({
+            url: '/Conferences/AddConference',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                 $('body').html(result);
+
+            }).fail(function (xhr) {
+                //console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+</script>

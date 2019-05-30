@@ -1,0 +1,59 @@
+﻿@using ScientificReport.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<User> UserManager
+@model ConferenceDetailsModel
+<div class="item-detailed">
+
+    <div>
+        <h2>@Model.ConferenceInfo.Title</h2>
+        <h5>@Model.ConferenceInfo.Date.ToShortDateString().Split(' ')[0]</h5>
+        <p class="description">@Model.ConferenceInfo.Description</p>`
+        <h4>Participants:</h4>
+        <div>
+            <ul class="list-group list-group-flush">
+                @foreach (var i in Model.UserNames)
+                {
+                    <li class="list-group-item">@i</li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div>
+        <img src="@Model.ConferenceInfo.ImgPath" alt="photo" class="img-detailed" />
+        <div class="likes-watches">
+            <div>
+
+                <div>
+                    <p class="text ">Likes</p>
+                    <img src="~/img/Conferences/icons/likes.png" alt="Likes" class="small-ico " />
+                </div>
+                <p class="pl-1">@Model.ConferenceInfo.Likes</p>
+            </div>
+            <div>
+                <div>
+                    <p class="text">Watches</p>
+                    <img src="~/img/Conferences/icons/watches.png" alt="Watches" class="small-ico" />
+                </div>
+                <p class="pl-1">@Model.ConferenceInfo.Watches</p>
+            </div>
+        </div>
+        @if (Model.TakePart == false)
+        {
+            <a   asp-route-id="@Model.ConferenceInfo.Id"  asp-route-userId="@UserManager.GetUserId(User)"  asp-controller="Conferences" asp-action="AddToUserConference"  class="btn btn-success center">
+                Взяти участь
+            </a>
+        }
+        else
+        {
+            <a asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-controller="Conferences" asp-action="DeleteUserFromConference" class="btn btn-danger center">
+                Скасувати участь
+            </a>
+        }
+    </div>
+</div>

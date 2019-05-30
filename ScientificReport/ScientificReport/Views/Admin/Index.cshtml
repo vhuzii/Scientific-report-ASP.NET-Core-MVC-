@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model KeyValuePair<IEnumerable<UserModel>, IEnumerable<UserModel>>
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<User> UserManager
+<style>
+    th, tr {
+    }
+
+    .center {
+        width: 80%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<div id="assets" class="">
+    <h4 style="text-align:center">Список користувачів</h4>
+
+    <div id="assetsTable1 " style="padding-top:20px;">
+        <table class="table table-condensed " style="margin-left:7%; " id="ToApproveTable">
+            <thread>
+                <tr>
+                    <th>ПІБ</th>
+                    <th>Факультет</th>
+                    <th>Кафедра</th>
+                    <th>Статус</th>
+                </tr>
+            </thread>
+            <tbody>
+                @foreach (var asset in Model.Value)
+                {
+                    <tr class="AssetRow" id="@asset.Id">
+                        <td class="">
+                            @asset.FullName
+                        </td>
+                        <td class="">
+                            @asset.Faculty
+                        </td>
+                        <td class="">
+                            @asset.Department
+                        </td>
+                        <td>
+                            <a asp-route-id="@asset.Id"  asp-controller="Admin" asp-action="Approve" class="btn btn-success">Підтвердити</a>
+                        </td>
+                    </tr>
+                }
+                @foreach (var asset in Model.Key)
+                {
+                    <tr class="AssetRow" id="@asset.Id">
+                        <td class="">
+                            @asset.FullName
+                        </td>
+                        <td class="">
+                            @asset.Faculty
+                        </td>
+                        <td class="">
+                            @asset.Department
+                        </td>
+                        <td>
+                            <a asp-route-id="@asset.Id" asp-controller="Admin" asp-action="Disapprove" class="btn btn-danger">Скасувати</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,48 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+<div class="row">
+    <h1 class="text-center col-md-6 offset-1">Вхід в систему</h1>
+</div>
+<div class="row pt-1">
+
+    <div class="col-md-5 offset-2" style="background-color:rgba(255,255,255,0.7); padding-bottom:10px; border-radius:10px;">
+        <section>
+            <form id="account" method="post">
+                <h4>Введіть свої вхідні дані</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">Пароль</label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Ввійти</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Забули пароль?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Зареєструватись</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <img src="~/img/lviv.png" alt="Alternate Text" style="height:93vh; position :fixed; bottom:0; left:20%;z-index:-1000;" />
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -27,7 +27,7 @@
     @if (@Model != null && (@Model.IsApproved || @Model.IsAdmin))
     {
 
-    <div >
+    <div>
 
         <img src="~/img/1.png" />
         <div>
@@ -39,9 +39,29 @@
                 Pозроблена спеціально для Факультету Прикладної математики та Інформатики Львівського національного університету імені Івана Франка
             </p>
         </div>
+        <br />
+        <div style="display:flex; justify-content:space-around; margin-left:auto; margin-right:auto; width:40%;" >
+            <div style="display:flex; flex-direction:column;">
+                <label for="start" style="font-size:15px;">Початкова дата:</label>
 
-        <a class="btn btn-success" style="margin-top:30px;" asp-controller="Report" asp-action="CreateReportAsync">
-            <strong>Згенерувати звіт</strong>
+                <input type="date" id="start" name="report-start"
+                       value="" style="padding-right:25px;"
+                       min="1950-01-01" max="2050-01-01" class="form-control  d-inline-block">
+            </div>
+            <div style="display:flex; flex-direction:column;">
+                <label for="end" style="font-size:15px;">Кінцева дата:</label>
+                <input type="date" id="end" name="report-end" style="padding-left:25px;"
+                       value=""
+                       min="1950-01-01" max="2050-01-01" class="form-control  d-inline-block">
+            </div>
+        </div>
+        
+        <a id="createReport" class="btn btn-info text-white " style="margin-top: 15px; padding-left: 25px; padding-right: 25px; " >
+            <strong>Встановити дату</strong>
+        </a>
+
+        <a id="createReport1"  class="btn btn-success disabled" style="margin-top: 15px; margin-left:25px;" asp-controller="Report" asp-action="CreateReport" ;>
+            <strong>Згенерувати репорт</strong>
         </a>
     </div>
    
@@ -97,37 +117,7 @@
     }
 </div>
 
-        <label for="start">Start date:</label>
-
-        <input type="date" id="start" name="report-start"
-               value=""
-               min="1950-01-01" max="2050-01-01">
-
-        <label for="end">End date:</label>
-        <input type="date" id="end" name="report-end"
-               value=""
-               min="1950-01-01" max="2050-01-01">
-        //"asp-controller="Report" asp-action="CreateReportByDateAsync"
-        <a id="createReport" class="btn btn-success" style="margin-top: 30px" ;>
-            <strong>Set Date</strong>
-        </a>
-
-        <a id="createReport1" class="btn btn-success" style="margin-top: 30px" asp-controller="Report" asp-action="CreateReport" ;>
-            <strong>Download Report</strong>
-        </a>
-    if (@Model == null)
-    {
-        <h3>Залогіньтеся, щоб побачити інформацію</h3>
-    }
-    else
-    {
-        <div id="warning">
-            <h2 style="text-align: center;">Увага!</h2>
-            <p>Щоб переглянути інформацію зарєєструйтесь, дочекайтесь підтвердженняю</p>
-            <p>Після того, як вам на email-адресу прийде сповіщення, вийдіть і ввійдіть в систему.</p>
-        </div>
-    }
-</div>
+       
 
 <script>
 
@@ -136,7 +126,8 @@
     var end = document.getElementById('end');
 
     btn.onclick = function () {
-
+       
+        document.getElementById('createReport1').classList.remove('disabled');
         var value = { start: start.value, end: end.value };
         sendData(value);
     };

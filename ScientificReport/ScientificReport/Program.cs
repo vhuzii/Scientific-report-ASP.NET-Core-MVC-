@@ -22,7 +22,7 @@ namespace ScientificReport
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetRequiredService<ReportContext>();
-                //RolesInitializer.InitializeAsync(context,services).Wait();
+                RolesInitializer.InitializeAsync(context,services).Wait();
             }
             CreateWebHostBuilder(args).Build().Run();
         }

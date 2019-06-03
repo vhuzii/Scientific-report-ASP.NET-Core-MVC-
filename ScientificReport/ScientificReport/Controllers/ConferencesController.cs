@@ -94,47 +94,18 @@ namespace ScientificReport.Controllers
                     tookPart = true;
                 }
             }
-            ConferenceDetailsModel model = new ConferenceDetailsModel();
-            model.TakePart = false;
             UserConference element = new UserConference()
             {
                 ConferenceId = id,
                 UserId = userId
             };
-            model.TakePart = tookPart;
-            if (!model.TakePart)
+            if (!tookPart)
             {
                 userConferenceService.Add(element);
                 conferenceUsers = userConferenceService.getAll();
             }
 
-            var thisConferenceUsers = conferenceUsers
-                .Where(res => res.ConferenceId == id)
-                .Select(res => res.UserId);
-            var thisConferenceUserNames = from i in thisConferenceUsers select userService.getById(i).Name;
-            model.UserNames = thisConferenceUserNames;
-            foreach (var item in conferenceUsers)
-            {
-                if(item.ConferenceId==id&&item.UserId==userId)
-                {
-                    model.TakePart = true;
-                }
-            }
-            var result = conferenceService.getById(id);
-            var data = new Conference()
-            {
-                Id = result.Id,
-                Date = result.Date,
-                Description = result.Description,
-                ImgPath = result.ImgPath,
-                Likes = result.Likes,
-                Title = result.Title,
-                Watches = result.Watches
-            };
-           
-            model.ConferenceInfo = data;
-          
-            return View("Details",model);
+            return RedirectToAction("Details", new { id = id, userId = userId });
         }
 
         public IActionResult Details(int id,string userId)
@@ -149,8 +120,7 @@ namespace ScientificReport.Controllers
                     model.TakePart = true;
                 }
             }
-           
-            
+
             var thisConferenceUsers = conferenceUsers
                 .Where(res => res.ConferenceId == id)
                 .Select(res => res.UserId);
@@ -183,33 +153,7 @@ namespace ScientificReport.Controllers
             var userToDel =( from i in ConferenceUsers where i.UserId==userId select i ).ToList();
 
             userConferenceService.Delete(userToDel[0]);
-            ConferenceDetailsModel model = new ConferenceDetailsModel();
-            
-            model.TakePart = false;
-            
-
-            conferenceUsers = userConferenceService.getAll();
-            var thisConferenceUsers = conferenceUsers
-                .Where(res => res.ConferenceId == id)
-                .Select(res => res.UserId);
-            var thisConferenceUserNames = from i in thisConferenceUsers select userService.getById(i).Name;
-            model.UserNames = thisConferenceUserNames;
-
-            var result = conferenceService.getById(id);
-            result.Watches = result.Watches + 1;
-            conferenceService.Update(result);
-            var data = new Conference()
-            {
-                Id = result.Id,
-                Date = result.Date,
-                Description = result.Description,
-                ImgPath = result.ImgPath,
-                Likes = result.Likes,
-                Title = result.Title,
-                Watches = result.Watches
-            };
-            model.ConferenceInfo = data;
-            return View("Details",model);
+            return RedirectToAction("Details", new { id = id, userId = userId });
         }
     }
 }

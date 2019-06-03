@@ -1,0 +1,38 @@
+﻿@model ScientificReportData.Models.Responses.DepWorkViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Назва</th>
+            <th scope="col">Тип</th>
+            <th scope="col">Дата</th>
+            <th scope="col">Автори</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Додати автора</th>
+        </tr>
+    </thead>
+    @foreach (var pub in Model.DepWorks)
+    {
+        <tbody>
+            <tr>
+                <td>@pub.Topic</td>
+                <td>@pub.Type</td>
+                <td>@pub.Date.ToShortDateString()</td>
+                <td>@pub.Authors.Select(a => a.Name).Aggregate((a, b) => a + "," + b)</td>
+                <td>@pub.Status</td>
+                <td>
+                    <select onchange="addAuthor(this)" data-assigned-id="@pub.Id" class="form-control" placeholder="Автори">
+                        <option value="" disabled selected>Виберіть автора</option>
+                        @foreach (var a in Model.Authors.Where(a => !pub.Authors.Any(z => z.Name == a)))
+                        {
+                            <option>@a</option>
+                        }
+                    </select>
+
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+<script src="~/js/AddAuthor.js"></script>
+

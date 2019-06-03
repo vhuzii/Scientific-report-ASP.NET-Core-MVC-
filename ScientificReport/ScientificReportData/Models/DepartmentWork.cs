@@ -19,6 +19,7 @@ namespace ScientificReportData.Models
         public string Intro { get; set; }
         public string Content { get; set; }
         public DateTime Date { get; set; }
+        public string Department { get; set; }
     }
 
 }

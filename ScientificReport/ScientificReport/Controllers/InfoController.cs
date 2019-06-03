@@ -53,6 +53,7 @@ namespace ScientificReport.Controllers
             model.Authors = new List<Author>();
             model.Authors.Add(userAsAuthor);
             model.Date = DateTime.Now;
+            model.Department = currentUser.Department;
             _serv.AddDepartmentWork(model);
 
             return RedirectToAction("Create");
@@ -114,9 +115,28 @@ namespace ScientificReport.Controllers
             return View("PublicationTable", searchRes);
         }
 
+        [HttpPost]
+        public IActionResult SearchDepWork([FromForm] SearchDepWorkModel searchParam)
+        {
+            var searchRes = _serv.SearchPublications(searchParam.Name, searchParam.Author);
+            if (searchRes.Publications == null)
+            {
+                return View("SearchPublication", new SearchPublicationModel
+                {
+                    Error = "Пошук не дав результатів"
+                });
+            }
+            return View("PublicationTable", searchRes);
+        }
+
         public IActionResult SearchPubilcationForm()
         {
             return View("SearchPublication");
+        }
+
+        public IActionResult SearchDepWorkForm()
+        {
+            return View("SearchDepWork");
         }
 
         [HttpGet]

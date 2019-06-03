@@ -13,11 +13,13 @@ namespace ScientificReportServices
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IPublicationService _publServ;
+        private readonly IDepWorkService _depWorkServ;
 
-        public ReportItemsService(UnitOfWork unitOfWork, IPublicationService publServ)
+        public ReportItemsService(UnitOfWork unitOfWork, IPublicationService publServ, IDepWorkService depWorkServ )
         {
             _unitOfWork = unitOfWork;
             _publServ = publServ;
+            _depWorkServ = depWorkServ;
         }
 
         public DepartmentWork AddDepartmentWork(DepartmentWork dw)
@@ -78,7 +80,17 @@ namespace ScientificReportServices
             return _publServ.SearchPublications(searchParam, author);
         }
 
-		public IEnumerable<string> GetPublicationIntrosByUser(User user) 
+        public void AddAuthorDepWork(int depId, string author)
+        {
+            _publServ.AddAuthor(depId, author);
+        }
+
+        public DepWorkViewModel SearchDepWork(string searchParam, string author, string department)
+        {
+            return _depWorkServ.SearchDepartmentWork(searchParam, author, department);
+        }
+
+        public IEnumerable<string> GetPublicationIntrosByUser(User user) 
 		{
 			return this._unitOfWork.DepartmentWorkTopicRepository.GetAll().Where(intro => intro.Faculty == user.Faculty).Select(s => s.Intro);
 		}

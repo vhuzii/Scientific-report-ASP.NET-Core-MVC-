@@ -8,7 +8,6 @@
             <th scope="col">Дата</th>
             <th scope="col">Автори</th>
             <th scope="col">Статус</th>
-            <th scope="col">Додати автора</th>
         </tr>
     </thead>
     @foreach (var pub in Model.Publications)
@@ -21,14 +20,7 @@
                 <td>@pub.Authors.Select(a => a.Name).Aggregate((a, b) => a + "," + b)</td>
                 <td>@pub.Status</td>
                 <td>
-                    <select onchange="addAuthor(this)" data-assigned-id="@pub.Id" class="form-control" placeholder="Автори">
-                        <option value="" disabled selected>Виберіть автора</option>
-                        @foreach (var a in Model.Authors.Where(a => !pub.Authors.Any(z => z.Name == a)))
-                        {
-                            <option>@a</option>
-                        }
-                    </select>
-
+                    <a asp-route-id="@pub.Id" asp-action="EditPubAuthors">Редагувати авторів</a>
                 </td>
             </tr>
         </tbody>

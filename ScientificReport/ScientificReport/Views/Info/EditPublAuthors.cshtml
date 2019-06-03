@@ -1,0 +1,39 @@
+﻿@model Publication
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Автор</th>
+            <th scope="col">Редагувати ім'я</th>
+            <th scope="col">Видалити</th>
+        </tr>
+    </thead>
+    @foreach (var pub in Model.Authors)
+    {
+        <tbody>
+            <tr>
+                <td>@pub.Name</td>
+                <td>
+                    <div class="flex-row pt-3">
+                        <form method="POST" asp-route-id="@pub.Id" asp-controller="Info" asp-action="EditPubAuthor">
+                            <input type="text" placeholder="@pub.Name" name="authorName" class="form-control" />
+                            <input type="submit" class="btn btn-success float-right mt-2 text-white">
+                        </form>
+                    </div>
+                </td>
+                <td><a asp-route-id="@pub.Id" asp-action="DeleteAuthor">Видалити</a></td>
+                <td>
+                    <a asp-route-id="@pub.Id" asp-route-name="@pub.Name" asp-action="EditPubAuthors">Редагувати авторів</a>
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<div class="flex-row pt-3">
+    <form method="POST" asp-route-id="@Model.Id" asp-controller="Info" asp-action="AddAuthor">
+        <input type="text" placeholder="Ім'я автора" name="authorName" class="form-control" />
+        <input type="submit" class="btn btn-success float-right mt-2 text-white">
+    </form>
+</div>        

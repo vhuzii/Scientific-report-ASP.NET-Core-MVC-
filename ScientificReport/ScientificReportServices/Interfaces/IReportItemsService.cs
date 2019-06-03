@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ScientificReportData;
 using ScientificReportData.Models;
 using ScientificReportData.Models.Responses;
 
@@ -6,6 +7,7 @@ namespace ScientificReportServices
 {
     public interface IReportItemsService
     {
+        UnitOfWork UOF { get; }
         DepartmentWork AddDepartmentWork(DepartmentWork dw);
         Grant AddGrant(Grant gr);
         Publication AddPublication(CreatePublicationModel pb);

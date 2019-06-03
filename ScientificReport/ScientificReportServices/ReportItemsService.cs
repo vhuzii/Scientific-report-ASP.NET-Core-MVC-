@@ -14,6 +14,8 @@ namespace ScientificReportServices
         private readonly UnitOfWork _unitOfWork;
         private readonly IPublicationService _publServ;
 
+        public UnitOfWork UOF => _unitOfWork;
+
         public ReportItemsService(UnitOfWork unitOfWork, IPublicationService publServ)
         {
             _unitOfWork = unitOfWork;

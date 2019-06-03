@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -146,5 +147,35 @@ namespace ScientificReport.Controllers
 	        return RedirectToAction("Create");
         }
 
-	}
+        public IActionResult EditPubAuthors(string id)
+        {
+            var publ = _serv.UOF.PublicationRepository.Set.Where(s => s.Id == Convert.ToInt32(id))?.Include(d => d.Authors).FirstOrDefault();
+            if (publ.Authors == null) publ.Authors = new List<Author>();
+            return View("EditPublAuthors", publ);
+        }
+
+        public IActionResult DeleteAuthor(string id)
+        {
+            var publ = _serv.UOF.PublicationRepository.Get(Convert.ToInt32(id));
+            publ.Authors = publ.Authors.Where(a => a.Id != Convert.ToInt32(id)).ToList();
+            _serv.UOF.PublicationRepository.Update(publ);
+            return View("SearchPublication");
+        }
+
+        public IActionResult EditPubAuthor(string id, string authorName)
+        {
+            var publ = _serv.UOF.AuthorRepository.Get(Convert.ToInt32(id));
+            publ.Name = authorName;
+            _serv.UOF.AuthorRepository.Update(publ);
+            return View("SearchPublication");
+        }
+
+        public IActionResult AddAuthor(string id, string authorName)
+        {
+            var publ = _serv.UOF.PublicationRepository.Get(Convert.ToInt32(id));
+
+            _serv.AddAuthor(Convert.ToInt32(id), authorName);
+            return View("SearchPublication");
+        }
+    }
 }

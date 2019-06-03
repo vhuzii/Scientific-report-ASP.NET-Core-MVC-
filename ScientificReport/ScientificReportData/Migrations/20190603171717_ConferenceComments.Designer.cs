@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScientificReport.Data.DataAccess;
 
 namespace ScientificReportData.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    partial class ReportContextModelSnapshot : ModelSnapshot
+    [Migration("20190603171717_ConferenceComments")]
+    partial class ConferenceComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,8 +192,6 @@ namespace ScientificReportData.Migrations
                     b.Property<int>("ConferenceId");
 
                     b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
 
                     b.Property<DateTime>("date");
 

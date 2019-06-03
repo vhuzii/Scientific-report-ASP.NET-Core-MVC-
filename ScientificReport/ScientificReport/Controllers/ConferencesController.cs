@@ -18,12 +18,14 @@ namespace ScientificReport.Controllers
         private readonly IConferenceService conferenceService;
         private readonly IUserService userService;
         private readonly IUserConferenceService userConferenceService;
-       
-        public ConferencesController(IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService)
+        private readonly IConferenceCommentsService conferenceCommentsService;
+        
+        public ConferencesController(IConferenceCommentsService conferenceCommentsService, IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService)
         {
             this.conferenceService = conferenceService;
             this.userService = userService;
             this.userConferenceService = userConferenceService;
+            this.conferenceCommentsService = conferenceCommentsService;
         }
 
         public IActionResult Index()
@@ -133,7 +135,8 @@ namespace ScientificReport.Controllers
             };
            
             model.ConferenceInfo = data;
-          
+            var comments = conferenceCommentsService.getAll().Where(rez => rez.ConferenceId == id).Select(res => res);
+            model.comments = comments;
             return View("Details",model);
         }
 
@@ -171,6 +174,8 @@ namespace ScientificReport.Controllers
                 Watches = result.Watches
             };
             model.ConferenceInfo = data;
+            var comments = conferenceCommentsService.getAll().Where(rez => rez.ConferenceId == id).Select(res => res);
+            model.comments = comments;
             return View(model);
         }
         public IActionResult DeleteUserFromConference(int id,string userId)
@@ -209,7 +214,38 @@ namespace ScientificReport.Controllers
                 Watches = result.Watches
             };
             model.ConferenceInfo = data;
+            var comments = conferenceCommentsService.getAll().Where(rez => rez.ConferenceId == id).Select(res => res);
+            model.comments = comments;
             return View("Details",model);
+        }
+
+        [HttpPost]
+        public IActionResult AddComment(int id, string userId,  string commentTEXT)
+        {
+            ConferenceComments comment = new ConferenceComments()
+            {
+                UserId = userId,
+                ConferenceId = id,
+                UserName = userService.getById(userId).Name,
+                date = DateTime.Now,
+                text = commentTEXT
+            };
+            conferenceCommentsService.Add(comment);
+            return RedirectToAction("Details", new { id = id, userId = userId });           
+        }
+
+        public IActionResult DeleteComment(int id, string userId,int conf_id)
+        {
+            ConferenceComments comment = new ConferenceComments()
+            {
+                UserId = userId,
+                ConferenceId = id,
+                UserName = userService.getById(userId).Name,
+                date = DateTime.Now,
+                text = commentTEXT
+            };
+            conferenceCommentsService.Add(comment);
+            return RedirectToAction("Details", new { id = id, userId = userId });
         }
     }
 }

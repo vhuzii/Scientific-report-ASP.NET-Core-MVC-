@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScientificReport.Data.DataAccess;
 
 namespace ScientificReportData.Migrations
 {
     [DbContext(typeof(ReportContext))]
-    partial class ReportContextModelSnapshot : ModelSnapshot
+    [Migration("20190603165955_comments")]
+    partial class comments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,27 +181,6 @@ namespace ScientificReportData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Conferences");
-                });
-
-            modelBuilder.Entity("ScientificReportData.Models.ConferenceComments", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ConferenceId");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
-
-                    b.Property<DateTime>("date");
-
-                    b.Property<string>("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ConferenceComments");
                 });
 
             modelBuilder.Entity("ScientificReportData.Models.DepartmentWork", b =>

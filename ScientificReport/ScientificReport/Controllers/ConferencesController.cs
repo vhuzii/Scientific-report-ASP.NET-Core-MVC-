@@ -211,5 +211,13 @@ namespace ScientificReport.Controllers
             model.ConferenceInfo = data;
             return View("Details",model);
         }
+
+        public IActionResult Comment(string id, string comment)
+        {
+            var result = conferenceService.getById(Convert.ToInt32(id));
+            result.Comments += comment + ",";
+            conferenceService.Update(result);
+            return View("ConferencePage");
+        }
     }
 }

@@ -56,4 +56,19 @@
             </a>
         }
     </div>
+    
+
+</div>
+<div>
+    <p>Comments:</p>
+    <a>@Model.ConferenceInfo.Comments</a>
+
+</div>
+
+
+<div class="flex-row pt-3">
+    <form method="POST" asp-route-id="@Model.ConferenceInfo.Id" asp-controller="Conferences" asp-action="Comment">
+        <input type="text" placeholder="" name="comment" class="form-control" />
+        <input type="submit" class="btn btn-success float-right mt-2 text-white">
+    </form>
 </div>

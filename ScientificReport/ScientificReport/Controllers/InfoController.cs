@@ -146,5 +146,10 @@ namespace ScientificReport.Controllers
 	        return RedirectToAction("Create");
         }
 
-	}
+        public IActionResult MyPublications()
+        {
+            var searchRes = _serv.SearchPublications("", "");
+            return View(searchRes);
+        }
+    }
 }

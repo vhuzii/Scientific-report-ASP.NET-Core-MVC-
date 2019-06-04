@@ -12,5 +12,7 @@ namespace ScientificReportServices.Interfaces
         Publication AddPublication(CreatePublicationModel model);
         PubliEditViewModel SearchPublications(string searchParam, string author);
         void AddAuthor(int pubId, string author);
+
+       
     }
 }

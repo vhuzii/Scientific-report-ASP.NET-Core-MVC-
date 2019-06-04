@@ -59,24 +59,40 @@
 </div>
 <div id="comments">
     
-    <div class="flex-row pt-3">
+    <div class=" pt-3 ">
         <form method="POST" asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)"  asp-controller="Conferences" asp-action="AddComment">
             <label for="text">Ваш коментар</label>
             <input type="text" placeholder="Текст коментаря" name="commentTEXT" class="form-control" />
-            <input type="submit" class="btn btn-success float-right mt-2 text-white" >
+            <input type="submit" class="btn btn-success float-right mt-2 text-white">
         </form>        
     </div>
-
+    
     <div id="allComments" class="pt-5">
+        <h5 class="text-center">Коментарі</h5>
         @foreach (var i in Model.comments)
         {
             <div class="">
-                <p>@i.UserName</p>
+                <p><i>@i.UserName</i></p>
                 <p>@i.text</p>
                 <p>@i.date</p>
-                <a class="btn btn-info">Редагувати</a>
-                <a class="btn btn-danger">Видалити</a>
+                <form method="POST" class="mb-3" asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-controller="Conferences" asp-action="EditComment" asp-route-conf_id="@i.Id" style="display:none;">
+                    <input type="text" placeholder="Текст коментаря" name="commentTEXT" class="form-control" />
+                    <input type="submit" class="btn btn-success float-right mt-2 text-white" value="Зберегти">
+                </form>
+                <a class="btn btn-info text-white" onclick="ShowEdit(this)">Редагувати</a>
+                <a class="btn btn-danger" asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-route-conf_id="@i.Id" asp-controller="Conferences" asp-action="DeleteComment">Видалити</a>
             </div>
         }
     </div>
 </div>
+<script>
+    function ShowEdit(e) {
+        if (e.parentNode.childNodes[7].style.display == 'none') {
+            e.parentNode.childNodes[7].style.display = 'block';
+            e.parentNode.childNodes[9].style.display = 'none';
+        } else {
+            e.parentNode.childNodes[7].style.display = 'none';
+            e.parentNode.childNodes[9].style.display = 'block';
+        }
+    }
+</script>

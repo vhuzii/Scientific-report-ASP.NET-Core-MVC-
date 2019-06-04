@@ -78,5 +78,7 @@ namespace ScientificReportServices
                 Authors = authors
             };
         }
+
+       
     }
 }

@@ -11,6 +11,6 @@ namespace ScientificReportServices.Interfaces
         void Add(ConferenceComments newElem);
         void Update(ConferenceComments newElem);
         ConferenceComments getById(int Id);
-
+        void Delete(ConferenceComments userToDelete);
     }
 }

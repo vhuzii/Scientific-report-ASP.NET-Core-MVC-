@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model ScientificReportData.Models.Responses.PubliEditViewModel
+
+<table class="table">
+   
+    @{ var pub = Model.Publications[0];
+    
+        <tbody>
+            <tr>
+                <td>@pub.Topic</td>
+                <td>@pub.Type</td>
+                <td>@pub.Date.ToShortDateString()</td>               
+                <td>@pub.Status</td>
+                <td>         
+                     <a class="btn btn-success text-white" asp-route-name="@pub.">Переглянути</a>
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+

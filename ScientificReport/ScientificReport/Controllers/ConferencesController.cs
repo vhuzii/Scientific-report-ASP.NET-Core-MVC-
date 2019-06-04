@@ -236,16 +236,17 @@ namespace ScientificReport.Controllers
 
         public IActionResult DeleteComment(int id, string userId,int conf_id)
         {
-            ConferenceComments comment = new ConferenceComments()
-            {
-                UserId = userId,
-                ConferenceId = id,
-                UserName = userService.getById(userId).Name,
-                date = DateTime.Now,
-                text = commentTEXT
-            };
-            conferenceCommentsService.Add(comment);
+            conferenceCommentsService.Delete(conferenceCommentsService.getById(conf_id));
             return RedirectToAction("Details", new { id = id, userId = userId });
+        }
+
+        [HttpPost]
+        public IActionResult EditComment(int id, string userId, string commentTEXT, int conf_id)
+        {
+            ConferenceComments comment = conferenceCommentsService.getById(conf_id);
+            comment.text = commentTEXT;
+            conferenceCommentsService.Update(comment);
+            return RedirectToAction("Details", new { id = id, userId = userId });            
         }
     }
 }

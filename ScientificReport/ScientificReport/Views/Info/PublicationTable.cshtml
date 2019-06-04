@@ -18,7 +18,7 @@
                 <td>@pub.Topic</td>
                 <td>@pub.Type</td>
                 <td>@pub.Date.ToShortDateString()</td>
-                <td>@pub.Authors.Select(a => a.Name).Aggregate((a, b) => a + "," + b)</td>
+                <td>@pub.Authors.Select(a => a.Name).Aggregate((a, b) => a + ", " + b)</td>
                 <td>@pub.Status</td>
                 <td>
                     <select onchange="addAuthor(this)" data-assigned-id="@pub.Id" class="form-control" placeholder="Автори">
@@ -29,6 +29,7 @@
                         }
                     </select>
 
+                    <!-- <a class="btn btn-success text-white">Редагувати</a>-->
                 </td>
             </tr>
         </tbody>

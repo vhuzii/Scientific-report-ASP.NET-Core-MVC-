@@ -1,0 +1,22 @@
+﻿@model List<Author>
+@{
+    ViewData["Title"] = "ShowAuthors";
+}
+
+<thead>
+    <tr>
+        <th scope="col">Автори:</th>
+    </tr>
+</thead>
+
+    @foreach (var b in Model)
+    {
+        <div>
+            <tbody>
+            <tr>
+                <td>@b.Name</td>
+            </tr>
+            </tbody>
+        </div>
+    }
+

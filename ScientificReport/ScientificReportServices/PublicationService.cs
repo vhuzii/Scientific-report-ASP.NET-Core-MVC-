@@ -15,11 +15,12 @@ namespace ScientificReportServices
     public class PublicationService : IPublicationService
     {
         private readonly UnitOfWork _unitOfWork;
-
+        public UnitOfWork UOF => _unitOfWork;
         public PublicationService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
+
 
         public PubliEditViewModel SearchPublications(string searchParam = "", string author = "")
         {

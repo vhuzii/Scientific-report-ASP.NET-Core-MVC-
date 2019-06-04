@@ -156,9 +156,8 @@ namespace ScientificReport.Controllers
 
         public IActionResult DeleteAuthor(string id)
         {
-            var publ = _serv.UOF.PublicationRepository.Get(Convert.ToInt32(id));
-            publ.Authors = publ.Authors.Where(a => a.Id != Convert.ToInt32(id)).ToList();
-            _serv.UOF.PublicationRepository.Update(publ);
+
+            _serv.UOF.AuthorRepository.Delete(Convert.ToInt32(id));
             return View("SearchPublication");
         }
 
@@ -176,6 +175,24 @@ namespace ScientificReport.Controllers
 
             _serv.AddAuthor(Convert.ToInt32(id), authorName);
             return View("SearchPublication");
+        }
+
+        public IActionResult ShowAuthors()
+        {
+            var authors = new List<Author>();
+            var amount = _serv.UOF.PublicationRepository.GetAll().ToList();
+            for (int i = 0; i < amount.Count; i++)
+            {
+                var publ = _serv.UOF.PublicationRepository.Set.Where(s => s.Id == Convert.ToInt32(amount[i].Id))?.Include(d => d.Authors).FirstOrDefault();
+                if (publ != null)
+                {
+                    foreach (var b in publ.Authors)
+                    {
+                        authors.Add(b);
+                    }
+                }
+            }
+            return View(authors);
         }
     }
 }

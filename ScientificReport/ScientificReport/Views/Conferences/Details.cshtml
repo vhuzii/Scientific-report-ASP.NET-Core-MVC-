@@ -71,7 +71,7 @@
         <h5 class="text-center">Коментарі</h5>
         @foreach (var i in Model.comments)
         {
-            <div class="">
+            <div class="mb-4">
                 <p><i>@i.UserName</i></p>
                 <p>@i.text</p>
                 <p>@i.date</p>
@@ -79,8 +79,10 @@
                     <input type="text" placeholder="Текст коментаря" name="commentTEXT" class="form-control" />
                     <input type="submit" class="btn btn-success float-right mt-2 text-white" value="Зберегти">
                 </form>
+                @if(i.UserId == UserManager.GetUserId(User)) { 
                 <a class="btn btn-info text-white" onclick="ShowEdit(this)">Редагувати</a>
                 <a class="btn btn-danger" asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-route-conf_id="@i.Id" asp-controller="Conferences" asp-action="DeleteComment">Видалити</a>
+                }
             </div>
         }
     </div>

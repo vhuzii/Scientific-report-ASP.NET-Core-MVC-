@@ -168,7 +168,9 @@ namespace ScientificReport.Controllers
                 ImgPath = result.ImgPath,
                 Likes = result.Likes,
                 Title = result.Title,
-                Watches = result.Watches
+                Watches = result.Watches,
+                Comments = result.Comments
+                
             };
             model.ConferenceInfo = data;
             return View(model);
@@ -215,7 +217,7 @@ namespace ScientificReport.Controllers
         public IActionResult Comment(string id, string comment)
         {
             var result = conferenceService.getById(Convert.ToInt32(id));
-            result.Comments += comment + ",";
+            result.Comments += comment + "\n";
             conferenceService.Update(result);
             return View("ConferencePage");
         }

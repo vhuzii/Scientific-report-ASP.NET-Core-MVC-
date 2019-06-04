@@ -21,5 +21,6 @@ namespace ScientificReport.Data.DataAccess
         public virtual DbSet<UserConference> UserConferences { get; set; }
         public virtual DbSet<ReportItem> ReportItems { get; set; }
         public virtual DbSet<DepartmentWorkIntro> DepartmentWorkIntro { get; set; }
+        public virtual DbSet<ConferenceComments> ConferenceComments { get; set; }
 	}
 }

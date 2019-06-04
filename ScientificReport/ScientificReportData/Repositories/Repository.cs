@@ -57,7 +57,6 @@ namespace ScientificReportData.Repositories
 			{
 				return old;
 			}
-
 			context.Entry(entity).CurrentValues.SetValues(item);
 			context.SaveChanges();
 			return entity;

@@ -11,5 +11,6 @@ namespace ScientificReport.Models
         public Conference ConferenceInfo { get; set; }
         public bool TakePart { get; set; }
         public IEnumerable<string> UserNames { get; set; }
+        public IEnumerable<ConferenceComments> Comments { get; set; }
     }
 }

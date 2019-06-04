@@ -57,3 +57,24 @@
         }
     </div>
 </div>
+<div>
+    <h4>Comments</h4>
+    <div>                
+         @foreach (var i in Model.Comments)
+            {
+                <p>@i.UserName</p>
+                <p>@i.Text</p>
+                <a asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-action="AddComment" class="btn-info btn">Редагувати</a>
+                <a asp-route-id="@Model.ConferenceInfo.Id" asp-route-confId="@i.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-action="DeleteComment" class="btn-danger btn">Видалити</a>
+            }
+       
+    </div>
+    <div>
+        <form method="post"  asp-controller=" Conferences" asp-action="AddComment">
+            <label>Додати коментар</label>
+            <input type="text" placeholder="Ваш коментар" name="commentText" class="form-control" />
+            <input asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-action="AddComment" type="submit" class="btn-success" float-right mt-2 text-white />
+        </form>
+    </div>
+
+</div>

@@ -10,12 +10,12 @@
 @model ConferenceDetailsModel
 <div class="item-detailed">
 
-    <div>
+    <div style="width:100%; padding-right:20px;">
         <h2>@Model.ConferenceInfo.Title</h2>
         <h5>@Model.ConferenceInfo.Date.ToShortDateString().Split(' ')[0]</h5>
-        <p class="description">@Model.ConferenceInfo.Description</p>`
+        <p class="description" >@Model.ConferenceInfo.Description</p>`
         <h4>Participants:</h4>
-        <div>
+        <div style="overflow-y:auto; height:200px;margin-top:20px;">
             <ul class="list-group list-group-flush">
                 @foreach (var i in Model.UserNames)
                 {
@@ -56,4 +56,25 @@
             </a>
         }
     </div>
+</div>
+<div>
+    <h4>Comments</h4>
+    <div>                
+         @foreach (var i in Model.Comments)
+            {
+                <p>@i.UserName</p>
+                <p>@i.Text</p>
+                <a asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-action="AddComment" class="btn-info btn">Редагувати</a>
+                <a asp-route-id="@Model.ConferenceInfo.Id" asp-route-confId="@i.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-action="DeleteComment" class="btn-danger btn">Видалити</a>
+            }
+       
+    </div>
+    <div>
+        <form method="post"  asp-controller=" Conferences" asp-action="AddComment">
+            <label>Додати коментар</label>
+            <input type="text" placeholder="Ваш коментар" name="commentText" class="form-control" />
+            <input asp-route-id="@Model.ConferenceInfo.Id" asp-route-userId="@UserManager.GetUserId(User)" asp-action="AddComment" type="submit" class="btn-success" float-right mt-2 text-white />
+        </form>
+    </div>
+
 </div>

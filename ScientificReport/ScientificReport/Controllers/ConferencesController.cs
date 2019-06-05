@@ -18,12 +18,14 @@ namespace ScientificReport.Controllers
         private readonly IConferenceService conferenceService;
         private readonly IUserService userService;
         private readonly IUserConferenceService userConferenceService;
+        private readonly IConferenceCommentsService conferenceCommentsService;
        
-        public ConferencesController(IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService)
+        public ConferencesController(IConferenceService conferenceService,IUserService userService,IUserConferenceService userConferenceService,IConferenceCommentsService conferenceCommentsService)
         {
             this.conferenceService = conferenceService;
             this.userService = userService;
             this.userConferenceService = userConferenceService;
+            this.conferenceCommentsService = conferenceCommentsService;
         }
 
         public IActionResult Index()
@@ -48,20 +50,19 @@ namespace ScientificReport.Controllers
         }
         
         
-        public IActionResult AddConference(string co )
+        public IActionResult AddConference(string co)
         {            
             string[] arr = co.Split('*');
             string[] q = arr[2].Split('-');
             DateTime date = new DateTime(int.Parse(q[0]), int.Parse(q[1]), int.Parse(q[2]));
             Conference newConf = new Conference()
             {
-                Title =arr[0],
-                Description=arr[1],
-                Date=date,
-                ImgPath =arr[3],
-                Likes=0,
-                Watches=0               
-                
+                Title = arr[0],
+                Description = arr[1],
+                Date = date,
+                ImgPath = arr[3],
+                Likes = 0,
+                Watches = 0
             };
             conferenceService.Add(newConf);
             var conferences = conferenceService.getAll();
@@ -94,52 +95,47 @@ namespace ScientificReport.Controllers
                     tookPart = true;
                 }
             }
-            ConferenceDetailsModel model = new ConferenceDetailsModel();
-            model.TakePart = false;
             UserConference element = new UserConference()
             {
                 ConferenceId = id,
                 UserId = userId
             };
-            model.TakePart = tookPart;
-            if (!model.TakePart)
+            if (!tookPart)
             {
                 userConferenceService.Add(element);
                 conferenceUsers = userConferenceService.getAll();
             }
 
-            var thisConferenceUsers = conferenceUsers
-                .Where(res => res.ConferenceId == id)
-                .Select(res => res.UserId);
-            var thisConferenceUserNames = from i in thisConferenceUsers select userService.getById(i).Name;
-            model.UserNames = thisConferenceUserNames;
-            foreach (var item in conferenceUsers)
-            {
-                if(item.ConferenceId==id&&item.UserId==userId)
-                {
-                    model.TakePart = true;
-                }
-            }
-            var result = conferenceService.getById(id);
-            var data = new Conference()
-            {
-                Id = result.Id,
-                Date = result.Date,
-                Description = result.Description,
-                ImgPath = result.ImgPath,
-                Likes = result.Likes,
-                Title = result.Title,
-                Watches = result.Watches
-            };
-           
-            model.ConferenceInfo = data;
-          
-            return View("Details",model);
+            return RedirectToAction("Details", new { id = id, userId = userId });
         }
-
+        [HttpPost]
+        public IActionResult AddComment(int id,string userId,string commentText)
+        {
+            ConferenceComments elem = new ConferenceComments()
+            {
+                ConferenceId = id,
+                UserId = userId,
+                Text = commentText,
+                UserName = userService.getById(userId).Name
+            };
+            conferenceCommentsService.Add(elem);
+            return RedirectToAction("Details", new { id = id, userId = userId });
+        }
+        public IActionResult DeleteComment(int id,string userId,int confId)
+        {
+            var Comments = conferenceCommentsService.getAll();
+            ConferenceComments delElem = conferenceCommentsService.getById(confId);
+            conferenceCommentsService.Delete(delElem);
+            return RedirectToAction("Details", new { id = id, userId = userId });
+        }
         public IActionResult Details(int id,string userId)
         {
             var conferenceUsers = userConferenceService.getAll();
+            var allComments = conferenceCommentsService.getAll();
+            var thisConfCom = allComments
+                .Where(res => res.ConferenceId == id)
+                .Select(res => res);
+            
             ConferenceDetailsModel model = new ConferenceDetailsModel();
             model.TakePart = false;
             foreach (var item in conferenceUsers)
@@ -149,8 +145,7 @@ namespace ScientificReport.Controllers
                     model.TakePart = true;
                 }
             }
-           
-            
+            model.Comments = thisConfCom;
             var thisConferenceUsers = conferenceUsers
                 .Where(res => res.ConferenceId == id)
                 .Select(res => res.UserId);
@@ -160,6 +155,8 @@ namespace ScientificReport.Controllers
             var result = conferenceService.getById(id);
             result.Watches = result.Watches + 1;
             conferenceService.Update(result);
+            var confCom = conferenceCommentsService.getAll();
+            model.Comments = confCom.Where(r => r.ConferenceId == id).Select(r => r);
             var data = new Conference()
             {
                 Id = result.Id,
@@ -170,9 +167,11 @@ namespace ScientificReport.Controllers
                 Title = result.Title,
                 Watches = result.Watches
             };
+
             model.ConferenceInfo = data;
             return View(model);
         }
+        
         public IActionResult DeleteUserFromConference(int id,string userId)
         {
             var conferenceUsers = userConferenceService.getAll();
@@ -183,33 +182,7 @@ namespace ScientificReport.Controllers
             var userToDel =( from i in ConferenceUsers where i.UserId==userId select i ).ToList();
 
             userConferenceService.Delete(userToDel[0]);
-            ConferenceDetailsModel model = new ConferenceDetailsModel();
-            
-            model.TakePart = false;
-            
-
-            conferenceUsers = userConferenceService.getAll();
-            var thisConferenceUsers = conferenceUsers
-                .Where(res => res.ConferenceId == id)
-                .Select(res => res.UserId);
-            var thisConferenceUserNames = from i in thisConferenceUsers select userService.getById(i).Name;
-            model.UserNames = thisConferenceUserNames;
-
-            var result = conferenceService.getById(id);
-            result.Watches = result.Watches + 1;
-            conferenceService.Update(result);
-            var data = new Conference()
-            {
-                Id = result.Id,
-                Date = result.Date,
-                Description = result.Description,
-                ImgPath = result.ImgPath,
-                Likes = result.Likes,
-                Title = result.Title,
-                Watches = result.Watches
-            };
-            model.ConferenceInfo = data;
-            return View("Details",model);
+            return RedirectToAction("Details", new { id = id, userId = userId });
         }
     }
 }
